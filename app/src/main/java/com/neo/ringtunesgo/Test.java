@@ -26,7 +26,8 @@ public class Test extends BaseActivity {
                 Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.neo.testgetdatavina");
                 launchIntent.putExtra("vinaphone", "0942148362");
                 if (launchIntent != null) {
-                    startActivity(launchIntent);//null pointer check in case package name was not found
+                    startActivity(launchIntent);
+                    //null pointer check in case package name was not found
                 }
             }
         });

@@ -63,6 +63,7 @@ public class TestPlayMusic extends BaseFragment implements MediaPlayer.OnComplet
         ButterKnife.bind(this, view);
         songDestination_URL = getArguments().getString("url_music", "");
         playSong(songDestination_URL);
+        playSong(songDestination_URL);
         initEvent();
         return view;
 
