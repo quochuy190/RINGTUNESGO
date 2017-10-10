@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/app_bar_main2"/>
+        <ImageView
+            android:id="@+id/img_back_xacthuc"
+            android:padding="@dimen/dp5"
+            android:src="@drawable/icon_back"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30" />
+        <TextView
+            android:layout_marginLeft="@dimen/dp35"
+            android:layout_centerVertical="true"
+            android:id="@+id/txt_title_xacthuc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="RingtunesGo"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_18sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp100"
+        android:gravity="center"
+        android:padding="@dimen/dp10"
+        android:src="@drawable/ringtunes_go_icon"
+        android:textColor="@color/ringtunes"
+        android:textSize="@dimen/text_34sp" />
+
+    <TextView
+        android:textColor="@color/text_name_song"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginRight="@dimen/dp30"
+        android:textSize="@dimen/text_16sp"
+        android:gravity="center"
+        android:padding="@dimen/dp5"
+        android:text="Bạn cần phải xác thực số điện thoại. Mời bạn chọn cách xác thực số điện thoại"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:padding="@dimen/dp3"
+            android:id="@+id/rbtn_vinaphone_portal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/purple"
+            android:text="Xác thực qua tài khoản Vinaphone Portal"
+            android:textColor="@color/text_name_song"
+            android:textSize="@dimen/text_17sp" />
+
+        <RadioButton
+            android:id="@+id/rbtn_sms_OTP"
+            android:padding="@dimen/dp3"
+            android:textColor="@color/text_name_song"
+            android:buttonTint="@color/purple"
+            android:textSize="@dimen/text_17sp"
+            android:text="Xác thực qua tin nhắn OTP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/rbtn_3g_vinaphone"
+            android:padding="@dimen/dp3"
+            android:textColor="@color/text_name_song"
+            android:buttonTint="@color/purple"
+            android:textSize="@dimen/text_17sp"
+            android:text="Xác thực qua mạng 3G Vinaphone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </RadioGroup>
+    <Button
+        android:id="@+id/btn_next_xacthuc"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_gravity="center"
+        android:text="Xác nhận"
+        android:textColor="@color/white"
+        android:background="@drawable/button_continue"
+        android:layout_width="@dimen/dp120"
+        android:layout_height="@dimen/dp40" />
+
+</LinearLayout>

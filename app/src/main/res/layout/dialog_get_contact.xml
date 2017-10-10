@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/radius_dialog"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spr_backgroup_title_dialog"
+        android:gravity="center"
+        android:text="Xác nhận"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_25sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spr_backgroup_body_dialog"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:layout_marginTop="@dimen/dp20"
+            android:gravity="center_vertical">
+            <RelativeLayout
+                android:background="@drawable/spr_backgroup_edittext"
+                android:id="@+id/relative_phone"
+                android:layout_width="@dimen/dp220"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:backgroundTint="@color/white"
+                    android:id="@+id/ed_add_phone_dialog"
+                    android:layout_width="@dimen/dp200_singer"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Nhập số điện thoại"
+                    android:inputType="number"
+                    android:padding="@dimen/dp5"
+                    android:paddingRight="@dimen/dp10"
+                    android:textColor="@color/text_name_song" />
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/txt_delete_phone"
+                    android:visibility="gone"
+                    android:textSize="@dimen/dp20"
+                    android:text="x"
+                    android:textColor="@color/purple"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="@dimen/dp30"
+                    android:layout_height="@dimen/dp30" />
+            </RelativeLayout>
+
+
+            <ImageView
+                android:layout_toRightOf="@+id/relative_phone"
+                android:id="@+id/img_add_contact_dialog"
+                android:layout_width="@dimen/dp30"
+                android:layout_height="@dimen/dp30"
+                android:layout_marginLeft="@dimen/dp5"
+                android:src="@drawable/icon_contact" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp20"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:textSize="@dimen/text_16sp"
+                android:textStyle="bold"
+                android:id="@+id/btn_dialogcontact_cancel"
+                android:layout_width="@dimen/dp90"
+                android:layout_height="@dimen/dp35"
+                android:layout_marginRight="@dimen/dp10"
+                android:background="@drawable/spr_buton_dialog"
+                android:text="@string/Cancel"
+                android:textColor="@color/purple" />
+
+            <Button
+                android:textStyle="bold"
+                android:textSize="@dimen/text_16sp"
+                android:id="@+id/btn_dialogcontact_ok"
+                android:layout_width="@dimen/dp90"
+                android:layout_height="@dimen/dp35"
+                android:layout_marginLeft="@dimen/dp10"
+                android:background="@drawable/spr_buton_dialog"
+                android:text="@string/alert_ok"
+                android:textColor="@color/purple" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

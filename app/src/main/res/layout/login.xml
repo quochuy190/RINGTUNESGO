@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp150"
+        android:padding="@dimen/dp25"
+        android:src="@drawable/ringtunes_go_icon" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@color/background_item">
+
+        <ImageView
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp3"
+            android:padding="@dimen/dp5"
+            android:src="@drawable/phone_login" />
+
+        <EditText
+            android:id="@+id/edt_taikhoan_Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp30"
+            android:backgroundTint="@color/background_item"
+            android:ems="10"
+            android:hint="Số điện thoại:"
+            android:inputType="phone"
+            android:padding="@dimen/dp10" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/background_item">
+
+        <ImageView
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp3"
+            android:padding="@dimen/dp5"
+            android:src="@drawable/pass_login" />
+
+        <EditText
+            android:id="@+id/edt_matkhau_Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp30"
+            android:backgroundTint="@color/background_item"
+            android:hint="Mật khẩu:"
+            android:inputType="textPassword"
+            android:padding="@dimen/dp10" />
+
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/img_showpass"
+            android:padding="@dimen/dp5"
+            android:src="@drawable/eye"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp10">
+
+        <CheckBox
+            android:id="@+id/cb_remember_login"
+            android:background="@color/background_item"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_dangnhap_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_toRightOf="@id/cb_remember_login"
+            android:padding="@dimen/dp10"
+            android:text="Ghi nhớ mật khẩu"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_17sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/remember_password"
+            android:theme="@style/checkBoxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="@dimen/text_17sp"
+            android:layout_marginLeft="@dimen/dp5"
+            android:text="Nhớ mật khẩu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="@dimen/dp10"
+        android:textSize="@dimen/text_17sp"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:text="Trong trường hợp quên mật khẩu. Quý khách vui lòng gửi tin nhắn theo cú pháp: MK gửi đến 333 (Miễn phí)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:textSize="@dimen/text_20sp"
+        android:textColor="@color/white"
+        android:id="@+id/btn_dangnhap_Login"
+        android:layout_width="@dimen/dp200_singer"
+        android:layout_height="@dimen/dp40"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp40"
+        android:background="@drawable/button_continue"
+        android:text="Đăng nhập" />
+
+
+
+
+
+
+
+
+</LinearLayout>

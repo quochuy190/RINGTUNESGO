@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pull_to_refresh_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.NestedScrollView
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/progressBar_install"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true" />
+
+
+            </LinearLayout>
+            <com.daimajia.slider.library.SliderLayout
+                android:visibility="gone"
+                android:id="@+id/slider1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp150"
+                android:focusable="true"
+                custom:auto_cycle="true"
+                custom:indicator_visibility="visible"
+                custom:pager_animation="Accordion"
+                custom:pager_animation_span="1100"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <com.daimajia.slider.library.Indicators.PagerIndicator
+                android:id="@+id/custom_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                custom:selected_color="#0095BF"
+                custom:selected_height="6dp"
+                custom:selected_padding_left="5dp"
+                custom:selected_padding_right="5dp"
+                custom:selected_width="6dp"
+                custom:shape="oval"
+                custom:unselected_color="#55333333"
+                custom:unselected_height="6dp"
+                custom:unselected_padding_left="5dp"
+                custom:unselected_padding_right="5dp"
+                custom:unselected_width="6dp" />
+
+            <com.daimajia.slider.library.Indicators.PagerIndicator
+                android:id="@+id/custom_indicator2"
+                style="@style/AndroidImageSlider_Corner_Oval_Orange"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp" />
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginBottom="1dp">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp_showroom_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+                </android.support.v4.view.ViewPager>
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tbl_showroom_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:scrollbarSize="2dp"
+                    app:tabBackground="@drawable/spr_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorColor="@android:color/holo_red_dark"
+                    app:tabIndicatorHeight="0dp">
+                </android.support.design.widget.TabLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/slidertest"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginBottom="1dp"
+                android:visibility="visible">
+
+                <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tbl_showroom_detail_test"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:scrollbarSize="2dp"
+                    app:tabBackground="@drawable/spr_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorColor="@android:color/holo_red_dark"
+                    app:tabIndicatorHeight="0dp">
+
+                </android.support.design.widget.TabLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/content_home_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/slidertest"
+                android:background="@color/white"
+                android:orientation="vertical"
+                tools:context="com.neo.ringtunesgo.Fragment.Home.View.FragmentHome">
+                <!--ringtunes new-->
+                <include layout="@layout/header_ringtunes_moi" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:id="@+id/list_ringtunes_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:focusable="false">
+                </android.support.v7.widget.RecyclerView>
+                <!--chủ đề hot-->
+
+                <include layout="@layout/header_album_search" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:id="@+id/list_topic_hot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:focusable="false">
+                </android.support.v7.widget.RecyclerView>
+
+                <!--album hot-->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/header_album_hot" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:id="@+id/list_album_hot"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false">
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+
+                <!--ringtunes hot-->
+                <include layout="@layout/header_ringtunes_hot" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:id="@+id/list_ringtunes_hot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:focusable="false">
+                </android.support.v7.widget.RecyclerView>
+                <!--ca si-->
+                <include layout="@layout/header_type" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:id="@+id/list_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:focusable="false">
+                </android.support.v7.widget.RecyclerView>
+                <!--type-->
+                <include layout="@layout/header_singer" />
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:id="@+id/list_singer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:focusable="false">
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>
+

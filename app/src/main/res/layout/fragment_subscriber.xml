@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/app_bar_main2"/>
+        <ImageView
+            android:id="@+id/img_back_dangky"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp14"
+            android:src="@drawable/back_white"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_width="@dimen/dp45"
+            android:layout_height="@dimen/dp45" />
+        <TextView
+            android:layout_marginLeft="@dimen/dp50"
+            android:layout_centerVertical="true"
+            android:id="@+id/txt_title_dangky"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text="ABC"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_18sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+    <ImageView
+        android:src="@drawable/ringtunes_go_icon"
+        android:textColor="@color/ringtunes"
+        android:textSize="@dimen/text_34sp"
+        android:text="RingtunesGo"
+        android:gravity="center"
+        android:padding="@dimen/dp10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp100" />
+
+    <TextView
+        android:textColor="@color/black"
+        android:id="@+id/txt_notifycation_addsubcriber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_marginRight="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp20"
+        android:gravity="center"
+        android:text="@string/add_subcriber"
+        android:textSize="@dimen/text_17sp" />
+
+    <LinearLayout
+
+        android:layout_marginTop="@dimen/dp30"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:visibility="gone"
+            android:layout_marginRight="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"
+            android:textColor="@color/white"
+            android:id="@+id/btn_tamdung"
+            android:layout_width="@dimen/dp120"
+            android:layout_height="@dimen/dp40"
+            android:layout_gravity="center"
+            android:background="@drawable/button_continue"
+            android:text="Tạm dừng" />
+        <Button
+            android:layout_marginRight="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"
+            android:textColor="@color/white"
+            android:id="@+id/btn_next_dangky"
+            android:layout_width="@dimen/dp120"
+            android:layout_height="@dimen/dp40"
+            android:layout_gravity="center"
+            android:background="@drawable/button_continue"
+            android:text="Đăng ký" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

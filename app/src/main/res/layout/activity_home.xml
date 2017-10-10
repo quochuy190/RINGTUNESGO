@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.neo.ringtunesgo.untils.CustomViewPager
+
+        android:id="@+id/vp_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginBottom="?attr/actionBarSize">
+
+
+    </com.neo.ringtunesgo.untils.CustomViewPager>
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/tab_homefragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppBarOverlay"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <com.neo.ringtunesgo.untils.CustomTabLayout
+            android:id="@+id/tablayout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp55"
+            android:background="@color/white"
+            app:popupTheme="@style/PopupOverlay"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/purple"
+            app:tabTextAppearance="@style/text_tab_layout"
+            app:tabTextColor="@color/text_home" />
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp2"
+        android:layout_above="@+id/tab_homefragment"
+        android:background="@drawable/below_shadow"></View>
+
+
+</RelativeLayout>

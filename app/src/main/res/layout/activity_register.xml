@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp150"
+            android:padding="@dimen/dp25"
+            android:src="@drawable/ringtunes_go_icon" />
+        <TextView
+            android:id="@+id/txt_nhapOTp"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:textSize="@dimen/text_17sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/welcome_detail"
+
+            />
+
+        <EditText
+            android:padding="@dimen/dp5"
+            android:background="@drawable/spr_backgroup_edittext"
+            android:id="@+id/editTextNumber_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp25"
+            android:layout_marginRight="@dimen/dp25"
+            android:layout_marginTop="@dimen/dp20"
+            android:ems="10"
+            android:hint="@string/input_phone"
+            android:inputType="phone" />
+
+        <Button
+            android:textColor="@color/white"
+           android:layout_marginTop="@dimen/dp20"
+            android:id="@+id/btn_next_register"
+            android:layout_width="@dimen/dp150"
+            android:layout_height="@dimen/dp40"
+            android:layout_gravity="center"
+            android:background="@drawable/button_continue"
+            android:text="Nhận mã OTP" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+

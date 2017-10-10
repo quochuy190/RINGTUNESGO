@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.neo.ringtunesgo">
+
+    <!-- permission read contacts -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ringtunes_final"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <provider
+            android:name="net.grandcentrix.tray.provider.TrayContentProvider"
+            android:authorities="your.custom.authority"
+            android:exported="false"
+            tools:replace="android:authorities" />
+
+        <!-- <activity
+             android:name=".MainActivity.MainActivity"
+             android:screenOrientation="portrait">
+
+         </activity>-->
+
+        <activity
+            android:name=".View.Login.ActivityLogin"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".View.Register.ActivityRegisterOTP"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".View.Splash_Screen.SplashScreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Test" />
+        <activity
+            android:name=".View.Xacthuc_thuebao.ActivityXacthuc"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:taskAffinity=""
+            android:name=".MainNavigationActivity"
+            android:label="@string/title_activity_main_navigation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
+        <service android:name=".Service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Service.MyFirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".Player.PlaybackService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.bebeboo.funringvn.ACTION.PLAY_TOGGLE" />
+                <action android:name="com.bebeboo.funringvn.ACTION.PLAY_NEXT" />
+                <action android:name="com.bebeboo.funringvn.ACTION.PLAY_LAST" />
+                <action android:name="com.bebeboo.funringvn.ACTION.STOP_SERVICE" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

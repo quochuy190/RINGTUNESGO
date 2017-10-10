@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/spr_item_groupt"
+    android:layout_margin="@dimen/dp1"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/img_dot_profile"
+        android:padding="@dimen/dp5"
+        android:layout_marginRight="@dimen/dp2"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/three_dots"
+        android:layout_width="@dimen/dp30"
+        android:layout_height="@dimen/dp30" />
+    <RelativeLayout
+        android:id="@+id/relative_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/name_profiles"
+            android:textColor="@color/text_name_song"
+            android:textStyle="bold"
+            android:text="Ten số điện thoại"
+            android:padding="@dimen/dp5"
+            android:textSize="@dimen/text_18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linner_setup"
+        android:layout_below="@id/relative_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp25"
+            android:layout_height="@dimen/dp25"
+            android:padding="@dimen/dp5"
+            android:src="@drawable/setup_blue" />
+
+        <TextView
+            android:id="@+id/profile_setup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ngẫu nhiên"
+            android:textSize="@dimen/text_15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linner_songs"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_below="@id/linner_setup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="@dimen/dp5"
+            android:src="@drawable/topic_blue"
+            android:layout_width="@dimen/dp25"
+            android:layout_height="@dimen/dp25" />
+        <TextView
+            android:textSize="@dimen/text_15sp"
+            android:text="ngẫu nhiên"
+            android:id="@+id/profile_number_songs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_below="@id/linner_songs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="@dimen/dp5"
+            android:src="@drawable/history_blue"
+            android:layout_width="@dimen/dp25"
+            android:layout_height="@dimen/dp25" />
+        <TextView
+            android:textSize="@dimen/text_15sp"
+            android:text="ngẫu nhiên"
+            android:id="@+id/profile_random"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linner_edit"
+        android:visibility="gone"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_alignParentRight="true"
+       android:layout_marginTop="@dimen/dp20"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.CardView
+            app:cardCornerRadius="@dimen/dp2"
+            android:layout_margin="@dimen/dp2"
+            android:elevation="@dimen/dp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp15"
+                    android:id="@+id/txt_edit_profile"
+                    android:padding="@dimen/dp5"
+                    android:text="Sửa cài đặt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp15"
+                    android:id="@+id/txt_delete_profile"
+                    android:padding="@dimen/dp5"
+                    android:text="Xoá cài đặt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</RelativeLayout>

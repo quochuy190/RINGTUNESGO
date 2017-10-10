@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="black">#060606</color>
+    <color name="red">#ff0000</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_backgroup">#dbf9f8f8</color>
+    <color name="text_color1">#00030a</color>
+    <color name="mp.list.background">#1ADDF9FF</color>
+    <color name="mp.list.background.selected">#6CDDF9FF</color>
+    <color name="title_singer_search">#666666</color>
+    <color name="song_search_album">#101933</color>
+    <color name="funringvn">#E0171F</color>
+    <color name="bg_app">#fff</color>
+    <color name="color_bg_playing_small">#101933</color>
+    <color name="line_app">#efeeee</color>
+    <color name="bg_progress">#c6c6c6</color>
+    <color name="info_singer">#f5f5f5</color>
+    <color name="text_color2">#225A9D</color>
+    <color name="orange">#fcb11a</color>
+    <color name="one">#FC261A</color>
+    <color name="two">#FCC92D</color>
+    <color name="three">#7DD220</color>
+    <color name="four">#1D5EB1</color>
+    <color name="five">#13a4d1</color>
+
+    <color name="main_color">#1D5EB1</color>
+    <color name="text_alpha">#666666</color>
+    <color name="yellow">#CD950C</color>
+    <color name="background">#a6aec8e6</color>
+
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
+    <color name="text_name_song">#3e3450</color>
+    <color name="title_left_manu">#7d7a81</color>
+    <!--//home_fragment-->
+    <color name="background_title">#9d1f2225</color>
+    <color name="background_home">#c6c6c8</color>
+    <color name="text_home">#434343</color>
+    <color name="background_item">#f4f4f4</color>
+    <color name="dialog">#00f4f4f4</color>
+    <color name="purple">#6f2b8e</color>
+    <color name="purple_down">#d69661ae</color>
+    <color name="ringtunes">#0280a9</color>
+    <color name="header_contact">#b90280a9</color>
+    <color name="backgroup_buysongs">#3e4148</color>
+    <color name="title_fragment_all">#dbe2e6</color>
+    <color name="player">#c64a4a4a</color>
+    <color name="text_botton">#017faa</color>
+    <!--đổ bóng-->
+    <color name="start">#0bdedbdb</color>
+    <color name="end">#fb4a4a4a</color>
+    <color name="backgroud_search">#b5716363</color>
+    <color name="backgroud_full">#e4595656</color>
+
+
+
+
+
+</resources>

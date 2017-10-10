@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="@dimen/dp10"
+    android:layout_marginRight="@dimen/dp10"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp5"
+    android:background="@drawable/spr_item_groupt"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/id_relative_itemhome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dp5">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp180"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spr_radius_img">
+
+            <ImageView
+                android:id="@+id/item_home_photo_type"
+                android:layout_width="@dimen/dp180"
+                android:layout_height="@dimen/dp90"
+                android:scaleType="centerCrop"
+             />
+
+            <TextView
+                android:id="@+id/item_home_name_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/item_home_photo_type"
+                android:background="@color/background_title"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/dp5"
+                android:singleLine="true"
+                android:text="Hương Tràm - tuyển tập"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14sp" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

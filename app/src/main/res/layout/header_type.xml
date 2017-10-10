@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="@dimen/dp10"
+    android:layout_marginRight="@dimen/dp10"
+    android:layout_height="@dimen/dp50"
+    android:background="@color/white">
+    <View
+        android:background="@color/background_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1">
+    </View>
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/title_Album"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="THỂ LOẠI"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_18sp" />
+
+
+    <ImageView
+        android:padding="@dimen/dp3"
+        android:id="@+id/img_next_type"
+        android:layout_width="@dimen/dp35"
+        android:layout_height="@dimen/dp25"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/icon_ba_cham" />
+</RelativeLayout>

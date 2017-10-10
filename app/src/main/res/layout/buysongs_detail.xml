@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible">
+
+        <include layout="@layout/bottomplayer"></include>
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nesScoll_DetailSong"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp50">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+
+                android:id="@+id/tab_bar_detailsong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <include layout="@layout/app_bar_main2" />
+
+                <ImageView
+                    android:id="@+id/img_back_detailsong"
+                    android:layout_width="@dimen/dp30"
+                    android:layout_height="@dimen/dp30"
+                    android:padding="@dimen/dp5"
+                    android:src="@drawable/back_white"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:id="@+id/txt_title_detailsong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp35"
+                    android:padding="@dimen/dp5"
+                    android:text="ABC"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_18sp"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp300"
+                android:layout_below="@+id/tab_bar_detailsong">
+
+                <ImageView
+                    android:id="@+id/img_buysong_detail_nen"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp284"
+                    android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                   />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp284"
+                    android:background="@color/backgroud_search">
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/carview_img_buysong"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp25"
+                        app:cardCornerRadius="@dimen/dp5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/img_buysong_detail"
+                            android:layout_width="@dimen/dp160"
+                            android:layout_height="@dimen/dp160"
+                            android:scaleType="centerCrop" />
+                    </android.support.v7.widget.CardView>
+
+
+
+                    <TextView
+                        android:id="@+id/txt_name_buysongs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/carview_img_buysong"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:singleLine="true"
+                        android:text="@string/name_buy_songs"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_singer_buysongs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_name_buysongs"
+                        android:layout_centerHorizontal="true"
+                        android:text="Sơn Tùng - MTP"
+                        android:textColor="@color/white_backgroup"
+                        android:textSize="@dimen/text_14sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/linnear_hsd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_singer_buysongs"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true">
+
+                            <TextView
+                                android:textStyle="italic"
+                                android:id="@+id/txt_price_buysongs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp5"
+                                android:text="( 3000 d"
+                                android:textColor="@color/white_backgroup"
+                                android:textSize="@dimen/text_13sp" />
+
+                            <TextView
+                                android:textStyle="italic"
+                                android:id="@+id/txt_time_buysongs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp5"
+                                android:text="30 ngày )"
+                                android:textColor="@color/white_backgroup"
+                                android:textSize="@dimen/text_13sp" />
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:layout_marginRight="@dimen/dp5"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/txt_hits_buysongs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2354"
+                                android:textColor="@color/white_backgroup"
+                                android:textSize="@dimen/text_13sp" />
+                            <ImageView
+                                android:src="@drawable/icon_white_download"
+                                android:layout_width="@dimen/dp15"
+                                android:layout_height="@dimen/dp15" />
+                        </LinearLayout>
+
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn_buy_gift_buysongs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp32"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/button_continue"
+                    android:gravity="center_horizontal|center_vertical">
+
+                    <Button
+                        android:textSize="@dimen/text_18sp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/button_continue"
+                        android:id="@+id/img_buy_buysong"
+                        android:layout_width="@dimen/dp90"
+                        android:layout_height="@dimen/dp32"
+                        android:text="mua"
+                        />
+                    <TextView
+                        android:textSize="@dimen/text_18sp"
+                        android:text="|"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:textSize="@dimen/text_18sp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/button_continue"
+                        android:layout_width="@dimen/dp90"
+                        android:layout_height="@dimen/dp32"
+                        android:text="Tặng"
+                        android:id="@+id/img_gift_buysong"
+                       />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relative_img"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_total_comment_songs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp5"
+                    android:text="@string/Fragment_BuySong_Next"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_18sp" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_input_commnet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:background="@color/background_item"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/input_content_buysongs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp30"
+                        android:background="@drawable/spr_backgroup_edittext"
+                        android:gravity="center_vertical"
+                        android:imeOptions="actionSend"
+                        android:inputType="textImeMultiLine"
+                        android:padding="@dimen/dp5"
+                        android:textSize="@dimen/text_15sp" />
+
+                    <ImageView
+                        android:id="@+id/img_buysong_send_comment"
+                        android:layout_width="@dimen/dp30"
+                        android:layout_height="@dimen/dp30"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/dp1"
+                        android:src="@drawable/send_comment" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</RelativeLayout>

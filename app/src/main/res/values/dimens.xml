@@ -1,0 +1,175 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="dp270_navigation">270dp</dimen>
+    <dimen name="dp280">280dp</dimen>
+    <dimen name="dp16">16dp</dimen>
+    <dimen name="dp56">56dp</dimen>
+    <dimen name="header_height">200dp</dimen>
+    <dimen name="float_title_left_margin">44dp</dimen>
+    <dimen name="float_title_size">20dp</dimen>
+    <dimen name="float_title_size_large">36sp</dimen>
+    <dimen name="dp25_margin_statusbar">25dp</dimen>
+    <dimen name="dp20">20dp</dimen>
+    <dimen name="dp18">18dp</dimen>
+    <dimen name="text_20sp">20sp</dimen>
+    <dimen name="text_25sp">25sp</dimen>
+    <dimen name="dp27">27dp</dimen>
+    <dimen name="dp15">15dp</dimen>
+    <dimen name="dp14">14dp</dimen>
+    <dimen name="dp175">175dp</dimen>
+    <dimen name="text_13sp">13sp</dimen>
+    <dimen name="text_12sp">12sp</dimen>
+    <dimen name="text_15sp">15sp</dimen>
+    <dimen name="text_16sp">16sp</dimen>
+    <dimen name="dp3">3dp</dimen>
+    <dimen name="dp5">5dp</dimen>
+    <dimen name="dp284">284dp</dimen>
+    <dimen name="dp32">32dp</dimen>
+    <dimen name="dp35">35dp</dimen>
+    <dimen name="text_34sp">34sp</dimen>
+    <dimen name="header_height1">300dp</dimen>
+    <dimen name="dp44">44dp</dimen>
+    <dimen name="dp36">36dp</dimen>
+    <dimen name="header_height2">275dp</dimen>
+    <dimen name="dp75">75dp</dimen>
+    <dimen name="dp1">1dp</dimen>
+    <dimen name="dp2">2dp</dimen>
+    <dimen name="dp90">90dp</dimen>
+    <dimen name="dp60">60dp</dimen>
+    <dimen name="dp43">43dp</dimen>
+    <dimen name="dp250">250dp</dimen>
+    <dimen name="dp75_register1">75dp</dimen>
+    <dimen name="dp10">10dp</dimen>
+    <dimen name="dp50">50dp</dimen>
+    <dimen name="dp25">25dp</dimen>
+    <dimen name="dp100">100dp</dimen>
+    <dimen name="dp110">110dp</dimen>
+    <dimen name="dp120">120dp</dimen>
+    <dimen name="dp130">130dp</dimen>
+    <dimen name="dp300">300dp</dimen>
+    <dimen name="dp350">350dp</dimen>
+    <dimen name="text_17sp">17sp</dimen>
+    <dimen name="dp125">125dp</dimen>
+    <dimen name="dp155">155dp</dimen>
+    <dimen name="dp95">95dp</dimen>
+    <dimen name="dp35_dialog">35dp</dimen>
+    <dimen name="dp30_personal_sell">30dp</dimen>
+    <dimen name="dp25_margin_sell">25dp</dimen>
+    <dimen name="dp200_purchased">200dp</dimen>
+    <dimen name="dp35_img_song_bottom">35dp</dimen>
+    <dimen name="text_11sp">11sp</dimen>
+    <dimen name="dp20_margin_top_playing">20dp</dimen>
+    <dimen name="dp225_picture">225dp</dimen>
+    <dimen name="dp35_playing">35dp</dimen>
+    <dimen name="text_18sp">18sp</dimen>
+    <dimen name="dp8_playing">8dp</dimen>
+    <dimen name="dp77_playing">77dp</dimen>
+    <dimen name="dp26_playing">26dp</dimen>
+    <dimen name="dp100_playing">100dp</dimen>
+    <dimen name="dp45_playing">45dp</dimen>
+    <dimen name="dp60_playing">60dp</dimen>
+    <dimen name="dp25_playing">25dp</dimen>
+    <dimen name="dp68_playing">68dp</dimen>
+    <dimen name="total_h_bottom">116dp</dimen>
+    <dimen name="dp45_personal_sell">45dp</dimen>
+    <dimen name="dp15_margin_sell">15dp</dimen>
+    <dimen name="dp52_img_dialog_purchase">52dp</dimen>
+    <dimen name="dp30">30dp</dimen>
+    <dimen name="dp40_text_purchase">40dp</dimen>
+
+
+    <!--BOTTOM TAB-->
+
+    <dimen name="fixed_min_width">120dp</dimen>
+    <dimen name="fixed_min_width_small_views">104dp</dimen>
+    <dimen name="fixed_max_width">168dp</dimen>
+    <dimen name="fixed_width_padding">12dp</dimen>
+
+    <dimen name="fixed_height">56dp</dimen>
+    <dimen name="fixed_height_top_padding_inactive">2dp
+    </dimen><!-- 8(Top Padding) - 12/2(extra padding due to badges) = 2 -->
+    <dimen name="fixed_height_top_padding_active">0dp
+    </dimen><!-- 6(Top Padding) - 12/2(extra padding due to badges) = 0 -->
+    <dimen name="fixed_height_bottom_padding">5dp</dimen>
+
+    <dimen name="fixed_label_active">12sp</dimen>
+    <dimen name="fixed_label_inactive">11sp</dimen>
+    <item name="fixed_label_active_to_inactive_ratio" format="float" type="dimen">1</item>
+
+    <dimen name="fixed_icon_grid">24dp</dimen>
+    <dimen name="fixed_icon_badge_grid_height">36dp
+    </dimen><!-- this adds 6 dp extra to top and bottom icon -->
+    <dimen name="fixed_icon_badge_grid_width">48dp
+    </dimen><!-- this adds 6 dp extra to top and bottom icon -->
+
+
+    <dimen name="shifting_min_width_active">96dp</dimen>
+    <dimen name="shifting_max_width_active">168dp</dimen>
+    <dimen name="shifting_min_width_inactive">64dp</dimen>
+    <dimen name="shifting_max_width_inactive">96dp</dimen>
+    <dimen name="shifting_width_custom_padding">6dp</dimen>
+
+    <dimen name="shifting_height">56dp</dimen>
+    <dimen name="shifting_height_bottom_padding_inactive">16dp
+    </dimen><!-- not used because in inactive state text-view will be hidden and for icon top padding would be enough -->
+    <dimen name="shifting_height_bottom_padding_active">10dp</dimen>
+    <dimen name="shifting_height_top_padding_active">0dp
+    </dimen><!-- 6(Top padding) - 12/2(extra padding due to badges) = 0 -->
+    <dimen name="shifting_height_top_padding_inactive">10dp
+    </dimen><!-- 56(total) - 24(icon) - 16(bottom padding inactive) = 16 ||| 16 - 12/2(extra padding due to badges)  = 10-->
+
+    <dimen name="shifting_label">14sp</dimen>
+
+
+    <dimen name="shifting_icon_grid">24dp</dimen>
+    <dimen name="shifting_icon_badge_grid_height">36dp</dimen>
+    <dimen name="shifting_icon_badge_grid_width">48dp</dimen>
+
+    <dimen name="bottom_navigation_elevation">8dp</dimen>
+    <dimen name="bottom_navigation_height">56dp</dimen>
+    <dimen name="bottom_navigation_padded_height">64dp</dimen>
+    <dimen name="bottom_navigation_top_margin_correction">-8dp</dimen><!-- 64 - 56 = 8 -->
+
+    <dimen name="badge_text_size">12sp</dimen><!-- 10 -->
+    <dimen name="badge_corner_radius">13dp</dimen><!-- 15 -->
+    <dimen name="badge_width_padding">4dp</dimen><!-- 4 -->
+    <dimen name="badge_height_padding">1dp</dimen><!-- 1 -->
+    <dimen name="badge_top_margin">2dp</dimen>
+    <dimen name="dp40">40dp</dimen>
+    <dimen name="dp55">55dp</dimen>
+    <dimen name="dp126">126dp</dimen>
+    <dimen name="dp20_margin_sell">20dp</dimen>
+    <dimen name="dp48">48dp</dimen>
+    <dimen name="dp160">160dp</dimen>
+    <dimen name="dp150">150dp</dimen>
+    <dimen name="dp180">180dp</dimen>
+    <dimen name="dp200_singer">200dp</dimen>
+    <dimen name="dp220">220dp</dimen>
+    <dimen name="dp65">65dp</dimen>
+    <dimen name="dp250_singer">250dp</dimen>
+    <dimen name="text_14sp">14sp</dimen>
+    <dimen name="dp45">45dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen><!-- 2 -->
+    <!--ENG BOTTOM TAB-->
+
+    <!--detail_ringtunes-->
+    <dimen name="item_offset">10dp</dimen>
+    <dimen name="detail_backdrop_height">200dp</dimen>
+    <dimen name="backdrop_title">30dp</dimen>
+    <dimen name="backdrop_subtitle">18dp</dimen>
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_album_radius">0dp</dimen>
+    <dimen name="album_cover_height">160dp</dimen>
+    <dimen name="album_title_padding">10dp</dimen>
+    <dimen name="album_title">15dp</dimen>
+    <dimen name="songs_count_padding_bottom">5dp</dimen>
+    <dimen name="songs_count">12dp</dimen>
+    <dimen name="ic_album_overflow_width">20dp</dimen>
+    <dimen name="ic_album_overflow_height">30dp</dimen>
+    <dimen name="ic_album_overflow_margin_top">10dp</dimen>
+
+</resources>

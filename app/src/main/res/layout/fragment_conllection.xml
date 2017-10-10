@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relative_conllection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tab_bar_conllection">
+
+            <TextView
+                android:id="@+id/txt_title_conllection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/title_fragment_all"
+                android:padding="@dimen/dp8_playing"
+                android:text="Bộ sưu tập của bạn"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/text_15sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_songs_conllection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_title_conllection"
+                android:layout_marginTop="@dimen/dp2">
+
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/txt_title_song_same"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_songs_conllection"
+                android:background="@color/title_fragment_all"
+                android:padding="@dimen/dp8_playing"
+                android:text="Bài hát tương tự"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/text_15sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_songs_conllection_same"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_title_song_same"
+                android:layout_marginTop="@dimen/dp2"></android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/tab_bar_conllection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <include layout="@layout/app_bar_main2" />
+
+            <ImageView
+                android:id="@+id/img_back_conllection"
+                android:padding="@dimen/dp14"
+                android:src="@drawable/back_white"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="@dimen/dp45"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/txt_title_tabar_conllection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp50"
+                android:padding="@dimen/dp5"
+                android:text="ABC"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_18sp"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_notification_conllection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tab_bar_conllection"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/dp10"
+            android:text="Thuê bao chưa đăng ký dịch vụ Ringtunes.
+            Hãy đăng ký để có thể tiếp tục sử dụng"
+            android:textColor="@color/text_name_song"
+            android:textSize="@dimen/text_18sp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">RINGTUNESGO</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="update_success">cập nhật thành công!</string>
+    <string name="alert_ok">OK</string>
+    <string name="alert_yes">Có</string>
+    <string name="alert_no">Không</string>
+    <string name="alert_message_loading">Loading. Please wait...</string>
+    <string name="alert_cancel">Cancel</string>
+    <string name="alert_message_load_contact">Đang đồng bộ danh bạ..</string>
+    <string name="alert_blank_body">Không được bỏ trống</string>
+    <string name="alert_blank_title">Lỗi</string>
+    <string name="alert_success">Thành công</string>
+    <string name="alert_blank_addr">Không lấy được địa chỉ server</string>
+    <string name="blank_info">Không có thông tin</string>
+    <string name="alert_error_phone_number">Số điện thoại không hợp lệ</string>
+    <string name="alert_error_get_data">Có lỗi trong quá trình lấy dữ liệu</string>
+    <string name="alert_confirm_title">Confirm Phone Number</string>
+    <string name="alert_title_network_error">Lỗi mạng</string>
+    <string name="alert_message_check_network">Vui lòng kiểm tra lại kết nối 3g hoặc wifi!</string>
+    <!--    //name fragment-->
+    <string name="Fragment_Home">Trang chủ</string>
+    <string name="Fragment_Album">Album</string>
+    <string name="Fragment_Topic">Chủ đề</string>
+    <string name="Fragment_Type">Thể loại</string>
+    <string name="Fragment_Singer">Ca sĩ</string>
+    <string name="Fragment_Personal">Cá nhân</string>
+    <!--singer_detail-->
+    <string name="Fragment_Singer_Detail">Thông tin ca sĩ</string>
+    <string name="Fragment_Singer_songs">Danh sách bài hát</string>
+    <!--buy songs-->
+    <string name="Fragment_Songs_Detail">Thông tin bài hát</string>
+    <string name="Fragment_BuySong_Next">CÓ THỂ BẠN QUAN TÂM</string>
+    <!--    header-->
+    <string name="header_topic_hot">CHỦ ĐỀ HOT</string>
+    <string name="header_album_hot">ALBUM HOT</string>
+    <string name="header_ringtunes_hot">RINGTUNES HOT</string>
+    <string name="header_ringtunes_new">RINGTUNES MỚI</string>
+    <string name="view_all">Xem thêm</string>
+
+    <!-- ringtunes detail-->
+    <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_play_next">Play Next</string>
+    <string name="backdrop_title">LOVE MUSICS</string>
+    <string name="backdrop_subtitle">This season top 20 music</string>
+    <!--buy ringtunes-->
+    <string name="title_comment">Bình luận (0)</string>
+    <string name="title_thongtin">Thông tin</string>
+    <string name="name_buy_songs">Chắc ai đó sẽ về</string>
+    <string name="singer_buy_songs">Ca sĩ: </string>
+    <string name="singer_name">Singer Name </string>
+    <string name="hits_buy_songs">Lượt tải: </string>
+    <string name="price_buy_songs">Giá bài hát: </string>
+    <string name="time_buy_songs">Thời hạn sự dụng: </string>
+    <string name="phone_gif_songs">- Nhập số điện thoại bạn muốn tặng: </string>
+    <string name="button_buy">Mua</string>
+    <!--cài đặt-->
+    <string name="bo_suu_tap">BỘ SƯU TẬP CÁ NHÂN</string>
+    <string name="quan_ly_nhom">QUẢN LÝ NHÓM</string>
+    <string name="cai_dat_ringtunes">CÀI ĐẶT RINGTUNES</string>
+    <string name="history">LỊCH SỬ GIAO DỊCH</string>
+    <string name="stop_pause">TẠM DỪNG VÀ HUỶ</string>
+    <string name="edit_profiles">Sửa cài đặt</string>
+    <string name="delete_profiles">Xoá cài đặt</string>
+    <string name="Cancel">Thoát</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="infomation">THÔNG TIN THUÊ BAO</string>
+    <!--login-->
+    <string name="welcome">Chào mừng đến với RingtunesGo</string>
+    <string name="welcome_detail">Bạn hãy nhập vào số điện thoại khi đăng nhập lần đầu</string>
+    <string name="input_phone">- Nhập vào số điện thoại</string>
+    <string name="ringtunes_go_logo">RINGTUNESGO</string>
+    <string name="ringtunes_slogan">Yêu phút đợi chờ</string>
+    <string name="waiting_code">Đợi vài phút hệ thống gửi tin nhắn mã code về máy của bạn</string>
+    <string name="add_subcriber">Mời bạn đăng ký sử dụng dịch vụ Ringtunes để có thể sử dụng những bản nhạc
+        chờ tuyệt vời của chúng tôi. Phí dịch vụ là 9000 đ trên một tháng</string>
+    <string name="stop_subcriber">Bạn có chắc chắn muốn hủy dịch vụ không?
+Bộ sưu tập cá nhân và các chế độ cài đặt của quý khách sẽ bị xóa khỏi hệ thống.
+Quý khách có muốn tiếp tục hay không?</string>
+    <string name="resume_subcriber">Bạn đang tạm ngưng sự dụng dịch vu, Mời bạn chọn tiếp tục dể có
+        thể sử dụng lại dịch vụ nhạc chờ RingtunGo</string>
+
+    <string-array name="sex">invit
+        <item>Male</item>
+        <item>Female</item>
+        <item>LGBT</item>
+    </string-array>
+    <string name="title_activity_main_navigation">RingtunesGo</string>
+
+    <!-- for FCM -->
+    <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
+        send downstream messages to this app.</string>
+    <string name="registering_message">Generating InstanceID token...</string>
+    <string name="token_error_message">An error occurred while either fetching the InstanceID token,
+        sending the fetched token to the server or subscribing to the PubSub topic. Please try
+        running the sample again.</string>
+</resources>
+

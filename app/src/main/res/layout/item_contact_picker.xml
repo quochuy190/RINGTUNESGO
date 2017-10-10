@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative_contacts"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip">
+
+
+    <!--  ListRow Left sied Thumbnail image -->
+    <FrameLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:padding="3dip">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/item_contact_avata"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/ringtunes_final" />
+    </FrameLayout>
+
+    <!-- Title Of Song-->
+    <TextView
+        android:id="@+id/item_contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:paddingTop="8dp"
+        android:text="Rihanna Love the way lie"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_17sp"
+        android:typeface="sans" />
+
+    <!-- Artist Name -->
+    <TextView
+
+        android:id="@+id/item_contact_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_contact_name"
+        android:layout_marginTop="@dimen/dp3"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:paddingBottom="2dp"
+        android:text="Just gona stand there and ..."
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_13sp" />
+
+
+    <!-- Rightend Arrow -->
+    <CheckBox
+        android:id="@+id/cb_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="false"
+        android:focusable="true"
+        android:focusableInTouchMode="false" />
+</RelativeLayout>

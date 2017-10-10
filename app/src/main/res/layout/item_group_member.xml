@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative_contacts"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp2"
+    android:layout_marginTop="@dimen/dp2"
+    android:background="@drawable/spr_item_groupt"
+    android:orientation="horizontal">
+
+
+    <!--  ListRow Left sied Thumbnail image -->
+    <FrameLayout
+        android:layout_marginLeft="@dimen/dp3"
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/dp5">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/item_g_member_avata"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"
+            android:layout_marginRight="@dimen/dp5"
+            android:src="@drawable/icon_group_member" />
+
+    </FrameLayout>
+    <LinearLayout
+        android:layout_marginLeft="@dimen/dp1"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- Title Of Song-->
+        <TextView
+            android:id="@+id/item_g_member_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/text_name_song"
+            android:textSize="@dimen/text_16sp" />
+
+        <TextView
+            android:id="@+id/item_g_member_phone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dip"
+            android:paddingBottom="@dimen/dp5"
+            android:text="0942148362"
+            android:textColor="@color/text_name_song"
+            android:textSize="@dimen/text_15sp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

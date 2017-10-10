@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/personal_blue"
+            android:title="Bộ sưu tááo cá nhân" />
+        <item
+
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/group_blue"
+            android:title="Quản lý nhóm" />
+        <item
+
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/history_blue"
+            android:title="Cài đặt Ringtunes" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/stop_blue"
+            android:title="Lịch sử giao dịch" />
+        <item
+            android:id="@+id/nav_dangky"
+            android:icon="@drawable/infomation"
+            android:title="Thông tin thuê bao" />
+    </group>
+
+    <item android:title="Thuê bao">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/infomation"
+                android:title="Đăng nhập" />
+        </menu>
+    </item>
+
+</menu>

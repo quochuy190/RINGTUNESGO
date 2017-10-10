@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/radius_dialog"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="@dimen/dp20"
+        android:id="@+id/txt_add_menu"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginRight="@dimen/dp40"
+        android:textColor="@color/purple"
+        android:text="Update Sự kiện"
+        android:textSize="@dimen/text_18sp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/purple" />
+
+    <TextView
+        android:textColor="@color/purple"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/txt_delete_menu"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginRight="@dimen/dp40"
+        android:text="Delete Sự kiện"
+        android:textSize="@dimen/text_18sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/purple" />
+
+    <TextView
+        android:layout_marginBottom="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp10"
+        android:textColor="@color/purple"
+        android:id="@+id/txt_back_menu"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginRight="@dimen/dp40"
+        android:text="Thoát"
+        android:textSize="@dimen/text_18sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
