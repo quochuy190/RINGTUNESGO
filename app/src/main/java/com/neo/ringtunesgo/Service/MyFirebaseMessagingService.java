@@ -46,6 +46,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String idsinger = mMap.get("idsinger");
         Intent intent = new Intent(this, MainNavigationActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("subtype", mMap.get("subtype"));
+        intent.putExtra("image", mMap.get("image"));
         intent.putExtra("type", mMap.get("type"));
         intent.putExtra("id", mMap.get("id"));
         intent.putExtra("idsinger", mMap.get("idsinger"));

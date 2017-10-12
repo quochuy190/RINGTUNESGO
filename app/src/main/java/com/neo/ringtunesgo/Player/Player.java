@@ -5,8 +5,10 @@ import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.neo.ringtunesgo.ApiService.ApiService;
 import com.neo.ringtunesgo.Config.Constant;
 import com.neo.ringtunesgo.Fragment.BuySongs.View.FragmentDetailBuySongs;
+import com.neo.ringtunesgo.Listener.CallbackData;
 import com.neo.ringtunesgo.Model.PlayList;
 import com.neo.ringtunesgo.Model.Ringtunes;
 
@@ -72,6 +74,28 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
         }
         mPlayList = list;
     }
+    public void log_Info_Charge_Server(String P1, String P2, String P3, String P4, String P5, String P6,String P7, String P8) {
+        ApiService apiService = new ApiService();
+        String Service = "log_info_charge_service";
+        String Provider = "default";
+        String ParamSize = "8";
+        apiService.log_info_charge_service(new CallbackData<String>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<String> arrayList) {
+
+            }
+
+            @Override
+            public void onGetDataFault(Exception e) {
+
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(String Object) {
+
+            }
+        }, Service, Provider, ParamSize, P1, P2, P3, P4, P5, P6,P7,P8);
+    }
 
     @Override
     public boolean play() {
@@ -86,6 +110,8 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
             Ringtunes song = mPlayList.getCurrentSong();
             i(TAG, "playsong ------->>>>" + song.getProduct_name());
             Log.i(TAG, "playsong ------->>>>" + song.getPath());
+            log_Info_Charge_Server("app listen "+song.getId(), Constant.sSessionID, Constant.sMSISDN,
+                    "", "2", "0", "", Constant.USER_ID);
             try {
                 mPlayer.reset();
                 String url = "";
@@ -94,6 +120,7 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
                     url = song.getPathfulltrack();
                 } else {
                     url = Constant.MUSIC_URL + song.getPath().replace(" ", "%20");
+                    url = url.replaceAll("WMA", "mp3");
                 }
                 mPlayer.setDataSource(url);
                 mPlayer.setOnPreparedListener(this);

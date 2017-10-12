@@ -53,7 +53,9 @@
     <!--đổ bóng-->
     <color name="start">#0bdedbdb</color>
     <color name="end">#fb4a4a4a</color>
-    <color name="backgroud_search">#b5716363</color>
+    <color name="backgroud_search">#9d736767</color>
+    <color name="backgroud_event">#45201f1f</color>
+    <color name="backgroud_tabbar">#54b3acb4</color>
     <color name="backgroud_full">#e4595656</color>
 
 

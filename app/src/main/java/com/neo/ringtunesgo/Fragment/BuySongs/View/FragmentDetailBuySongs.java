@@ -176,6 +176,7 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     boolean notifi;
     boolean isFull = false;
     String id_Songs;
+    String sEntity;
 
     private void initPlayer() {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -318,6 +319,7 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     public void onResume() {
         super.onResume();
         intData();
+
         realm = RealmController.with(this).getRealm();
         iPlayer = Player.getInstance(getContext());
         iPlayer = new Player(this);
@@ -328,10 +330,10 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
                 txt_title_buysong.setText("" + ringtunes.getProduct_name());
             else
                 txt_title_buysong.setText("Chi tiết bài hát");
-
             if (ringtunes != null) {
                 String id_singer = ringtunes.getSinger_id();
-                presenterSongs.getBySinger(id_singer, "1", "" + page, "" + index);
+                showDialogLoading();
+                presenterSongs.api_suggestion_play(id_singer, ringtunes.getId(), userName);
             }
         }
         MainNavigationActivity.appbar.setVisibility(View.GONE);
@@ -381,7 +383,6 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     }
 
     private void intData() {
-
         pre = getActivity().getSharedPreferences("data", MODE_PRIVATE);
         isHome = pre.getBoolean("isHome", false);
         notifi = pre.getBoolean("notifi", false);
@@ -392,11 +393,13 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
         isLogin = pre.getBoolean("isLogin", false);
         sessionID = pre.getString("sessionID", "");
         pass = pre.getString("password", "");
+        sEntity = "app listen" + ringtunes.getId();
+        //presenterSongs.log_Info_Charge_Server(sEntity, sessionID, msisdn, );
         if (notifi) {
             id_Songs = pre.getString("id_songs", "");
             id_Singer = pre.getString("id_singer", "");
             presenterSongs.get_info_songs_by_id(id_Songs, userName);
-            presenterSongs.getBySinger(id_Singer, "1", "" + page, "" + index);
+            presenterSongs.api_suggestion_play(id_Singer, id_Songs, userName);
         }
     }
 
@@ -568,13 +571,18 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("XÁC NHẬN");
                 builder.setMessage("Bạn đã mua bài thành công, bạn có muốn vào bộ sưu tập");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        iPlayer.releasePlayer();
+                        mHandler.removeCallbacks(mProgressCallback);
+                        SharedPreferences.Editor editor = pre.edit();
+                        editor.putBoolean("isHome", false);
+                        editor.commit();
                         FragmentUtil.addFragment(getActivity(), FragmentConllection.getInstance(), true);
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Trở lại", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -586,7 +594,7 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
                 builder.show();
             } else Toast.makeText(getContext(), list.get(1), Toast.LENGTH_SHORT).show();
 
-        }
+        }else Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
     }
 
     @Override

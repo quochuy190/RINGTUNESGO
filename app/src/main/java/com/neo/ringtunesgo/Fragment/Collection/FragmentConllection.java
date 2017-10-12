@@ -1,6 +1,8 @@
 package com.neo.ringtunesgo.Fragment.Collection;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import com.neo.ringtunesgo.Adapter.AdapterCollection;
 import com.neo.ringtunesgo.Adapter.AdapterRingtunes;
 import com.neo.ringtunesgo.CRBTModel.Info_User;
 import com.neo.ringtunesgo.CRBTModel.Item;
+import com.neo.ringtunesgo.Config.Constant;
 import com.neo.ringtunesgo.Fragment.BuySongs.View.FragmentDetailBuySongs;
 import com.neo.ringtunesgo.Fragment.DetailSongs.View.FragmentSongs;
 import com.neo.ringtunesgo.MainNavigationActivity;
@@ -31,6 +35,7 @@ import com.neo.ringtunesgo.R;
 import com.neo.ringtunesgo.RealmController.RealmController;
 import com.neo.ringtunesgo.untils.BaseFragment;
 import com.neo.ringtunesgo.untils.FragmentUtil;
+import com.neo.ringtunesgo.untils.Utilities;
 import com.neo.ringtunesgo.untils.setOnItemClickListener;
 
 import java.util.ArrayList;
@@ -77,7 +82,9 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
     TextView txt_notification_conllection;
     String user_id;
     SharedPreferences pre;
+    boolean isHome;
     public List<Ringtunes> mlisSongs;
+
     public static FragmentConllection getInstance() {
         if (fragmentConllection == null) {
             synchronized (FragmentSongs.class) {
@@ -93,12 +100,12 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pre = getActivity().getSharedPreferences("data", MODE_PRIVATE);
+        isHome = pre.getBoolean("isHome", false);
         user_id = pre.getString("user_id", "");
         //id_Singer= pre.getString("isSinger", "");
         sesionID = pre.getString("sesionID", "");
         msisdn = pre.getString("msisdn", "");
         presenterConllection = new PresenterConllection(this);
-        presenterConllection.getConllection(sesionID, msisdn);
     }
 
     @Nullable
@@ -107,7 +114,8 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
         View view = inflater.inflate(R.layout.fragment_conllection, container, false);
         ButterKnife.bind(this, view);
         realm = RealmController.with(this).getRealm();
-        mlisSongs= new ArrayList<>();
+        mlisSongs = new ArrayList<>();
+
         init();
         initEvent();
         view.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +140,7 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
                     txt_notification_conllection.setVisibility(View.GONE);
                     sesionID = objLogin.getsSessinonID();
                     msisdn = objLogin.getMsisdn();
+                    presenterConllection.getConllection(sesionID, msisdn);
                 } else {
                     relative_conllection.setVisibility(View.GONE);
                     txt_notification_conllection.setVisibility(View.VISIBLE);
@@ -146,7 +155,8 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
     @Override
     public void onPause() {
         super.onPause();
-        MainNavigationActivity.appbar.setVisibility(View.VISIBLE);
+        if (isHome)
+            MainNavigationActivity.appbar.setVisibility(View.VISIBLE);
     }
 
 
@@ -162,19 +172,19 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
         adapterCollection.setSetOnItemClickListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
-                if (mlisSongs.size()>0){
-                  for (int i=0;i<mlisSongs.size();i++){
-                    if (mlisSongs.get(i).getId().equals(listConllection.get(position).getContent_id())){
-                        MyApplication.player_ring = Ringtunes.getInstance();
-                        SharedPreferences.Editor editor = pre.edit();
-                        MyApplication.player_ring = mlisSongs.get(i);
-                        editor.putBoolean("isHome", false);
-                        editor.putString("idSinger", mlisSongs.get(i).getSinger_id());
-                        editor.commit();
-                        if (!FragmentDetailBuySongs.getInstance().isAdded())
-                        FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+                if (mlisSongs.size() > 0) {
+                    for (int i = 0; i < mlisSongs.size(); i++) {
+                        if (mlisSongs.get(i).getId().equals(listConllection.get(position).getContent_id())) {
+                            MyApplication.player_ring = Ringtunes.getInstance();
+                            SharedPreferences.Editor editor = pre.edit();
+                            MyApplication.player_ring = mlisSongs.get(i);
+                            editor.putBoolean("isHome", false);
+                            editor.putString("idSinger", mlisSongs.get(i).getSinger_id());
+                            editor.commit();
+                            if (!FragmentDetailBuySongs.getInstance().isAdded())
+                                FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+                        }
                     }
-                  }
                 }
 
             }
@@ -226,7 +236,7 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
                 editor.putString("idSinger", lisRingtunes_same.get(position).getSinger_id());
                 editor.commit();
                 if (!FragmentDetailBuySongs.getInstance().isAdded())
-                FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+                    FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
             }
 
             @Override
@@ -256,8 +266,6 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
         if (lisRing.size() > 0) {
             lisRingtunes_same.addAll(lisRing);
             adapterRingtunes.notifyDataSetChanged();
-
-
         }
     }
 
@@ -275,7 +283,22 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
             }
             presenterConllection.get_info_songs_collection(id_songs, user_id);
 
+        } else {
+            adapterCollection.notifyDataSetChanged();
+            lisRingtunes_same.addAll(MyApplication.lisRingtunesNew);
+            adapterRingtunes.notifyDataSetChanged();
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("XÁC NHẬN");
+            builder.setMessage("Bạn chưa có bài nào trong bộ sưu tập");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
         }
+
     }
 
     @Override
@@ -292,10 +315,10 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
     @Override
     public void show_list_songs_collection(List<Ringtunes> listSongs) {
         hideDialogLoading();
-        if (listSongs.size()>0){
-            for (int i = 0;i<listSongs.size();i++){
-                for (int j = 0;j<listConllection.size();j++){
-                    if (listSongs.get(i).getId().equals(listConllection.get(j).getContent_id())){
+        if (listSongs.size() > 0) {
+            for (int i = 0; i < listSongs.size(); i++) {
+                for (int j = 0; j < listConllection.size(); j++) {
+                    if (listSongs.get(i).getId().equals(listConllection.get(j).getContent_id())) {
                         mlisSongs.add(listSongs.get(i));
                         listConllection.get(j).setImage_url(listSongs.get(i).getImage_file());
                         listConllection.get(j).setProduct_name(listSongs.get(i).getProduct_name());
@@ -303,9 +326,12 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
                         listConllection.get(j).setPath(listSongs.get(i).getPath());
                     }
                 }
-                adapterCollection.notifyDataSetChanged();
-                presenterConllection.getSongsSame(listSongs.get(listSongs.size()-1).getSinger_id(), "" + page, "" + index);
             }
+            adapterCollection.notifyDataSetChanged();
+            int random = Utilities.getRandomNumber(listSongs.size());
+            Log.i("collection", ""+random);
+            presenterConllection.api_suggestion_play(listSongs.get(random).getSinger_id(),
+                    listSongs.get(random).getSinger_id(), Constant.USER_ID);
         }
 
     }

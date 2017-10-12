@@ -11,6 +11,7 @@ public class Config {
     public static final String SINGER = "SINGER";
     public static final String RINGTUNES_HOT = "RINGTUNES_HOT";
     public static final String RINGTUNES_NEW = "RINGTUNES_NEW";
+    public static final String EVENT = "EVENT";
     //get buy songs or gif songs
     public static final String DOWNLOAD = "DOWNLOAD";
     public static final String GIFT = "GIFT";

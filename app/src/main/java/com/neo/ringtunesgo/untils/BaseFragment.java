@@ -45,12 +45,6 @@ public class BaseFragment extends Fragment {
     protected ProgressDialog dialog;
     private Handler StopDialogLoadingHandler = new Handler();
 
-    public void hideDialogLoading() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-        }
-    }
-
 
     public void showDialogLoading() {
         StopDialogLoadingHandler.postDelayed(new Runnable() {
@@ -61,15 +55,20 @@ public class BaseFragment extends Fragment {
                 }
             }
         }, 5000);
-        if (!getActivity().isFinishing()) {
-            dialog = new ProgressDialog(getActivity());
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.setMessage("Loading. Please wait...");
-            dialog.setIndeterminate(true);
-            dialog.setCanceledOnTouchOutside(false);
-        }
+        dialog = new ProgressDialog(getActivity());
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("Loading. Please wait...");
+        dialog.setIndeterminate(true);
+        dialog.setCanceledOnTouchOutside(false);
+
         if (dialog != null && !dialog.isShowing()) {
             dialog.show();
+        }
+    }
+
+    public void hideDialogLoading() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
         }
     }
 

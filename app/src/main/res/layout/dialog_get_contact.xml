@@ -22,7 +22,7 @@
         android:background="@drawable/spr_backgroup_body_dialog"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp10"
@@ -59,7 +59,6 @@
                     android:layout_height="@dimen/dp30" />
             </RelativeLayout>
 
-
             <ImageView
                 android:layout_toRightOf="@+id/relative_phone"
                 android:id="@+id/img_add_contact_dialog"
@@ -68,7 +67,7 @@
                 android:layout_marginLeft="@dimen/dp5"
                 android:src="@drawable/icon_contact" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
         <LinearLayout

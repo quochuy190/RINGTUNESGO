@@ -36,10 +36,14 @@ import android.widget.TextView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.neo.ringtunesgo.Adapter.AdapterDrawer;
+import com.neo.ringtunesgo.CRBTModel.GROUP;
 import com.neo.ringtunesgo.CRBTModel.Info_User;
+import com.neo.ringtunesgo.CRBTModel.PROFILE;
 import com.neo.ringtunesgo.CRBTModel.subscriber;
+import com.neo.ringtunesgo.Config.Config;
 import com.neo.ringtunesgo.Config.Constant;
 import com.neo.ringtunesgo.Fragment.Collection.FragmentConllection;
+import com.neo.ringtunesgo.Fragment.DetailSongs.View.FragmentSongs;
 import com.neo.ringtunesgo.Fragment.FragmentInfo;
 import com.neo.ringtunesgo.Fragment.Groups.FragmentGroups;
 import com.neo.ringtunesgo.Fragment.Home.View.FragmentHome;
@@ -138,6 +142,8 @@ public class MainNavigationActivity extends BaseActivity
     String user_id;
     String notifi;
     public static Context mContext;
+    String image;
+    String subtype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,6 +240,9 @@ public class MainNavigationActivity extends BaseActivity
                         drawer.closeDrawers();
                     } else if (position == 6) {
                         if (!FragmentConllection.getInstance().isAdded()) {
+                            SharedPreferences.Editor editor = fr.edit();
+                            editor.putBoolean("isHome", true);
+                            editor.commit();
                             FragmentUtil.addFragment(MainNavigationActivity.this, FragmentConllection.getInstance(), true);
                         }
                         drawer.closeDrawers();
@@ -266,6 +275,11 @@ public class MainNavigationActivity extends BaseActivity
                         yes.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                MyApplication.objGroup = new GROUP();
+                                MyApplication.profile_bundle = new PROFILE();
+                                MyApplication.listConllection = new ArrayList<>();
+                                MyApplication.player_ring = new Ringtunes();
+                                MyApplication.lisRingtunesNew = new ArrayList<>();
                                 isLogin = false;
                                 myRealm.beginTransaction();
                                 myRealm.clear(Login.class);
@@ -299,7 +313,7 @@ public class MainNavigationActivity extends BaseActivity
 
         });
         //khoi tạo fragment
-      addHomeFragment();
+        addHomeFragment();
         lisContacts = new ArrayList<>();
         // lisContacts = CustomUtils.getAllPhoneContacts(this);
         Log.i(TAG, "" + lisContacts.size());
@@ -321,9 +335,11 @@ public class MainNavigationActivity extends BaseActivity
 
 
     }
-    public void addFinish(){
+
+    public void addFinish() {
         finish();
     }
+
     private void getDataSharedPreferences() {
         fr = getSharedPreferences("data", MODE_PRIVATE);
         objInfo = myRealm.where(Info_User.class).findFirst();
@@ -342,12 +358,16 @@ public class MainNavigationActivity extends BaseActivity
                 }
             }
         }
+        sesionID = fr.getString("sessionID", "");
+        msisdn = fr.getString("msisdn", "");
         user_id = fr.getString("user_id", "");
+        Constant.USER_ID = user_id;
+        Constant.sSessionID = sesionID;
+        Constant.sMSISDN = msisdn;
         token = fr.getString("token", "");
         is_token = fr.getBoolean("token_sucsess", false);
         is_user_id = fr.getBoolean("is_user_id", false);
-        sesionID = fr.getString("sessionID", "");
-        msisdn = fr.getString("msisdn", "");
+
         is_save_namegroup = fr.getBoolean("is_save_namegroup", false);
     }
 
@@ -590,6 +610,8 @@ public class MainNavigationActivity extends BaseActivity
         super.onResume();
         getUserName();
         saveNameGroup();
+        subtype = getIntent().getStringExtra("subtype");
+        image = getIntent().getStringExtra("image");
         notifi = getIntent().getStringExtra("type");
         String id = getIntent().getStringExtra("id");
         String id_Singer = getIntent().getStringExtra("idsinger");
@@ -617,23 +639,57 @@ public class MainNavigationActivity extends BaseActivity
             addDrawerItem();
             initDrawer();
         }
-        if (notifi != null && notifi.equals("1")) {
-            SharedPreferences.Editor editor = fr.edit();
-            editor.putBoolean("notifi", true);
-            editor.putString("id_songs", id);
-            editor.putString("id_singer", id_Singer);
-            editor.commit();
-            FragmentHome.addFragmentBuySongs();
-            /*FragmentUtil.pushFragmentLayoutMain(getSupportFragmentManager(),
-                    R.id.fame_main, HomeFragment.getInstance(), null, HomeFragment.class.getSimpleName());
-           *//* Bundle bundle = new Bundle();
-            bundle.putString("idSinger", id_Singer);
-            bundle.putString("id_songs", id);*//*
-            if (!FragmentDetailBuySongs.getInstance().isAdded())
-              *//*  FragmentUtil.pushFragmentLayoutMain(getSupportFragmentManager(),
-                        R.id.fame_main, FragmentDetailBuySongs.getInstance(), null, HomeFragment.class.getSimpleName());*//*
-                FragmentUtil.addFragment(MainNavigationActivity.fragmentActivity, FragmentDetailBuySongs.getInstance(), true);*/
-
+        if (notifi != null) {
+            if (notifi.equals("1")) {
+                SharedPreferences.Editor editor = fr.edit();
+                editor.putBoolean("notifi", true);
+                editor.putString("id_songs", id);
+                editor.putString("id_singer", id_Singer);
+                editor.commit();
+                FragmentHome.addFragmentBuySongs();
+            } else if (notifi.equals("2")) {
+                SharedPreferences.Editor editor = fr.edit();
+                switch (subtype) {
+                    case "1":
+                        editor.putString("option", Config.RINGTUNES_NEW);
+                        editor.putString("title", "Ringtunes Mới");
+                        break;
+                    case "2":
+                        editor.putString("option", Config.EVENT);
+                        editor.putString("type_event", "event_details");
+                        editor.putString("title", "Ringtunes Mới");
+                        break;
+                    case "3":
+                        editor.putString("option", Config.EVENT);
+                        editor.putString("type_event", "promotion_details");
+                        editor.putString("title", "Ringtunes Mới");
+                        break;
+                    case "4":
+                        editor.putString("option", Config.RINGTUNES_HOT);
+                        editor.putString("title", "Ringtunes Mới");
+                        break;
+                    case "5":
+                        editor.putString("option", Config.RINGTUNES_NEW);
+                        editor.putString("title", "Ringtunes Mới");
+                        break;
+                    case "6":
+                        editor.putString("option", Config.TYPE);
+                        editor.putString("title", "Ringtunes Mới");
+                        break;
+                    case "7":
+                        editor.putString("option", Config.SINGER);
+                        editor.putString("title", "Ringtunes Mới");
+                        break;
+                    case "8":
+                        editor.putString("option", Config.TOPIC);
+                        editor.putString("title", "Ringtunes Mới");
+                        break;
+                }
+                editor.putString("id", id);
+                editor.putString("url_image_title", image);
+                editor.commit();
+                FragmentUtil.addFragment(fragmentActivity, FragmentSongs.getInstance(), true);
+            }
         }
     }
 
@@ -661,7 +717,8 @@ public class MainNavigationActivity extends BaseActivity
         }
 
     }
-    public static void addHomeFragment(){
+
+    public static void addHomeFragment() {
         FragmentUtil.pushFragmentLayoutMain(fragmentManager,
                 R.id.fame_main, HomeFragment.getInstance(), null, HomeFragment.class.getSimpleName());
     }

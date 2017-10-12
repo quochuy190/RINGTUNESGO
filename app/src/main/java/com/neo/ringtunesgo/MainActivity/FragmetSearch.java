@@ -156,7 +156,7 @@ public class FragmetSearch extends BaseFragment implements MainActivityImpl.View
                 inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 txt_notification_search.setVisibility(View.GONE);
                 Linner_Search.setBackgroundResource(R.drawable.backgroud_search);
-                key = array.get(position);
+                key = auto_edt_search.getText().toString();
                 page = 1;
                 showDialogLoading();
                 presenterMainActivity.getSearch(key, "" + page, "" + index);

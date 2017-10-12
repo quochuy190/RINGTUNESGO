@@ -22,12 +22,14 @@ public class MyApplication extends Application {
     public static Ringtunes player_ring;
     public static PROFILE profile_bundle;
     public static GROUP objGroup;
+    public static List<Ringtunes> lisRingtunesNew;
     @Override
     public void onCreate() {
         objGroup = new GROUP();
         profile_bundle = new PROFILE();
         listConllection = new ArrayList<>();
         player_ring = new Ringtunes();
+        lisRingtunesNew = new ArrayList<>();
         super.onCreate();
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
                 .name(Realm.DEFAULT_REALM_NAME)

@@ -53,10 +53,15 @@ public class PresenterConllection implements ConllectionInteface.Presenter {
 
             @Override
             public void onGetDataFault(Exception e) {
-                if (fragment_addProfiles != null)
+                if (fragment_addProfiles != null) {
                     fragment_addProfiles.hideDialogLoading();
-                if (fragmentConllection != null)
+                    fragmentConllection.showConllection(new ArrayList<Item>());
+                }
+
+                if (fragmentConllection != null) {
                     fragmentConllection.hideDialogLoading();
+                    fragmentConllection.showConllection(new ArrayList<Item>());
+                }
 
             }
 
@@ -122,7 +127,7 @@ public class PresenterConllection implements ConllectionInteface.Presenter {
             @Override
             public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
                 fragmentConllection.hideDialogLoading();
-                    fragmentConllection.showLisSongsSame(arrayList);
+                fragmentConllection.showLisSongsSame(arrayList);
             }
 
             @Override
@@ -143,7 +148,6 @@ public class PresenterConllection implements ConllectionInteface.Presenter {
         String Service = "afp_service";
         String Provider = "default";
         String ParamSize = "2";
-
         apiService.get_info_songs_collection(new CallbackData<Ringtunes>() {
             @Override
             public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
@@ -164,4 +168,30 @@ public class PresenterConllection implements ConllectionInteface.Presenter {
 
     }
 
+    public void api_suggestion_play(String Singer_id, String song_id, String UserID) {
+        fragmentConllection.showDialogLoading();
+        String Service = "suggestion_collection";
+        String Provider = "default";
+        String ParamSize = "3";
+
+
+        apiService.api_suggestion_play(new CallbackData<Ringtunes>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
+                fragmentConllection.hideDialogLoading();
+                fragmentConllection.showLisSongsSame(arrayList);
+
+            }
+
+            @Override
+            public void onGetDataFault(Exception e) {
+                fragmentConllection.hideDialogLoading();
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(Ringtunes Object) {
+                fragmentConllection.hideDialogLoading();
+            }
+        }, Service, Provider, ParamSize, Singer_id, song_id, UserID);
+    }
 }

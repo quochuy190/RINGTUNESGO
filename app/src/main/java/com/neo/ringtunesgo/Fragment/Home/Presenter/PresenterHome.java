@@ -181,8 +181,8 @@ public class PresenterHome implements PresenterHomeImpl {
             @Override
             public void onGetDataSuccess(ArrayList<Banner> arrayList) {
                 List<String> list = new ArrayList<String>();
-                if (arrayList.size()>0){
-                    for (int i =0;i<arrayList.size();i++){
+                if (arrayList.size() > 0) {
+                    for (int i = 0; i < arrayList.size(); i++) {
 
                         String sBanner = arrayList.get(i).getImage_file();
                         list.add(sBanner);
@@ -204,6 +204,58 @@ public class PresenterHome implements PresenterHomeImpl {
         }, Service, Provider, ParamSize, userid);
     }
 
+    public void promotion_idx(final String Service, String userid) {
+        if (Service.equals("event_idx"))
+            viewfragmentHome.showDialogLoading();
+        String Provider = "default";
+        String ParamSize = "1";
+        apiService.api_promotion_idx(new CallbackData<Topic>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<Topic> arrayList) {
+                viewfragmentHome.hideDialogLoading();
+                if (Service.equals("promotion_idx"))
+                    viewfragmentHome.showPromotion(arrayList);
+                if (Service.equals("event_idx"))
+                    viewfragmentHome.showEvent(arrayList);
+            }
+
+            @Override
+            public void onGetDataFault(Exception e) {
+                viewfragmentHome.hideDialogLoading();
+                viewfragmentHome.showPromotion(new ArrayList<Topic>());
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(Topic Object) {
+
+            }
+        }, Service, Provider, ParamSize, userid);
+    }
+
+    public void getslogan_idx(final String Service, String userid) {
+        String Provider = "default";
+        String ParamSize = "1";
+
+        apiService.api_promotion_idx(new CallbackData<Topic>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<Topic> arrayList) {
+                if (Service.equals("slogan_idx")) {
+                    viewfragmentHome.showslogan_idx(arrayList);
+                }
+            }
+
+            @Override
+            public void onGetDataFault(Exception e) {
+
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(Topic Object) {
+
+            }
+        }, Service, Provider, ParamSize, userid);
+    }
+
     @Override
     public void getrankRingtunes(String index, String number, String userID) {
         String Service = "ranking_detail_service";
@@ -213,8 +265,8 @@ public class PresenterHome implements PresenterHomeImpl {
         apiService.getrankRingtunes(new CallbackData<Ringtunes>() {
             @Override
             public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
-                if (arrayList.size()>0){
-                   // viewfragmentHome.showListRingtunesNew(arrayList);
+                if (arrayList.size() > 0) {
+                    // viewfragmentHome.showListRingtunesNew(arrayList);
                 }
             }
 

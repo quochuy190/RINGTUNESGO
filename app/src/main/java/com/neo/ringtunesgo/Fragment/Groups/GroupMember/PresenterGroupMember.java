@@ -94,7 +94,7 @@ public class PresenterGroupMember implements GroupMemberInterface.Presenter {
             @Override
             public void onGetDataSuccess(ArrayList<CLI> arrayList) {
                 fragmentGroupMember.hideDialogLoading();
-                if (arrayList.size()>0){
+                if (arrayList.size() > 0) {
                     List<String> list = new ArrayList<String>();
                     list.add(arrayList.get(0).getERROR());
                     list.add(arrayList.get(0).getERROR_DESC());
@@ -189,7 +189,7 @@ public class PresenterGroupMember implements GroupMemberInterface.Presenter {
         apiGetGroups.api_delete_profile(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
-                if (arrayList.size()>0)
+                if (arrayList.size() > 0)
                     fragmentGroupMember.showErrorDeleteProfile(arrayList);
             }
 
@@ -216,7 +216,7 @@ public class PresenterGroupMember implements GroupMemberInterface.Presenter {
         apiGetGroups.deleteGroup(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
-               // arrayList.add(group_id);
+                // arrayList.add(group_id);
                 fragmentGroupMember.showdeleteGroups(arrayList);
             }
 
@@ -257,7 +257,7 @@ public class PresenterGroupMember implements GroupMemberInterface.Presenter {
             public void onGetObjectDataSuccess(String Object) {
 
             }
-        }, Service, Provider, ParamSize, sesionID, msisdn,profile_id, content_id, caller_type, call_id, from_time, to_time);
+        }, Service, Provider, ParamSize, sesionID, msisdn, profile_id, content_id, caller_type, call_id, from_time, to_time);
     }
 
     @Override
@@ -270,8 +270,7 @@ public class PresenterGroupMember implements GroupMemberInterface.Presenter {
             @Override
             public void onGetDataSuccess(ArrayList<Item> arrayList) {
                 fragmentGroupMember.hideDialogLoading();
-                if (arrayList.size() > 0)
-                    fragmentGroupMember.showConllection(arrayList, content_id);
+                fragmentGroupMember.showConllection(arrayList, content_id);
             }
 
             @Override
@@ -320,6 +319,7 @@ public class PresenterGroupMember implements GroupMemberInterface.Presenter {
             }
         }, Service, Provider, ParamSize, P1, P2, P3, P4);
     }
+
     @Override
     public void add_profile(String sesionID, String msisdn, String content_id, String caller_type
             , String caller_id, String from_time, String to_time) {
@@ -330,7 +330,7 @@ public class PresenterGroupMember implements GroupMemberInterface.Presenter {
         apiGetGroups.add_Profiles(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
-                    fragmentGroupMember.show_update_profile(arrayList);
+                fragmentGroupMember.show_update_profile(arrayList);
             }
 
             @Override
@@ -369,5 +369,32 @@ public class PresenterGroupMember implements GroupMemberInterface.Presenter {
             }
         }, Service, Provider, ParamSize, id, userID);
 
+    }
+
+    public void api_suggestion_play(String Singer_id, String song_id, String UserID) {
+        fragmentGroupMember.showDialogLoading();
+        String Service = "suggestion_groups";
+        String Provider = "default";
+        String ParamSize = "3";
+
+
+        apiGetGroups.api_suggestion_play(new CallbackData<Ringtunes>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
+                fragmentGroupMember.hideDialogLoading();
+                fragmentGroupMember.showLisSongsSame(arrayList);
+
+            }
+
+            @Override
+            public void onGetDataFault(Exception e) {
+                fragmentGroupMember.hideDialogLoading();
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(Ringtunes Object) {
+                fragmentGroupMember.hideDialogLoading();
+            }
+        }, Service, Provider, ParamSize, Singer_id, song_id, UserID);
     }
 }

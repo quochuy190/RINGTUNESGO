@@ -25,7 +25,6 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
 
     @Override
     public void getByTopic(String id, String page, String number) {
-        viewRingtunes.hideDialogLoading();
        viewRingtunes.showDialogLoading();
         String Service = "hot_detail_detail_service";
         String Provider = "default";
@@ -49,7 +48,28 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
             }
         }, Service, Provider, ParamSize, P1, page, number, Constant.USER_ID);
     }
+    public void getByEvent(String Service,String id, String page, String number, String userID) {
+        viewRingtunes.showDialogLoading();
+        String Provider = "default";
+        String ParamSize = "4";
+        apiService.getRingtunes_ByTocpic(new CallbackData<Ringtunes>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
+                viewRingtunes.hideDialogLoading();
+                viewRingtunes.showListRingtunes(arrayList);
+            }
 
+            @Override
+            public void onGetDataFault(Exception e) {
+
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(Ringtunes Object) {
+
+            }
+        }, Service, Provider, ParamSize, id, page, number, userID);
+    }
     @Override
     public void getByAlbum(String id, String type, String page, String number) {
         viewRingtunes.hideDialogLoading();

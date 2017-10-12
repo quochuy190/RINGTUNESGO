@@ -55,6 +55,7 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.neo.ringtunesgo.MyApplication.lisRingtunesNew;
 import static com.neo.ringtunesgo.MyApplication.listConllection;
 
 /**
@@ -116,11 +117,14 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
     GROUP objGrop;
     String title;
     public static TextView txt_delete_phone;
+    List<Ringtunes> listSongSame;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         realm = RealmController.with(this).getRealm();
         lisPhone = new ArrayList<>();
+        listSongSame = new ArrayList<>();
         lisItem = listConllection;
         lisRingtunes_same = new ArrayList<>();
         presenterGroupMember = new PresenterGroupMember(this);
@@ -197,7 +201,7 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
                 SharedPreferences.Editor editor = pre.edit();
                 editor.putString("option", Config.GROUP_MEMBER);
                 editor.commit();
-               // bundle.putSerializable("lis_CLI", (Serializable) lisCLI);
+                // bundle.putSerializable("lis_CLI", (Serializable) lisCLI);
                 FragmentUtil.addFragment(getActivity(), ActivityContacts.getInstance(), true);
                 dialog.dismiss();
             }
@@ -257,9 +261,9 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
             ed_getphone_group.setText(all_phone);
             dialog.show();
         }*/
-        if (ed_getphone_group.getText().toString().length()>0)
+        if (ed_getphone_group.getText().toString().length() > 0)
             txt_delete_phone.setVisibility(View.VISIBLE);
-        else  txt_delete_phone.setVisibility(View.GONE);
+        else txt_delete_phone.setVisibility(View.GONE);
 
         txt_title.setText(title);
         MainNavigationActivity.appbar.setVisibility(View.GONE);
@@ -513,7 +517,7 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
                 editor.putString("idSinger", lisRingtunes_same.get(position).getSinger_id());
                 editor.commit();
                 if (!FragmentDetailBuySongs.getInstance().isAdded())
-                FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+                    FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
             }
 
             @Override
@@ -544,22 +548,36 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
 
     }
 
+
     @Override
     public void show_list_songs_collection(List<Ringtunes> listSongs) {
-        if (listSongs.size()>0){
-            for (int i = 0;i<listSongs.size();i++){
-                for (int j = 0;j<lisItem.size();j++){
-                    if (listSongs.get(i).getId().equals(lisItem.get(j).getContent_id())){
+        int position = -1;
+        if (listSongs.size() > 0) {
+            listSongSame.clear();
+            for (int i = 0; i < listSongs.size(); i++) {
+                for (int j = 0; j < lisItem.size(); j++) {
+                    if (listSongs.get(i).getId().equals(lisItem.get(j).getContent_id())) {
                         lisItem.get(j).setImage_url(listSongs.get(i).getImage_file());
                         lisItem.get(j).setProduct_name(listSongs.get(i).getProduct_name());
                         lisItem.get(j).setSinger_id(listSongs.get(i).getSinger_id());
                         lisItem.get(j).setPath(listSongs.get(i).getPath());
+                        if (lisItem.get(j).is_check)
+                            position = j;
                     }
                 }
-                adapterCollection.notifyDataSetChanged();
-                presenterGroupMember.getSongsSame(lisItem.get(0).getSinger_id(), "" + "1", "" + "10");
             }
-        }
+            adapterCollection.notifyDataSetChanged();
+            if (position >= 0)
+                presenterGroupMember.api_suggestion_play(lisItem.get(position).getSinger_id(),
+                        lisItem.get(position).getContent_id(), Constant.USER_ID);
+            else if (position < 0 && lisItem.size() > 0) {
+                presenterGroupMember.api_suggestion_play(lisItem.get(0).getSinger_id(),
+                        lisItem.get(0).getContent_id(), Constant.USER_ID);
+            }
+        } else
+            adapterRingtunes.notifyDataSetChanged();
+
+
     }
 
     public void initConllection() {
@@ -638,7 +656,9 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
                 else id_songs = id_songs + listConllection.get(i).getContent_id();
             }
             presenterGroupMember.get_info_songs_collection(id_songs, Constant.USER_ID);
+        }else {
+            lisRingtunes_same.addAll(lisRingtunesNew);
+            adapterRingtunes.notifyDataSetChanged();
         }
-
     }
 }

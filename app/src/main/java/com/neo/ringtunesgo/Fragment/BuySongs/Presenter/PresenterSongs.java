@@ -58,8 +58,6 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
 
     @Override
     public void getSongsInformation(String sesionID, String msisdn, String content_id) {
-        fragmentDetailBuySongs.hideDialogLoading();
-        fragmentDetailBuySongs.showDialogLoading();
         String Service = "GET_CONTENT_ITEMS_BY_CONTENT_ID";
         String Provider = "default";
         String ParamSize = "3";
@@ -67,17 +65,16 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
         apiSevice.getContenItem(new CallbackData<Item>() {
             @Override
             public void onGetDataSuccess(ArrayList<Item> arrayList) {
-                fragmentDetailBuySongs.hideDialogLoading();
+
             }
 
             @Override
             public void onGetDataFault(Exception e) {
-                fragmentDetailBuySongs.hideDialogLoading();
+
             }
 
             @Override
             public void onGetObjectDataSuccess(Item Object) {
-                fragmentDetailBuySongs.hideDialogLoading();
                 fragmentDetailBuySongs.ShowItems(Object);
             }
         }, Service, Provider, ParamSize, sesionID, msisdn, content_id);
@@ -223,6 +220,35 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
 
             }
         }, Service, Provider, ParamSize, P1, P2, P3, P4);
+    }
+
+    public void api_suggestion_play(String Singer_id, String song_id, String UserID) {
+
+        String Service = "suggestion_play";
+        String Provider = "default";
+        String ParamSize = "3";
+
+
+        apiSevice.api_suggestion_play(new CallbackData<Ringtunes>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
+                //viewRingtunes.showSongsBySingerId(arrayList);
+                if (arrayList.size() > 0) {
+                    Log.i("abc", arrayList.size() + "");
+                    fragmentDetailBuySongs.show_lis_songs_bysinger(arrayList);
+                }
+            }
+
+            @Override
+            public void onGetDataFault(Exception e) {
+
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(Ringtunes Object) {
+
+            }
+        }, Service, Provider, ParamSize,Singer_id, song_id, UserID);
     }
 
     @Override

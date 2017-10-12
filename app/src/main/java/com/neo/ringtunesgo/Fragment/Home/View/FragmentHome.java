@@ -20,8 +20,10 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.neo.ringtunesgo.Adapter.AdapterAlbum;
+import com.neo.ringtunesgo.Adapter.AdapterEventHome;
 import com.neo.ringtunesgo.Adapter.AdapterRingtunes;
 import com.neo.ringtunesgo.Adapter.AdapterSinger;
+import com.neo.ringtunesgo.Adapter.AdapterSlogan;
 import com.neo.ringtunesgo.Adapter.AdapterTopic;
 import com.neo.ringtunesgo.Adapter.AdapterType;
 import com.neo.ringtunesgo.Adapter.AdapterViewPagerHome;
@@ -36,6 +38,7 @@ import com.neo.ringtunesgo.Model.Ringtunes;
 import com.neo.ringtunesgo.Model.Singer;
 import com.neo.ringtunesgo.Model.Topic;
 import com.neo.ringtunesgo.Model.Type;
+import com.neo.ringtunesgo.MyApplication;
 import com.neo.ringtunesgo.R;
 import com.neo.ringtunesgo.View.HomeFragment;
 import com.neo.ringtunesgo.untils.BaseFragment;
@@ -66,6 +69,10 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     PresenterHome presenterHome;
     @BindView(R.id.pull_to_refresh_home)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycle_home_event)
+    RecyclerView recycle_home_event;
+    @BindView(R.id.recycle_slogan)
+    RecyclerView recycle_slogan;
     @BindView(R.id.list_topic_hot)
     RecyclerView recyclerTopichot;
     @BindView(R.id.list_album_hot)
@@ -91,9 +98,11 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     @BindView(R.id.img_next_Singer)
     ImageView viewAll_Singer;
     AdapterTopic adapterTopic;
+    AdapterEventHome adapterEventHome;
     AdapterAlbum adapterAlbum;
     AdapterRingtunes adapterRingtunes;
     AdapterSinger adapterSinger;
+    AdapterSlogan adapterSlogan;
     AdapterType adapterType;
     List<Topic> listTop;
     View view;
@@ -118,6 +127,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     @BindView(R.id.slider1)
     SliderLayout mDemoSlider;
     HashMap<String, String> url_maps;
+    List<Topic> lisPromotion;
+    List<Topic> lisSlogan;
 
     public static FragmentHome getInstance() {
         if (fragment == null) {
@@ -142,6 +153,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         listTopic = new ArrayList<>();
         listSinger = new ArrayList<>();
         listType = new ArrayList<>();
+        lisPromotion = new ArrayList<>();
+        lisSlogan = new ArrayList<>();
         url_maps = new HashMap<String, String>();
         initData();
     }
@@ -153,7 +166,6 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         ButterKnife.bind(this, view);
         objViewPager = (AutoScrollViewPager) view.findViewById(R.id.view_pager);
         objTabLayout = (TabLayout) view.findViewById(R.id.tbl_showroom_detail_test);
-
 
         init();
         initEvent();
@@ -174,7 +186,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
             showViewpager(lisBanner);
         }
     }
-    public static void addFragmentBuySongs(){
+
+    public static void addFragmentBuySongs() {
         FragmentUtil.addFragment(MainNavigationActivity.fragmentActivity, FragmentDetailBuySongs.getInstance(), true);
     }
 
@@ -274,10 +287,13 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
             listTop = new ArrayList<>();
         }
         initTopic();
+        initPromotion();
         initRingtunesHot();
         initRingtunesNew();
         initSinger();
         initType();
+        initSlogan();
+
         if (url_maps.size() > 0) {
             initHeaderSlider(url_maps);
         }
@@ -341,6 +357,7 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         });
     }
 
+
     @Override
     public void showListTopic(final List<Topic> list) {
         listTopic.clear();
@@ -380,6 +397,97 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
               });
           }
       }*/
+    public void initPromotion() {
+        adapterEventHome = new AdapterEventHome(lisPromotion, getContext());
+        mLayoutManager = new GridLayoutManager(getContext(), 1);
+        recycle_home_event.setNestedScrollingEnabled(false);
+        recycle_home_event.setHasFixedSize(true);
+        recycle_home_event.setLayoutManager(mLayoutManager);
+        recycle_home_event.setItemAnimator(new DefaultItemAnimator());
+        recycle_home_event.setAdapter(adapterEventHome);
+        adapterEventHome.notifyDataSetChanged();
+
+
+        adapterEventHome.setOnIListener(new setOnItemClickListener() {
+            @Override
+            public void OnItemClickListener(int position) {
+                SharedPreferences.Editor editor = fr.edit();
+                editor.putString("option", Config.EVENT);
+                editor.putString("id", lisPromotion.get(position).getId());
+                if (lisPromotion.get(position).getBigphoto() != null){
+                    editor.putString("type_event", "promotion_details");
+                    editor.putString("url_image_title", lisPromotion.get(position).getPhoto());
+                    editor.putString("title", lisPromotion.get(position).getPackage_name());
+                }
+                if (lisPromotion.get(position).getTHUMBNAIL_IMAGE()!=null){
+                    editor.putString("type_event", "event_details");
+                    editor.putString("url_image_title", lisPromotion.get(position).getTHUMBNAIL_IMAGE());
+                    editor.putString("title", lisPromotion.get(position).getNAME());
+                }
+                editor.commit();
+                if (!FragmentSongs.getInstance().isAdded())
+                    FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
+            }
+
+            @Override
+            public void OnLongItemClickListener(int position) {
+
+            }
+        });
+    }
+
+    public void initSlogan() {
+        adapterSlogan = new AdapterSlogan(lisSlogan, getContext());
+        mLayoutManager = new GridLayoutManager(getContext(), 1);
+        recycle_slogan.setNestedScrollingEnabled(false);
+        recycle_slogan.setHasFixedSize(true);
+        recycle_slogan.setLayoutManager(mLayoutManager);
+        recycle_slogan.setItemAnimator(new DefaultItemAnimator());
+        recycle_slogan.setAdapter(adapterSlogan);
+        adapterSlogan.notifyDataSetChanged();
+
+        adapterSlogan.setOnIListener(new setOnItemClickListener() {
+            @Override
+            public void OnItemClickListener(int position) {
+          /*      SharedPreferences.Editor editor = fr.edit();
+                editor.putString("name_singer", listSinger.get(position).getSinger_name());
+                editor.putString("hits_singer", listSinger.get(position).getHits());
+                editor.putString("url_imgSinger", listSinger.get(position).getPhoto());
+                editor.putString("idSinger", listSinger.get(position).getId());
+                editor.commit();
+                if (!FragmentDetailBuySongs.getInstance().isAdded())
+                    FragmentUtil.addFragment(getActivity(), Fragment_SingerDetail.getInstance(), true);*/
+            }
+
+            @Override
+            public void OnLongItemClickListener(int position) {
+
+            }
+        });
+    }
+
+    public void showslogan_idx(final List<Topic> list) {
+        if (list != null && list.size() > 0) {
+            lisSlogan.addAll(list);
+            adapterSlogan.notifyDataSetChanged();
+        }
+    }
+
+    public void showPromotion(final List<Topic> list) {
+        if (list != null && list.size() > 0) {
+            lisPromotion.addAll(list);
+        }
+        adapterEventHome.notifyDataSetChanged();
+    }
+
+    public void showEvent(final List<Topic> list) {
+        if (list != null && list.size() > 0) {
+            lisPromotion.clear();
+            lisPromotion.addAll(list);
+        }
+        presenterHome.promotion_idx("promotion_idx", sUsername);
+    }
+
     public void initRingtunesHot() {
         adapterRingtunes = new AdapterRingtunes(listRingHot, getContext());
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -460,6 +568,7 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         lisRingNew.clear();
         if (lisRingtunesNew != null && lisRingtunesNew.size() > 0) {
             lisRingNew.addAll(lisRingtunesNew);
+            MyApplication.lisRingtunesNew = lisRingNew;
             adapterRingtunes.notifyDataSetChanged();
         }
     }
@@ -596,6 +705,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     }*/
 
     private void initData() {
+        lisPromotion = new ArrayList<>();
+        lisSlogan = new ArrayList<>();
         lisRing = new ArrayList<>();
         lisBanner = new ArrayList<>();
         lisRingNew = new ArrayList<>();
@@ -612,6 +723,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         presenterHome.getListType(page, index);
         presenterHome.getbanner_header(sUsername);
         presenterHome.getrankRingtunes(page, index, sUsername);
+        presenterHome.promotion_idx("event_idx", sUsername);
+        presenterHome.getslogan_idx("slogan_idx", sUsername);
         // init();
     }
 

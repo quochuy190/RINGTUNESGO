@@ -12,12 +12,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
 
 /**
  * Created by QQ on 7/11/2017.
  */
 
 public class Utilities {
+    public static int getRandomNumber(int max){
+        Random rand = new Random();
+        int  n = rand.nextInt(max);
+        return n;
+    }
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);

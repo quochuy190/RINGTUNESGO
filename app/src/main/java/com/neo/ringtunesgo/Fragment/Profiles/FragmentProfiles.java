@@ -175,7 +175,7 @@ public class FragmentProfiles extends BaseFragment implements ProfilesInterface.
                 add_menu.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MyApplication.profile_bundle = lisProfiles.get(0);
+                        MyApplication.profile_bundle = lisProfiles.get(position);
                         FragmentUtil.addFragment(getActivity(), Fragment_EditProfile.getInstance(), true);
                         dialog_yes_member.dismiss();
                     }

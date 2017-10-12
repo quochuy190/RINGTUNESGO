@@ -15,5 +15,7 @@ public class Constant {
     public final static String MUSIC_LINK2 = "http://ringtunes.vinaphone.com.vn/content/VNP/A/VASC/72/154448672/154448675.MP3";
     public final static String MUSIC_LINK3 = "http://ringtunes.vinaphone.com.vn/content/VNP/VNP/C/VASC/2016/10/290903693/20161026WEB.mp3";
     public static String USER_ID = "";
+    public static String sSessionID = "";
+    public static String sMSISDN = "";
     public final static String PROJECT_ID= "ringtunesgo-177608";
 }

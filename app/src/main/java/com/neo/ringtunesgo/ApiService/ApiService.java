@@ -279,7 +279,34 @@ public class ApiService {
             }
         });
     }
+    //get All Ringtunes By Album, Type, Singer
+    public void api_suggestion_play(final CallbackData<Ringtunes> callbackData, String Service, String Provider,
+                                     String ParamSize, String P1, String P2, String P3) {
+        apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
+        Call<ResponseBody> call = apiSevice.api_get_P3_SQL(Service, Provider, ParamSize, P1, P2, P3);
 
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String jsonString = response.body().string();
+                    jsonString = jsonString.replaceAll("\\\\", "");
+                    jsonString = jsonString.substring(11, jsonString.length() - 2);
+                    System.out.print(jsonString);
+
+                    ArrayList<Ringtunes> list = Ringtunes.getListEntity(jsonString);
+                    callbackData.onGetDataSuccess(list);
+                } catch (Exception e) {
+                    callbackData.onGetDataFault(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
     // Api search Ringtunes
     public void getSearchRingtunes(final CallbackData<Ringtunes> callbackData, String Service, String Provider,
                                    String ParamSize, String P1, String P2, String P3) {
@@ -692,6 +719,8 @@ public class ApiService {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
+                    int total = -1;
+                    Gson gson = new Gson();
                     ArrayList<Item> items = new ArrayList<Item>();
                     String jsonString = response.body().string();
                     jsonString = jsonString.replaceAll("\\\\", "");
@@ -700,20 +729,29 @@ public class ApiService {
 
                     JSONObject jsonObj = new JSONObject(jsonString);
                     JSONObject jsonItems = new JSONObject(jsonObj.getString("ITEMS"));
-                    JSONArray jsonArray = jsonItems.getJSONArray("ITEM");
-                    Gson gson = new Gson();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        Item item = new Item();
-                        item = gson.fromJson(jsonArray.getJSONObject(i).toString(), Item.class);
-                        items.add(item);
+                    total = Integer.parseInt(jsonItems.getString("total"));
+                    if (total ==0){
+                        callbackData.onGetDataSuccess(new ArrayList<Item>());
+                    }else if (total == 1){
+                        Item objItem= gson.fromJson(jsonItems.getString("ITEM"), Item.class);
+                        items.add(objItem);
+                        callbackData.onGetDataSuccess(items);
+                    }else if (total>1){
+                        JSONArray jsonArray = jsonItems.getJSONArray("ITEM");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            Item item = new Item();
+                            item = gson.fromJson(jsonArray.getJSONObject(i).toString(), Item.class);
+                            items.add(item);
+                        }
+                        Log.i("abc", "" + items.size());
+
+                        // String test = fundial_profile.getFundial_profile().getRply().getName();
+                        //Log.i(TAG, test);
+                        // Item item = fundial_profile.getFundial_profile().getRply().getSubscriber().getItems().getObjItem();
+
+                        callbackData.onGetDataSuccess(items);
                     }
-                    Log.i("abc", "" + items.size());
 
-                    // String test = fundial_profile.getFundial_profile().getRply().getName();
-                    //Log.i(TAG, test);
-                    // Item item = fundial_profile.getFundial_profile().getRply().getSubscriber().getItems().getObjItem();
-
-                    callbackData.onGetDataSuccess(items);
                 } catch (Exception e) {
                     callbackData.onGetDataFault(e);
                 }
@@ -1399,6 +1437,35 @@ public class ApiService {
                         banner = gson.fromJson(jsonArray.getJSONObject(i).toString(), Banner.class);
                         lisBanner.add(banner);
                     }
+                    callbackData.onGetDataSuccess(lisBanner);
+                } catch (Exception e) {
+                    callbackData.onGetDataFault(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //callbackData.onGetDataFault(t);
+            }
+        });
+    }
+
+    //USER_INIT/init thông tin user theo sdt
+    public void api_promotion_idx(final CallbackData<Topic> callbackData, String Service, String Provider,
+                                          String ParamSize, String P1) {
+        apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
+        Call<ResponseBody> call = apiSevice.api_get_P1_sql(Service, Provider, ParamSize, P1);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    ArrayList<Topic> lisBanner = new ArrayList<Topic>();
+                    String jsonString = response.body().string();
+                    jsonString = jsonString.replaceAll("\\\\", "");
+                    jsonString = jsonString.substring(11, jsonString.length() - 2);
+                    JSONArray jsonArray = new JSONArray(jsonString);
+                    lisBanner = Topic.getList(jsonString);
                     callbackData.onGetDataSuccess(lisBanner);
                 } catch (Exception e) {
                     callbackData.onGetDataFault(e);

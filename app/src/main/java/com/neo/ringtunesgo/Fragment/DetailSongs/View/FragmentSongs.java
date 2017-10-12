@@ -8,23 +8,29 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.neo.ringtunesgo.Adapter.AdapterRingtunes;
 import com.neo.ringtunesgo.Adapter.AdapterSongsCustom;
 import com.neo.ringtunesgo.Config.Config;
+import com.neo.ringtunesgo.Config.Constant;
 import com.neo.ringtunesgo.Fragment.BuySongs.View.FragmentDetailBuySongs;
 import com.neo.ringtunesgo.Fragment.DetailSongs.Presenter.Presenter_Detail_Ringtunes;
 import com.neo.ringtunesgo.MainNavigationActivity;
@@ -53,14 +59,14 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
     public static final String TAG = FragmentSongs.class.getSimpleName();
     Presenter_Detail_Ringtunes presenter_detail_ringtunes;
     public static FragmentSongs fragment;
-    @BindView(R.id.list_detail_songs)
+    @BindView(R.id.recycler_list_downloaded)
     RecyclerView recycleSongs;
-    @BindView(R.id.pull_to_refresh_songs)
-    SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.txt_title_lis_songs)
-    TextView txt_title;
-    @BindView(R.id.img_back_lisSongs)
-    ImageView img_back_lisSongs;
+    /*    @BindView(R.id.pull_to_refresh_songs)
+        SwipeRefreshLayout swipeRefreshLayout;*/
+/*    @BindView(R.id.txt_title_lis_songs)
+    TextView txt_title;*/
+/*    @BindView(R.id.img_back_lisSongs)
+    ImageView img_back_lisSongs;*/
     AdapterRingtunes adapterRingtunes;
     AdapterSongsCustom adapterSongsCustom;
     List<Ringtunes> lisRing;
@@ -76,6 +82,14 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
     public ProgressBar progressBar;
     SharedPreferences pre;
     public String option;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+    @BindView(R.id.movie_poster)
+    ImageView imgHeader;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    String type_event;
+
     public static FragmentSongs getInstance() {
         if (fragment == null) {
             synchronized (FragmentSongs.class) {
@@ -98,11 +112,12 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail_songs, container, false);
+        View view = inflater.inflate(R.layout.fragment_downloaded_music, container, false);
         ButterKnife.bind(this, view);
         init();
         initEvent();
-        initPulltoRefresh();
+        setToolbar();
+        //  initPulltoRefresh();
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,44 +132,46 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
         pre = getActivity().getSharedPreferences("data", MODE_PRIVATE);
         /*url_image_title = pre.getString("url_image_title", "");*/
         id = pre.getString("id", "");
+        type_event = pre.getString("type_event", "");
         title = pre.getString("title", "");
         option = pre.getString("option", "");
         url_image_title = pre.getString("url_image_title", "");
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        txt_title.setText(""+title);
+        //  txt_title.setText(""+title);
         MainNavigationActivity.appbar.setVisibility(View.GONE);
     }
 
 
-    private void initPulltoRefresh() {
+  /*  private void initPulltoRefresh() {
         swipeRefreshLayout.setOnRefreshListener(this);
-    }
+    }*/
 
     private void init() {
-        adapterSongsCustom = new AdapterSongsCustom(getContext(), lisRing, "abc");
+        adapterRingtunes = new AdapterRingtunes(lisRing, getContext());
         mLayoutManager = new GridLayoutManager(getContext(), 1);
-       // recycleSongs.setNestedScrollingEnabled(false);
+        // recycleSongs.setNestedScrollingEnabled(false);
         recycleSongs.setHasFixedSize(true);
         recycleSongs.setLayoutManager(mLayoutManager);
         recycleSongs.setItemAnimator(new DefaultItemAnimator());
-        recycleSongs.setAdapter(adapterSongsCustom);
+        recycleSongs.setAdapter(adapterRingtunes);
 
-        adapterSongsCustom.setSetOnItemClickListener(new setOnItemClickListener() {
+        adapterRingtunes.setSetOnItemClickListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
-                player_ring=Ringtunes.getInstance();
+                player_ring = Ringtunes.getInstance();
                 //  showNotification(lisRing.get(position).getProduct_name());
-                SharedPreferences.Editor editor=pre.edit();
+                SharedPreferences.Editor editor = pre.edit();
                 player_ring = lisRing.get(position);
                 editor.putBoolean("isHome", false);
                 editor.putString("idSinger", lisRing.get(position).getSinger_id());
                 editor.commit();
                 if (!FragmentDetailBuySongs.getInstance().isAdded())
-                FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+                    FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
             }
 
             @Override
@@ -189,7 +206,7 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
                             CountDownTimer countDownTimer = new CountDownTimer(5 * 200, 200) {
                                 @Override
                                 public void onTick(long millisUntilFinished) {
-                                       progressBar.setVisibility(View.VISIBLE);
+                                    progressBar.setVisibility(View.VISIBLE);
                                 }
 
                                 @Override
@@ -203,12 +220,12 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
                 }
             }
         });
-        img_back_lisSongs.setOnClickListener(new View.OnClickListener() {
+      /*  img_back_lisSongs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                FragmentUtil.popBackStack(getActivity());
             }
-        });
+        });*/
     }
 
     private void showData(int page, int index) {
@@ -232,6 +249,12 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
             case Config.RINGTUNES_NEW:
                 presenter_detail_ringtunes.getByRingtunesNew("251", "" + page, "" + index);
                 break;
+            case Config.EVENT:
+                if (type_event.equals("event_details"))
+                    presenter_detail_ringtunes.getByEvent("event_details", id, "" + page, "" + index, Constant.USER_ID);
+                else if (type_event.equals("promotion_details"))
+                    presenter_detail_ringtunes.getByEvent("promotion_details", id, "" + page, "" + index, Constant.USER_ID);
+                break;
         }
     }
 
@@ -243,10 +266,8 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
             Log.i(TAG, "page " + page + " list.size" + listRingtunes.size() + " lisRing.size" + lisRing.size());
             isLoading = false;
             lisRing.addAll(listRingtunes);
-            Ringtunes objRing = new Ringtunes();
-            objRing.setImage_file(url_image_title);
-            lisRing.add(0, objRing);
-            adapterSongsCustom.notifyDataSetChanged();
+
+            adapterRingtunes.notifyDataSetChanged();
         }
     }
 
@@ -276,10 +297,30 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
                 lisRing = new ArrayList<>();
                 showData(page, index);
                 init();
-                swipeRefreshLayout.setRefreshing(false);
+                //  swipeRefreshLayout.setRefreshing(false);
             }
         }, 500);
 
+    }
+
+    private void setToolbar() {
+        Glide.with(getContext()).load(Constant.IMAGE_URL + url_image_title).into(imgHeader);
+        collapsingToolbar.setContentScrimColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        collapsingToolbar.setTitle(title);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedToolbar);
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedToolbar);
+        collapsingToolbar.setTitleEnabled(true);
+
+        if (toolbar != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+        } else {
+            // Don't inflate. Tablet is in landscape mode.
+        }
     }
 
     public void showNotification(String title) {
@@ -297,6 +338,7 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
         mNotifyMgr.notify(notification, mBuilder.build());
 
     }
+
     public void hideDialogLoadingSongs() {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
@@ -305,6 +347,7 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
 
     protected ProgressDialog dialog;
     private Handler StopDialogLoadingHandler = new Handler();
+
     public void showDialogLoadingSongs() {
         StopDialogLoadingHandler.postDelayed(new Runnable() {
             @Override
@@ -314,7 +357,7 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
                 }
             }
         }, 5000);
-        if (!getActivity().isFinishing()){
+        if (!getActivity().isFinishing()) {
             if (dialog == null) {
                 dialog = new ProgressDialog(getActivity());
                 dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

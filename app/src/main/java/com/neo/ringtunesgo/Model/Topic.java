@@ -33,6 +33,14 @@ public class Topic implements Serializable {
     private String photo;
     @SerializedName("BIGPHOTO")
     private String bigphoto;
+    @SerializedName("TONG")
+    private String sTONG;
+    @SerializedName("THUMBNAIL_IMAGE")
+    private String THUMBNAIL_IMAGE;
+    @SerializedName("IMAGE")
+    private String IMAGE;
+    @SerializedName("NAME")
+    private String NAME;
 
     private static Topic getObject (JSONObject jsonObject){
         return new Gson().fromJson(jsonObject.toString(),Topic.class);
@@ -51,6 +59,38 @@ public class Topic implements Serializable {
 
     public Topic() {
 
+    }
+
+    public String getTHUMBNAIL_IMAGE() {
+        return THUMBNAIL_IMAGE;
+    }
+
+    public void setTHUMBNAIL_IMAGE(String THUMBNAIL_IMAGE) {
+        this.THUMBNAIL_IMAGE = THUMBNAIL_IMAGE;
+    }
+
+    public String getIMAGE() {
+        return IMAGE;
+    }
+
+    public void setIMAGE(String IMAGE) {
+        this.IMAGE = IMAGE;
+    }
+
+    public String getNAME() {
+        return NAME;
+    }
+
+    public void setNAME(String NAME) {
+        this.NAME = NAME;
+    }
+
+    public String getsTONG() {
+        return sTONG;
+    }
+
+    public void setsTONG(String sTONG) {
+        this.sTONG = sTONG;
     }
 
     public String getId() {
