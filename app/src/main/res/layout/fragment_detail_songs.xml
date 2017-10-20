@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:context="com.neo.ringtunesgo.Fragment.Home.View.FragmentHome">
+            tools:context="com.neo.media.Fragment.Home.View.FragmentHome">
 
             <RelativeLayout
                 android:visibility="visible"

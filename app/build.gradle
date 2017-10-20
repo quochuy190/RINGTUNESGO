@@ -6,7 +6,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.neo.ringtunesgo"
+        applicationId "com.neo.media"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -26,9 +26,9 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('C:/Users/QQ/Desktop/RINGTUNES_GO/final/ringtunes_go_keystore.jks')
+            storeFile file('D:/MYWORK/2017/PROJECT/NEO/RingtunesGo/10_10_2017/final/keystore_media.jks')
             storePassword "quochuy@101"
-            keyAlias "neo.vn"
+            keyAlias "media.com"
             keyPassword "quochuy@101"
             v2SigningEnabled false
         }

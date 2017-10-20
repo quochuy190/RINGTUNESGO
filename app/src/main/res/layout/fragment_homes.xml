@@ -137,7 +137,7 @@
                 android:layout_below="@+id/slidertest"
                 android:background="@color/white"
                 android:orientation="vertical"
-                tools:context="com.neo.ringtunesgo.Fragment.Home.View.FragmentHome">
+                tools:context="com.neo.media.Fragment.Home.View.FragmentHome">
                 <!--ringtunes new-->
 
                 <android.support.v7.widget.RecyclerView

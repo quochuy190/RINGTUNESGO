@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="@dimen/dp300"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/dp10"
+    app:cardCornerRadius="@dimen/dp1"
     android:layout_gravity="center"
     android:orientation="vertical">
     <LinearLayout
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:padding="@dimen/dp10"
@@ -34,6 +35,19 @@
                 android:id="@+id/dialog_add_menu"
                 android:textColor="@color/text_name_song"
                 android:text="Thêm số điện thoại vào nhóm"
+                android:textSize="@dimen/text_18sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp30"
+                android:paddingRight="@dimen/dp30"
+                android:paddingTop="@dimen/dp20"
+                android:gravity="center"
+                android:id="@+id/dialog_edit_menu"
+                android:textColor="@color/text_name_song"
+                android:text="Edit Name"
                 android:textSize="@dimen/text_18sp"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"

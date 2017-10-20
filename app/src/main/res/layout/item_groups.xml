@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dp60"
     android:id="@+id/relative_group"
-    android:padding="@dimen/dp5"
     android:gravity="center_vertical"
     android:background="@drawable/spr_item_groupt"
     android:orientation="horizontal">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_centerVertical="true"
         android:id="@+id/item_img_avata"
         android:layout_marginLeft="@dimen/dp5"
-        android:layout_width="@dimen/dp60"
-        android:layout_height="@dimen/dp60"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"
         android:padding="@dimen/dp5"
         android:src="@drawable/icon_group_member"
         android:text="Tên nhóm" />
@@ -22,14 +22,14 @@
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp5"
+        android:layout_marginLeft="@dimen/dp10"
         android:layout_toRightOf="@id/item_img_avata">
 
         <TextView
             android:id="@+id/txt_item_groups_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gia đình"
+            android:text="Name"
             android:textColor="@color/text_name_song"
             android:textSize="@dimen/text_17sp"
             android:textStyle="bold" />
@@ -41,10 +41,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_item_groups_name"
             android:singleLine="true"
-            android:text="0942148362"
+            android:text="SĐT: "
             android:textSize="@dimen/text_15sp" />
 
     </RelativeLayout>
-
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_alignParentBottom="true"
+        android:background="@color/cardview_shadow_start_color"
+        android:layout_below="@+id/relative_tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1">
+    </View>
 
 </RelativeLayout>

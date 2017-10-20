@@ -27,14 +27,13 @@
                 android:src="@drawable/back_white" />
 
             <TextView
-                android:gravity="center"
                 android:id="@+id/txt_title_add_profiles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp35"
+                android:layout_marginLeft="@dimen/dp45"
                 android:padding="@dimen/dp5"
-                android:text="Tạo nhóm"
+                android:text="THÊM NHÓM MỚI"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_18sp"
                 android:visibility="visible" />
@@ -50,13 +49,22 @@
                 android:text="@string/alert_ok"
                 android:textColor="@color/white" />
         </RelativeLayout>
+        <View
+            android:background="@color/cardview_shadow_start_color"
+            android:layout_below="@+id/relative_tabbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1">
+        </View>
         <ImageView
-            android:padding="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp50"
+            android:layout_marginRight="@dimen/dp50"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/dp15"
             android:id="@+id/img_logo"
             android:src="@drawable/ringtunes_go_icon"
             android:layout_below="@+id/relative_tabbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp100" />
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -113,17 +121,36 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:visibility="visible">
-
-                <EditText
-                    android:id="@+id/ed_add_phone_addgroup"
-                    android:layout_width="@dimen/dp250"
+                <RelativeLayout
+                    android:id="@+id/relative_phone"
+                    android:layout_width="@dimen/dp220"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/spr_backgroup_edittext"
-                    android:gravity="center"
-                    android:hint="Nhập số điện thoại"
-                    android:inputType="number"
-                    android:padding="@dimen/dp5"
-                    android:textColor="@color/text_name_song" />
+                    android:background="@drawable/spr_backgroup_edittext">
+
+                    <EditText
+                        android:layout_marginRight="@dimen/dp15"
+                        android:id="@+id/ed_add_phone_addgroup"
+                        android:layout_width="@dimen/dp300"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:hint="Nhập số điện thoại"
+                        android:inputType="number"
+                        android:padding="@dimen/dp5"
+                        android:textColor="@color/text_name_song" />
+                    <TextView
+                        android:id="@+id/txt_delete_phone"
+                        android:layout_width="@dimen/dp30"
+                        android:layout_height="@dimen/dp30"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:gravity="center"
+                        android:text="x"
+                        android:textColor="@color/purple"
+                        android:textSize="@dimen/dp20"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
 
                 <ImageView
                     android:id="@+id/img_add_contact_addgroup"
@@ -160,19 +187,23 @@
                 android:layout_margin="@dimen/dp5">
             </android.support.v7.widget.RecyclerView>
 
+            <Button
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/btn_add_group"
+                android:textColor="@color/white"
+                android:text="Tạo nhóm"
+                android:textSize="@dimen/text_13sp"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_continue"
+                android:layout_width="@dimen/dp120"
+                android:layout_height="@dimen/dp35" />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_add_group"
-            android:textColor="@color/white"
-            android:text="Tạo nhóm"
-            android:textSize="@dimen/text_13sp"
-            android:layout_marginBottom="@dimen/dp5"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/button_continue"
-            android:layout_width="@dimen/dp120"
-            android:layout_height="@dimen/dp35" />
+
 
     </RelativeLayout>
 

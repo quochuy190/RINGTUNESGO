@@ -5,6 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@drawable/spr_item_groupt"
     android:padding="5dip">
 
 
@@ -22,7 +23,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginRight="5dp"
-            android:src="@mipmap/ringtunes_final" />
+            android:src="@drawable/icon_group_member" />
     </FrameLayout>
 
     <!-- Title Of Song-->
@@ -55,6 +56,7 @@
 
     <!-- Rightend Arrow -->
     <CheckBox
+        android:theme="@style/checkBoxStyle"
         android:id="@+id/cb_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

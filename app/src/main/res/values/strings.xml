@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RINGTUNESGO</string>
+    <string name="app_name">Ringtunes Go</string>
     <string name="title_activity_main2">Main2Activity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -79,12 +79,14 @@
     <string name="ringtunes_slogan">Yêu phút đợi chờ</string>
     <string name="waiting_code">Đợi vài phút hệ thống gửi tin nhắn mã code về máy của bạn</string>
     <string name="add_subcriber">Mời bạn đăng ký sử dụng dịch vụ Ringtunes để có thể sử dụng những bản nhạc
-        chờ tuyệt vời của chúng tôi. Phí dịch vụ là 9000 đ trên một tháng</string>
+        chờ tuyệt vời của chúng tôi.</string>
+    <string name="add_subcriber_success">Chúc mừng Quý Khách đã đăng ký thành công dịch vụ Ringtunes của
+        Vinaphone.Dịch vụ sẽ được kích hoạt sau 5 phút, dịch vụ sẽ được tự động gia hạn.</string>
     <string name="stop_subcriber">Bạn có chắc chắn muốn hủy dịch vụ không?
 Bộ sưu tập cá nhân và các chế độ cài đặt của quý khách sẽ bị xóa khỏi hệ thống.
 Quý khách có muốn tiếp tục hay không?</string>
-    <string name="resume_subcriber">Bạn đang tạm ngưng sự dụng dịch vu, Mời bạn chọn tiếp tục dể có
-        thể sử dụng lại dịch vụ nhạc chờ RingtunGo</string>
+    <string name="resume_subcriber">Bạn đang tạm ngưng sự dụng dịch vụ, Mời bạn chọn KÍCH HOẠT dể có
+        thể sử dụng lại dịch vụ nhạc chờ Ringtues Go</string>
 
     <string-array name="sex">invit
         <item>Male</item>
@@ -100,5 +102,8 @@ Quý khách có muốn tiếp tục hay không?</string>
     <string name="token_error_message">An error occurred while either fetching the InstanceID token,
         sending the fetched token to the server or subscribing to the PubSub topic. Please try
         running the sample again.</string>
+    "Rat tiec he thong dang ban. Quy Khach vui long thuc hien lai sau. De biet them chi tiet, Quy Khach vui long lien he tong dai 9191
+    <string name="error_44">"Rất tiệc hệ thống đang bận. Quý khách vui lòng thực hiện lại sau. Để biết thêm chi tiết vui long liên hệ tới tổng đài 9191. Xin cảm ơn</string>
+    <string name="error_104">Tặng không thành công do bài hát đã có trong Bộ sưu tập của thuê bao nhận. Quý Khách vui lòng chọn bài hát khác</string>
 </resources>
 

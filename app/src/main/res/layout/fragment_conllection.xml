@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fillViewport="true"
+    android:overScrollMode="never"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -14,16 +16,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tab_bar_conllection">
-
+            <View
+                android:background="@color/cardview_shadow_start_color"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp2"/>
             <TextView
                 android:id="@+id/txt_title_conllection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/title_fragment_all"
-                android:padding="@dimen/dp8_playing"
-                android:text="Bộ sưu tập của bạn"
-                android:textColor="@color/purple"
-                android:textSize="@dimen/text_15sp" />
+                android:padding="@dimen/dp5"
+                android:text="BỘ SƯU TẬP CỦA BẠN"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_17sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_songs_conllection"
@@ -32,26 +36,30 @@
                 android:layout_below="@id/txt_title_conllection"
                 android:layout_marginTop="@dimen/dp2">
 
-
             </android.support.v7.widget.RecyclerView>
-
+            <View
+                android:layout_below="@+id/list_songs_conllection"
+                android:background="@color/background_item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp2"/>
             <TextView
                 android:id="@+id/txt_title_song_same"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/list_songs_conllection"
-                android:background="@color/title_fragment_all"
-                android:padding="@dimen/dp8_playing"
-                android:text="Bài hát tương tự"
-                android:textColor="@color/purple"
-                android:textSize="@dimen/text_15sp" />
+                android:padding="@dimen/dp5"
+                android:text="BÀI HÁT BẠN CÓ THỂ QUAN TÂM"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_17sp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_songs_conllection_same"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt_title_song_same"
-                android:layout_marginTop="@dimen/dp2"></android.support.v7.widget.RecyclerView>
+                android:layout_marginTop="@dimen/dp2">
+
+            </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
 
         <RelativeLayout

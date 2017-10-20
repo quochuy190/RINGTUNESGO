@@ -42,17 +42,25 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <ImageView
-        android:src="@drawable/ringtunes_go_icon"
-        android:textColor="@color/ringtunes"
-        android:textSize="@dimen/text_34sp"
-        android:text="RingtunesGo"
-        android:gravity="center"
-        android:padding="@dimen/dp10"
+    <View
+        android:background="@color/cardview_shadow_start_color"
+        android:layout_below="@+id/relative_tabbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp100" />
+        android:layout_height="@dimen/dp1">
+    </View>
+    <ImageView
+        android:layout_marginLeft="@dimen/dp50"
+        android:layout_marginRight="@dimen/dp50"
+        android:adjustViewBounds="true"
+        android:padding="@dimen/dp15"
+        android:id="@+id/img_logo"
+        android:src="@drawable/ringtunes_go_icon"
+        android:layout_below="@+id/relative_tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:layout_marginTop="@dimen/dp10"
         android:layout_marginLeft="@dimen/dp20"
         android:layout_marginRight="@dimen/dp20"
         android:orientation="vertical"

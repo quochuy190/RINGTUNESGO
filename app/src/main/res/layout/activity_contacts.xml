@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_item"
+    android:background="@color/white"
     android:orientation="vertical">
     <LinearLayout
         android:gravity="center_vertical"
@@ -40,17 +40,18 @@
 
         <Button
             android:id="@+id/btn_ok_contact"
-            android:background="@drawable/button_continue"
+            android:background="@drawable/spr_buton_dialog"
             android:layout_weight="1"
             android:text="@string/alert_ok"
             android:layout_width="0dp"
-            android:textColor="@color/white"
+            android:textColor="@color/purple"
             android:layout_height="@dimen/dp30" />
 
     </LinearLayout>
 
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/listContact"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

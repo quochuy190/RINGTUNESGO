@@ -11,21 +11,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_marginBottom="@dimen/dp3"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_update_profile"
-                android:text="Sửa cài đặt"
-                android:textColor="@color/white"
-                android:background="@drawable/button_continue"
-                android:layout_width="@dimen/dp120"
-                android:layout_height="@dimen/dp35" />
 
-        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/relative_tabbar"
@@ -53,13 +39,28 @@
                 android:visibility="visible" />
 
         </RelativeLayout>
-
+        <View
+            android:background="@color/cardview_shadow_start_color"
+            android:layout_below="@+id/relative_tabbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1">
+        </View>
+        <ImageView
+            android:layout_marginLeft="@dimen/dp50"
+            android:layout_marginRight="@dimen/dp50"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/dp15"
+            android:id="@+id/img_logo"
+            android:src="@drawable/ringtunes_go_icon"
+            android:layout_below="@+id/relative_tabbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:id="@+id/linner_setup_addprofile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:layout_below="@+id/relative_tabbar"
+            android:layout_below="@+id/img_logo"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
@@ -131,7 +132,26 @@
 
             </android.support.v7.widget.RecyclerView>
 
+            <LinearLayout
+                android:layout_marginBottom="@dimen/dp5"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/dp3"
+                android:gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_update_profile"
+                    android:text="Sửa cài đặt"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_continue"
+                    android:layout_width="@dimen/dp120"
+                    android:layout_height="@dimen/dp35" />
+
+            </LinearLayout>
+
         </LinearLayout>
+
 
     </RelativeLayout>
 

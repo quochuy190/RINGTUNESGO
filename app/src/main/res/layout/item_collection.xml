@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/spr_item_groupt"
     android:orientation="horizontal">
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/img_play_item_ringtunes"
+        android:layout_width="@dimen/dp40"
+        android:layout_height="@dimen/dp40"
+        android:padding="@dimen/dp5"
+        android:layout_marginRight="@dimen/dp5"
+        android:src="@drawable/icon_download" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,4 +105,4 @@
 
         </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

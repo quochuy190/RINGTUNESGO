@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.neo.ringtunesgo.untils.CustomViewPager
+    <com.neo.media.untils.CustomViewPager
 
         android:id="@+id/vp_home"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:layout_marginBottom="?attr/actionBarSize">
 
 
-    </com.neo.ringtunesgo.untils.CustomViewPager>
+    </com.neo.media.untils.CustomViewPager>
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/tab_homefragment"
@@ -26,10 +26,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <com.neo.ringtunesgo.untils.CustomTabLayout
+        <com.neo.media.untils.CustomTabLayout
             android:id="@+id/tablayout_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp55"
+            android:layout_height="@dimen/dp50"
             android:background="@color/white"
             app:popupTheme="@style/PopupOverlay"
             app:tabGravity="fill"

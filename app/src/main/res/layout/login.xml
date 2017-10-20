@@ -4,19 +4,24 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
-
     <ImageView
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp50"
+        android:layout_marginRight="@dimen/dp50"
+        android:adjustViewBounds="true"
+        android:padding="@dimen/dp15"
+        android:id="@+id/img_logo"
+        android:src="@drawable/ringtunes_go_icon"
+        android:layout_below="@+id/relative_tabbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp150"
-        android:padding="@dimen/dp25"
-        android:src="@drawable/ringtunes_go_icon" />
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp20"
         android:layout_marginRight="@dimen/dp20"
-        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp40"
         android:background="@color/background_item">
 
         <ImageView
@@ -105,30 +110,33 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp20"
         android:layout_marginRight="@dimen/dp20"
-        android:gravity="center_vertical"
         android:layout_marginTop="@dimen/dp20"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:gravity="center_vertical">
+
         <CheckBox
             android:id="@+id/remember_password"
-            android:theme="@style/checkBoxStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:theme="@style/checkBoxStyle" />
+
         <TextView
-            android:textSize="@dimen/text_17sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp5"
             android:text="Nhớ mật khẩu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/text_17sp" />
 
     </LinearLayout>
+
     <TextView
-        android:layout_marginTop="@dimen/dp10"
-        android:textSize="@dimen/text_17sp"
-        android:layout_marginLeft="@dimen/dp20"
-        android:layout_marginRight="@dimen/dp20"
+        android:gravity="center"
+        android:id="@+id/txt_get_password"
+        android:textSize="@dimen/text_14sp"
+       android:padding="@dimen/dp20"
         android:text="Trong trường hợp quên mật khẩu. Quý khách vui lòng gửi tin nhắn theo cú pháp: MK gửi đến 333 (Miễn phí)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

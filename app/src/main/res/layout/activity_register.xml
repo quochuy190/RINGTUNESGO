@@ -14,18 +14,22 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-
-
         <ImageView
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginLeft="@dimen/dp50"
+            android:layout_marginRight="@dimen/dp50"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/dp15"
+            android:id="@+id/img_logo"
+            android:src="@drawable/ringtunes_go_icon"
+            android:layout_below="@+id/relative_tabbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp150"
-            android:padding="@dimen/dp25"
-            android:src="@drawable/ringtunes_go_icon" />
+            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/txt_nhapOTp"
             android:layout_marginLeft="@dimen/dp10"
             android:layout_marginRight="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp30"
             android:textSize="@dimen/text_17sp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"

@@ -5,6 +5,7 @@
     android:layout_height="@dimen/dp50"
     android:layout_marginLeft="@dimen/dp10"
     android:layout_marginRight="@dimen/dp10"
+    android:id="@+id/img_next_album"
     android:background="@color/white">
     <View
         android:background="@color/background_title"
@@ -21,13 +22,18 @@
         android:text="ALBUM HOT"
         android:textColor="@color/black"
         android:textSize="@dimen/text_18sp" />
+    <RelativeLayout
 
-    <ImageView
-        android:padding="@dimen/dp3"
-        android:id="@+id/img_next_album"
-        android:layout_width="@dimen/dp35"
-        android:layout_height="@dimen/dp25"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/icon_ba_cham" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:padding="@dimen/dp3"
+            android:layout_width="@dimen/dp35"
+            android:layout_height="@dimen/dp25"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_ba_cham" />
+    </RelativeLayout>
+
+
 </RelativeLayout>

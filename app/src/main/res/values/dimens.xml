@@ -65,6 +65,7 @@
     <dimen name="dp35_playing">35dp</dimen>
     <dimen name="text_18sp">18sp</dimen>
     <dimen name="dp8_playing">8dp</dimen>
+    <dimen name="dp7">7dp</dimen>
     <dimen name="dp77_playing">77dp</dimen>
     <dimen name="dp26_playing">26dp</dimen>
     <dimen name="dp100_playing">100dp</dimen>
