@@ -58,7 +58,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
       //  ringtone();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
-                //.setContentTitle("Ringtunes Go")
+                .setContentTitle("Ringtunes Go")
                 .setContentText(title)
                 .setAutoCancel(true)
                 .setSound(Uri.parse("android.resource://"

@@ -82,7 +82,7 @@ public class Fragment_SingerDetail extends BaseFragment implements PresenterSing
     RecyclerView.LayoutManager mLayoutManager;
     AdapterRingtunes adapterRingtunes;
     int page;
-    String index = "20";
+    String index = "50";
     @BindView(R.id.txt_singer_deps_full)
     TextView txt_singer_deps_full;
     @Override
@@ -102,8 +102,9 @@ public class Fragment_SingerDetail extends BaseFragment implements PresenterSing
         singer.setId(id_Singer);
         lisSongs = new ArrayList<>();
         PresenterSinger presenterSinger = new PresenterSinger(this);
+        showDialogLoading();
         presenterSinger.getDetailSinger(id_Singer);
-        presenterSinger.getSongsBySinger(id_Singer, "" + page, index);
+        presenterSinger.getSongsBySinger(id_Singer, "0" + page, index);
     }
 
     public void updateData(Singer objSinger) {
@@ -211,6 +212,7 @@ public class Fragment_SingerDetail extends BaseFragment implements PresenterSing
 
     @Override
     public void showSingerDetail(List<Singer> lisSinger) {
+        hideDialogLoading();
         if (lisSinger.size() > 0) {
             if (lisSinger.get(0).getDESCRIPTION() != null) {
                 singer.setDESCRIPTION(lisSinger.get(0).getDESCRIPTION());

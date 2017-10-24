@@ -58,7 +58,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.neo.media.Test" />
         <activity
             android:name="com.neo.media.View.Xacthuc_thuebao.ActivityXacthuc"
             android:screenOrientation="portrait">

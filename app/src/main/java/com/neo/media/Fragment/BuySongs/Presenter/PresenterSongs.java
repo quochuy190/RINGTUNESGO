@@ -204,10 +204,9 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
             @Override
             public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
                 //viewRingtunes.showSongsBySingerId(arrayList);
-                if (arrayList.size() > 0) {
-                    Log.i("abc", arrayList.size() + "");
+
                     fragmentDetailBuySongs.show_lis_songs_bysinger(arrayList);
-                }
+
             }
 
             @Override

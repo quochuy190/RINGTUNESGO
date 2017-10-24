@@ -199,7 +199,10 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
                 yes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //  startActivity(new Intent(getActivity(), ActivityXacthuc.class));
+                        SharedPreferences.Editor editor = pre.edit();
+                        editor.putBoolean("is_Dangky", true);
+
+                        editor.commit();
                         dialog_yes.dismiss();
                         finish();
                     }

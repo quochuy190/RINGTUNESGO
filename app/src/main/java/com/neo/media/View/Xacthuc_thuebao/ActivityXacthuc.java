@@ -196,6 +196,9 @@ public class ActivityXacthuc extends BaseActivity implements Xacthuc_Impl.View {
                     @Override
                     public void onClick(View v) {
                         //  startActivity(new Intent(getActivity(), ActivityXacthuc.class));
+                        SharedPreferences.Editor editor = pre.edit();
+                        editor.putBoolean("is_Dangky", true);
+                        editor.commit();
                         dialog_yes.dismiss();
                         finish();
                     }

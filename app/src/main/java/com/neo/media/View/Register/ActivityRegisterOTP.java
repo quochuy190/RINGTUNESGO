@@ -186,6 +186,10 @@ public class ActivityRegisterOTP extends BaseActivity implements InterfaceRegist
                 yes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        SharedPreferences.Editor editor = fr.edit();
+                        editor.putBoolean("is_Dangky", true);
+
+                        editor.commit();
                         dialog_yes.dismiss();
                         finish();
                     }

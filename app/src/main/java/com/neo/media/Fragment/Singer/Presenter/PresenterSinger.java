@@ -98,6 +98,6 @@ public class PresenterSinger implements PresenterSingerImpl.Presenter {
             public void onGetObjectDataSuccess(Ringtunes Object) {
 
             }
-        }, Service, Provider, ParamSize, singer_id, "1", page, index);
+        }, Service, Provider, ParamSize, singer_id, "0", page, index);
     }
 }

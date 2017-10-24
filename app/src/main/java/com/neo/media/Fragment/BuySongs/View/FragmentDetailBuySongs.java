@@ -468,10 +468,11 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
                                     phone_gift = phone_gift.replaceAll("\\,", "");
                                     phone_gift = phone_gift.replaceAll(" ", "");
                                     phone_gift = PhoneNumber.convertTo84PhoneNunber(phone_gift);
-                                    if (PhoneNumber.StandartTelco(phone_gift).equals("VINA")){
+                                    if (PhoneNumber.StandartTelco(phone_gift).equals("VINA")) {
                                         presenterSongs.addGifttoPlayList(sessionID, msisdn, phone_gift, sExpiration, ringtunes.getId());
                                         dialog_getphone.dismiss();
-                                    }else DialogUtil.showDialog(getContext(), "Lỗi", "Bạn chỉ tặng được cho số điện thoại thuộc mạng Vinaphone");
+                                    } else
+                                        DialogUtil.showDialog(getContext(), "Lỗi", "Bạn chỉ tặng được cho số điện thoại thuộc mạng Vinaphone");
                                 } else
                                     Toast.makeText(getContext(), "Bạn chưa nhập vào số điện thoại", Toast.LENGTH_SHORT).show();
                             }
@@ -721,12 +722,17 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
                 .apply(bitmapTransform(new BlurTransformation(10)))
                 .into(img_buysong_detail_nen);
         txtSinger_BuySongs.setText(ringtunes.getSinger_name());
-        if (ringtunes.getHist() == null) {
-            txtHits_BuySongs.setText("0");
-        } else {
+        if (ringtunes.getHist() != null) {
             String hit = CustomUtils.conventNumber(ringtunes.getHist());
             txtHits_BuySongs.setText(hit);
+        } else if (ringtunes.getCOUNTER() != null) {
+            String hit = CustomUtils.conventNumber(ringtunes.getCOUNTER());
+            txtHits_BuySongs.setText(hit);
+
+        } else {
+            txtHits_BuySongs.setText("0");
         }
+
 
         txtPrice_BuySongs.setText("(" + ringtunes.getPrice() + " Đ");
         txt_name_buysongs.setText(ringtunes.getProduct_name());

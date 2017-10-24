@@ -103,6 +103,7 @@ public class FragmentInfo extends BaseFragment implements InfoUserInterface.View
     SharedPreferences fr;
     String sSex;
     String sDate;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,14 +150,7 @@ public class FragmentInfo extends BaseFragment implements InfoUserInterface.View
     public void onResume() {
         super.onResume();
         if (objLogin != null) {
-            if (objInfo != null) {
-                if (objInfo.getStatus().equals("2")) {
-                    txt_notification_info.setVisibility(View.GONE);
-                    getData(objInfo);
-                } else {
-                    txt_notification_info.setVisibility(View.VISIBLE);
-                }
-            }
+            getData(objInfo);
         }
         MainNavigationActivity.appbar.setVisibility(View.GONE);
     }

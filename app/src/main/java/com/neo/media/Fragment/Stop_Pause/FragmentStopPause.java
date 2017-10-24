@@ -1,6 +1,8 @@
 package com.neo.media.Fragment.Stop_Pause;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -63,6 +65,7 @@ public class FragmentStopPause extends BaseActivity implements Stop_Pause_Interf
     public String sesionID;
     public String msisdn;
     public boolean isActivated;
+    boolean is_dk = false;
 
     @Override
     public int setContentViewId() {
@@ -305,10 +308,24 @@ public class FragmentStopPause extends BaseActivity implements Stop_Pause_Interf
     public void show_add_service(List<String> list) {
         if (list.size() > 0) {
             if (list.get(0).equals("0")) {
-                presenter_stopPause.get_detail_subsriber(sesionID, msisdn);
-                DialogUtil.showDialog(FragmentStopPause.this, "Thành Công",getResources().getString(R.string.add_subcriber_success) );
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("Thành công");
+                alertDialogBuilder.setMessage(getResources().getString(R.string.add_subcriber_success));
+
+                alertDialogBuilder.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                presenter_stopPause.get_detail_subsriber(sesionID, msisdn);
+                                dialog.dismiss();
+                            }
+                        });
+
+                alertDialogBuilder.setCancelable(false);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             } else {
-                DialogUtil.showDialog(FragmentStopPause.this, "Lỗi",list.get(1) );
+                DialogUtil.showDialog(FragmentStopPause.this, "Lỗi", list.get(1));
             }
         }
     }

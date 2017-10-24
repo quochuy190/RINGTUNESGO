@@ -266,6 +266,7 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
             lisRingtunes_same.addAll(lisRing);
             adapterRingtunes.notifyDataSetChanged();
         }else {
+            lisRingtunes_same.clear();
             lisRingtunes_same.addAll(MyApplication.lisRingtunesNew);
             adapterRingtunes.notifyDataSetChanged();
         }

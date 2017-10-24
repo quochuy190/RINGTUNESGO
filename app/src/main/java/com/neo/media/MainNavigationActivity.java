@@ -281,7 +281,6 @@ public class MainNavigationActivity extends BaseActivity
                                 MyApplication.profile_bundle = new PROFILE();
                                 MyApplication.listConllection = new ArrayList<>();
                                 MyApplication.player_ring = new Ringtunes();
-                                MyApplication.lisRingtunesNew = new ArrayList<>();
                                 isLogin = false;
                                 myRealm.beginTransaction();
                                 myRealm.clear(Login.class);
@@ -292,6 +291,7 @@ public class MainNavigationActivity extends BaseActivity
                                 initDrawer();
                                 dialog_yes.dismiss();
                                 SharedPreferences.Editor editor = fr.edit();
+                                editor.putBoolean("is_Dangky", false);
                                 editor.putBoolean("is_save_namegroup", false);
                                 editor.commit();
                             }
@@ -631,6 +631,7 @@ public class MainNavigationActivity extends BaseActivity
 
     protected void onResume() {
         super.onResume();
+        boolean is_Dangky= fr.getBoolean("is_Dangky", false);
 
         is_save_namegroup = fr.getBoolean("is_save_namegroup", false);
         getUserName();
@@ -650,6 +651,13 @@ public class MainNavigationActivity extends BaseActivity
                     }
                 } else {
                     is_subscriber = false;
+                }
+                if (is_Dangky){
+
+                    SharedPreferences.Editor editor = fr.edit();
+                    editor.putBoolean("is_Dangky", false);
+                    editor.commit();
+                    startActivity(new Intent(MainNavigationActivity.this, FragmentStopPause.class));
                 }
             }
         }
