@@ -29,6 +29,7 @@ import com.neo.media.Model.Login;
 import com.neo.media.R;
 import com.neo.media.RealmController.RealmController;
 import com.neo.media.untils.BaseFragment;
+import com.neo.media.untils.DialogUtil;
 import com.neo.media.untils.FragmentUtil;
 import com.neo.media.untils.Utilities;
 
@@ -61,7 +62,7 @@ public class FragmentInfo extends BaseFragment implements InfoUserInterface.View
         return fragmentStopPause;
     }
 
-    final String[] spn_sex_setup = {"Nam", "Nữ", "LGBT"};
+    final String[] spn_sex_setup = {"Nam", "Nữ"};
     @BindView(R.id.btn_update_info)
     Button btn_update_info;
     @BindView(R.id.spinnerSex)
@@ -166,8 +167,9 @@ public class FragmentInfo extends BaseFragment implements InfoUserInterface.View
                             inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                             if (ecFullName.getText().toString().length() > 0 && editTextBirthday.getText().toString().length() > 0) {
                                 presenterInfoUser.update_profile(ecFullName.getText().toString(), msisdn, sDate,
-                                        "1", editTextBirthday.getText().toString(), user_id);
-                            }
+                                        sSex, editTextBirthday.getText().toString(), user_id);
+                            } else
+                                DialogUtil.showDialog(getContext(), "Lỗi", "Bạn chưa nhập vào đủ thông tin");
 
                             return true;
                         default:
@@ -226,8 +228,8 @@ public class FragmentInfo extends BaseFragment implements InfoUserInterface.View
                 inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 if (ecFullName.getText().toString().length() > 0 && editTextBirthday.getText().toString().length() > 0) {
                     presenterInfoUser.update_profile(ecFullName.getText().toString(), msisdn, sDate,
-                            "1", editTextBirthday.getText().toString(), user_id);
-                }
+                            sSex, editTextBirthday.getText().toString(), user_id);
+                } else DialogUtil.showDialog(getContext(), "Lỗi", "Bạn chưa nhập vào đủ thông tin");
             }
         });
     }

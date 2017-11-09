@@ -46,7 +46,7 @@ public class AdapterDrawer extends ArrayAdapter<DrawerItem> {
                 drawerTitleHolder = new DrawerTitleHolder();
                 view = inflater.inflate(R.layout.item_title_drawer, parent, false);
                 drawerTitleHolder.ItemName = (TextView) view.findViewById(R.id.txt_title_drawer);
-                drawerTitleHolder.ItemName.setText("RingtunesGo");
+                drawerTitleHolder.ItemName.setText("RingTunes");
 
             } else {
                 if (view == null) {
@@ -78,7 +78,7 @@ public class AdapterDrawer extends ArrayAdapter<DrawerItem> {
                 drawerTitleHolder = new DrawerTitleHolder();
                 view = inflater.inflate(R.layout.item_title_drawer, parent, false);
                 drawerTitleHolder.ItemName = (TextView) view.findViewById(R.id.txt_title_drawer);
-                drawerTitleHolder.ItemName.setText("RingtunesGo");
+                drawerTitleHolder.ItemName.setText("RingTunes");
 
             } else if (position == 5) {
                 LayoutInflater inflater = ((Activity) context).getLayoutInflater();

@@ -27,8 +27,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         if (remoteMessage.getNotification() != null) {
-          //  hienThiThongBao(remoteMessage.getNotification().getBody());
-           // hienThiThongBao( remoteMessage.getFrom(), remoteMessage.getMessageType());
+            hienThiThongBao( remoteMessage.getFrom(), remoteMessage.getMessageType());
         } else{
            // hienThiThongBao( remoteMessage.getFrom(), remoteMessage.getMessageType());
             Map<String, String> mMap = new ArrayMap<>();
@@ -84,7 +83,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(body)
                 .setAutoCancel(true)
-                .setSound(sound)
+                .setSound(Uri.parse("android.resource://"
+                        + getApplicationContext().getPackageName() + "/"
+                        + R.raw.notifi))
                 .setNumber(++number_notifycation)
                 .setContentIntent(pendingIntent);
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

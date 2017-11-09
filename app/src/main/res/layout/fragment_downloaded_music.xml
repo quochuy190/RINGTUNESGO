@@ -7,6 +7,30 @@
     android:layout_alignParentTop="true"
     android:background="@color/white">
 
+    <RelativeLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_list_downloaded"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+
+               >
+
+            </android.support.v7.widget.RecyclerView>
+            <ProgressBar
+                android:backgroundTint="@color/purple"
+                android:progressBackgroundTint="@color/purple"
+                android:progressTint="@color/purple"
+                android:visibility="gone"
+                android:id="@+id/prb_loading_more_detailsongs"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp35" />
+        </RelativeLayout>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -30,42 +54,15 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:background="@color/backgroud_search"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="@color/backgroud_search"
                 app:layout_collapseMode="pin"
                 app:theme="@style/AppTheme.Toolbar" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-
-        <RelativeLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_list_downloaded"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp10">
-
-            </android.support.v7.widget.RecyclerView>
-            <ProgressBar
-                android:backgroundTint="@color/purple"
-                android:progressBackgroundTint="@color/purple"
-                android:progressTint="@color/purple"
-                android:visibility="gone"
-                android:id="@+id/prb_loading_more_detailsongs"
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp35" />
-        </RelativeLayout>
-
-
-
 
 
 </android.support.design.widget.CoordinatorLayout>

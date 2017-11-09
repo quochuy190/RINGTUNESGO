@@ -18,7 +18,7 @@
             <RelativeLayout
                 android:id="@+id/relative_img"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp284"
+                android:layout_height="@dimen/dp260"
                 android:layout_below="@+id/tab_bar_detailsong">
 
                 <ImageView
@@ -32,7 +32,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp284"
+                    android:layout_height="@dimen/dp260"
                     android:background="@color/backgroud_search"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
@@ -59,11 +59,9 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dp10"
                         android:singleLine="true"
-                        android:text="@string/name_buy_songs"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_18sp" />
-
-
 
                     <RelativeLayout
                         android:id="@+id/linnear_hsd"
@@ -85,7 +83,7 @@
                                 android:id="@+id/txt_hitssingerdetail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="2354"
+                                android:text=""
                                 android:textColor="@color/white_backgroup"
                                 android:textSize="@dimen/text_15sp" />
                             <ImageView

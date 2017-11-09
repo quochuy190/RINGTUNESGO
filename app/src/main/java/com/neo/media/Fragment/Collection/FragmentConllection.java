@@ -146,7 +146,7 @@ public class FragmentConllection extends BaseFragment implements ConllectionInte
             }
         }
         MainNavigationActivity.appbar.setVisibility(View.GONE);
-        txt_title.setText("BỘ SƯU TẬP");
+        txt_title.setText("BỘ SƯU TẬP CÁ NHÂN");
 
     }
 

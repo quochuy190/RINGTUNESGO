@@ -130,7 +130,7 @@ public class HomeFragment extends BaseFragment {
                     case 0:
                         ab.setDisplayHomeAsUpEnabled(false);
                         ab.setDisplayShowHomeEnabled(false);
-                        ab.setTitle("HOME");
+                        ab.setTitle("TRANG CHỦ");
                         tbHome.getTabAt(0).setIcon(R.drawable.home_purple);
            //             tbHome.getTabAt().setIcon(R.drawable.album_blue);
                         tbHome.getTabAt(1).setIcon(R.drawable.stype_blue);

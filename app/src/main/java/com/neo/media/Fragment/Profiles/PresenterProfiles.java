@@ -21,8 +21,7 @@ public class PresenterProfiles implements ProfilesInterface.Presenter {
     }
 
     @Override
-    public void getAllProfiles(String sesionID, String msisdn,String caller_id, String caller_type) {
-        fragmentProfiles.showDialogLoading();
+    public void getAllProfiles(String sesionID, String msisdn, String caller_id, String caller_type) {
         String Service = "GET_PROFILES";
         String Provider = "default";
         String ParamSize = "4";
@@ -49,19 +48,23 @@ public class PresenterProfiles implements ProfilesInterface.Presenter {
 
     @Override
     public void deleteProfile(String sesionID, String msisdn, String profile_id) {
+        fragmentProfiles.showDialogLoading();
         String Service = "DELETE_PROFILE";
         String Provider = "default";
         String ParamSize = "3";
         apiService.api_delete_profile(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
-                if (arrayList.size()>0)
+                if (arrayList.size() > 0)
                     fragmentProfiles.showErrorDeleteProfile(arrayList);
+                else {
+                    fragmentProfiles.hideDialogLoading();
+                }
             }
 
             @Override
             public void onGetDataFault(Exception e) {
-
+                fragmentProfiles.hideDialogLoading();
             }
 
             @Override

@@ -119,6 +119,7 @@ public class FragmentProfiles extends BaseFragment implements ProfilesInterface.
                     txt_notification_group.setVisibility(View.GONE);
                     sesionID = objLogin.getsSessinonID();
                     msisdn = objLogin.getMsisdn();
+                    showDialogLoading();
                     presenterProfiles.getAllProfiles(sesionID, msisdn, "", "");
                 } else {
                     txt_add_profile.setVisibility(View.GONE);
@@ -127,7 +128,7 @@ public class FragmentProfiles extends BaseFragment implements ProfilesInterface.
             }
         }
         MainNavigationActivity.appbar.setVisibility(View.GONE);
-        txt_title.setText("Cài đặt Ringtunes");
+        txt_title.setText("CÀI ĐẶT RINGTUNES");
     }
 
     private void initEvent() {
@@ -247,7 +248,7 @@ public class FragmentProfiles extends BaseFragment implements ProfilesInterface.
             } else {
                 Toast.makeText(getContext(), list.get(1), Toast.LENGTH_SHORT).show();
             }
-        }
+        }else Toast.makeText(getContext(), "Lỗi hệ thống", Toast.LENGTH_SHORT).show();
     }
 
     @Override

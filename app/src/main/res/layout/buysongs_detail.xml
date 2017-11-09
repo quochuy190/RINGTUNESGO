@@ -78,13 +78,16 @@
                     android:layout_height="@dimen/dp284"
                     android:background="@color/backgroud_search">
                     <android.support.v7.widget.CardView
+                        android:background="@color/backgroud_search"
                         android:id="@+id/carview_img_buysong"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dp25"
-                        app:cardCornerRadius="@dimen/dp5"
+                        app:cardCornerRadius="@dimen/dp10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <ImageView
+                            android:background="@color/backgroud_search"
+                            android:adjustViewBounds="true"
                             android:id="@+id/img_buysong_detail"
                             android:layout_width="@dimen/dp160"
                             android:layout_height="@dimen/dp160"
@@ -101,7 +104,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dp5"
                         android:singleLine="true"
-                        android:text="@string/name_buy_songs"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_18sp"
                         android:textStyle="bold" />
@@ -112,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/txt_name_buysongs"
                         android:layout_centerHorizontal="true"
-                        android:text="Sơn Tùng - MTP"
+                        android:text=""
                         android:textColor="@color/white_backgroup"
                         android:textSize="@dimen/text_14sp" />
 
@@ -136,7 +139,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp5"
-                                android:text="( 3000 d"
+                                android:text=""
                                 android:textColor="@color/white_backgroup"
                                 android:textSize="@dimen/text_13sp" />
 
@@ -146,7 +149,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dp5"
-                                android:text="30 ngày )"
+                                android:text=""
                                 android:textColor="@color/white_backgroup"
                                 android:textSize="@dimen/text_13sp" />
 
@@ -163,7 +166,7 @@
                                 android:id="@+id/txt_hits_buysongs"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="2354"
+                                android:text=""
                                 android:textColor="@color/white_backgroup"
                                 android:textSize="@dimen/text_13sp" />
                             <ImageView

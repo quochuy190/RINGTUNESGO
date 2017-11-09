@@ -31,7 +31,7 @@
                 android:id="@+id/txt_title_add_profiles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thêm cài đặt mới"
+                android:text="THÊM CÀI ĐẶT MỚI"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_18sp"
                 android:visibility="visible" />

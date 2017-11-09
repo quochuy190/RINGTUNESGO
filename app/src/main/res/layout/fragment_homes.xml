@@ -106,7 +106,7 @@
             <RelativeLayout
                 android:id="@+id/slidertest"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="150dp"
                 android:layout_marginBottom="1dp"
                 android:visibility="visible">
 

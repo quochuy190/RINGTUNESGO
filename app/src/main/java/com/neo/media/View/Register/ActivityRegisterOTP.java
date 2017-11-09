@@ -108,20 +108,28 @@ public class ActivityRegisterOTP extends BaseActivity implements InterfaceRegist
 
     @Override
     public void showGetOTP(List<String> listOTP) {
-        if (listOTP.get(0).equals("0")) {
-            btn_next_register.setVisibility(View.VISIBLE);
-            btn_next_register.setText("Đăng nhập");
-            txt_nhapOTp.setText(Html.fromHtml("Bạn đang đăng nhập với số điện thoại <font color='#6f2b8e'>"
-                    + editTextNumber_otp.getText().toString()+"</font>" ));
-            editTextNumber_otp.setText("");
-            editTextNumber_otp.setHint("- Nhập vào mã OTP");
-            is_getOTP = true;
-        } else {
-            DialogUtil.showDialog(ActivityRegisterOTP.this, "Lỗi",listOTP.get(2));
+        if (listOTP.size()>0){
+            if (listOTP.get(0).equals("0")) {
+                btn_next_register.setVisibility(View.VISIBLE);
+                btn_next_register.setText("Đăng nhập");
+                txt_nhapOTp.setText(Html.fromHtml("Bạn đang đăng nhập với số điện thoại <font color='#6f2b8e'>"
+                        + editTextNumber_otp.getText().toString()+"</font>" ));
+                editTextNumber_otp.setText("");
+                editTextNumber_otp.setHint("- Nhập vào mã OTP");
+                is_getOTP = true;
+            } else {
+                DialogUtil.showDialog(ActivityRegisterOTP.this, "Lỗi",listOTP.get(2));
+                //Toast.makeText(this, listOTP.get(2), Toast.LENGTH_SHORT).show();
+                editTextNumber_otp.setText("");
+                btn_next_register.setVisibility(View.VISIBLE);
+            }
+        }else {
+            DialogUtil.showDialog(ActivityRegisterOTP.this, "Lỗi","Rất tiếc hệ thông đang bận");
             //Toast.makeText(this, listOTP.get(2), Toast.LENGTH_SHORT).show();
             editTextNumber_otp.setText("");
             btn_next_register.setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override

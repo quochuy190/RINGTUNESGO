@@ -328,7 +328,6 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
                                                         realm.beginTransaction();
                                                         realm.copyToRealmOrUpdate(obj);
                                                         realm.commitTransaction();
-                                                        FragmentGroups.add_Group();
                                                         FragmentUtil.popBackStack(getActivity());
                                                         dialog_edit_name.dismiss();
                                                     }
@@ -340,7 +339,6 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
                                                     realm.beginTransaction();
                                                     realm.copyToRealmOrUpdate(obj);
                                                     realm.commitTransaction();
-                                                    FragmentGroups.add_Group();
                                                     FragmentUtil.popBackStack(getActivity());
                                                     dialog_edit_name.dismiss();
                                                 }
@@ -360,17 +358,18 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
                             @Override
                             public void onClick(View v) {
                                 if (ed_edit_name.getText().toString().length() > 0) {
-                                    if (objGroupName.getsNameServer().length() > 0) {
-                                        GroupName obj = new GroupName();
-                                        obj.setsNameLocal(ed_edit_name.getText().toString());
-                                        obj.setId_group(group_id);
-                                        obj.setsNameServer(objGroupName.getsNameServer());
-                                        realm.beginTransaction();
-                                        realm.copyToRealmOrUpdate(obj);
-                                        realm.commitTransaction();
-                                        FragmentGroups.add_Group();
-                                        FragmentUtil.popBackStack(getActivity());
-                                        dialog_edit_name.dismiss();
+                                    if (objGroupName != null) {
+                                        if (objGroupName.getsNameServer().length() > 0) {
+                                            GroupName obj = new GroupName();
+                                            obj.setsNameLocal(ed_edit_name.getText().toString());
+                                            obj.setId_group(group_id);
+                                            obj.setsNameServer(objGroupName.getsNameServer());
+                                            realm.beginTransaction();
+                                            realm.copyToRealmOrUpdate(obj);
+                                            realm.commitTransaction();
+                                            FragmentUtil.popBackStack(getActivity());
+                                            dialog_edit_name.dismiss();
+                                        }
                                     } else {
                                         GroupName obj = new GroupName();
                                         obj.setsNameLocal(ed_edit_name.getText().toString());
@@ -379,7 +378,6 @@ public class FragmentGroupMember extends BaseFragment implements GroupMemberInte
                                         realm.beginTransaction();
                                         realm.copyToRealmOrUpdate(obj);
                                         realm.commitTransaction();
-                                        FragmentGroups.add_Group();
                                         FragmentUtil.popBackStack(getActivity());
                                         dialog_edit_name.dismiss();
                                     }

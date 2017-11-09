@@ -19,7 +19,6 @@ public interface ApiServicePostImp {
     @POST("/m/getnumber.jsp")
     @FormUrlEncoded
     Call<ResponseBody> api_get_3g(@Field("userid") String userid );
-
     Retrofit retrofitpost = new Retrofit.Builder()
             .baseUrl(Constant.BASE_URL_POST)
             .addConverterFactory(GsonConverterFactory.create())

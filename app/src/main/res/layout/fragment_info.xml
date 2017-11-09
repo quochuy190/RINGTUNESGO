@@ -68,14 +68,13 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:backgroundTint="@color/white"
             android:textSize="@dimen/text_17sp"
             android:textColor="@color/text_color1"
             android:id="@+id/ecFullName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:ems="10"
-            android:hint="Nhập Tên"
+            android:hint="- Nhập vào tên của bạn"
             android:inputType="text" />
 
         <TextView
@@ -131,14 +130,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
+                android:backgroundTint="@color/white"
                 android:layout_marginLeft="@dimen/dp5"
                 android:textSize="@dimen/text_17sp"
                 android:textColor="@color/text_color1"
                 android:id="@+id/editTextBirthday"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:ems="10"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="- Nhập vào ngày sinh"

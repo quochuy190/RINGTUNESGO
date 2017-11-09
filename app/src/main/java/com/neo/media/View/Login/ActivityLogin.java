@@ -73,8 +73,7 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
         ButterKnife.bind(this);
         realm = RealmController.with(this).getRealm();
         presenterLogin = new PresenterLogin(this);
-        initNetwork();
-
+        //initNetwork();
         initEvent();
     }
 
@@ -241,7 +240,7 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
             }
             presenterLogin.get_detail_subsriber(list.get(2), username);
         } else {
-            Toast.makeText(this, "" + list.get(1), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi hệ thống, mời thử lại" , Toast.LENGTH_SHORT).show();
         }
 
 
@@ -269,7 +268,7 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
             } else {
                 Toast.makeText(this, "Lỗi", Toast.LENGTH_SHORT).show();
             }
-        }
+        }else Toast.makeText(this, "Lỗi hệ thống, mời thử lại", Toast.LENGTH_SHORT).show();
     }
 
     /*public void hideDialogLoading() {
