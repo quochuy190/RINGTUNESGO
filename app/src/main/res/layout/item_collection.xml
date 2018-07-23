@@ -14,7 +14,7 @@
         android:layout_height="@dimen/dp40"
         android:padding="@dimen/dp5"
         android:layout_marginRight="@dimen/dp5"
-        android:src="@drawable/icon_download" />
+        android:src="@drawable/delete_item" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,19 +31,21 @@
                     android:id="@+id/item_img_collection"
                     android:layout_width="@dimen/dp50"
                     android:layout_height="@dimen/dp50"
-                    android:padding="@dimen/dp10"
-                    android:src="@mipmap/ringtunes_final" />
+                    android:padding="@dimen/dp5"
+                    android:src="@mipmap/ic_launcher_round" />
             </LinearLayout>
 
             <LinearLayout
+                android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp5"
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:layout_gravity="center_vertical"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp45"
                     android:layout_weight="3"
                     android:gravity="center_vertical"
@@ -53,12 +55,12 @@
                         android:id="@+id/item_name_collection"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp3"
+                        android:layout_marginBottom="@dimen/dp1"
                         android:singleLine="true"
                         android:text="We don't talk any more"
                         android:textColor="@color/text_name_song"
-                        android:textSize="@dimen/text_18sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_15sp"
+                        />
 
                     <TextView
                         android:singleLine="true"
@@ -68,7 +70,7 @@
                         android:layout_marginBottom="@dimen/dp1"
                         android:layout_marginTop="@dimen/dp1"
                         android:text="Selena Gomez ft Charlie Puth"
-                        android:textSize="@dimen/text_14sp" />
+                        android:textSize="@dimen/text_13sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -88,6 +90,7 @@
                             android:textSize="@dimen/text_11sp" />
 
                         <TextView
+                            android:id="@+id/txt_cach"
                             android:singleLine="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

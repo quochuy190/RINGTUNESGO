@@ -17,6 +17,7 @@ import com.neo.media.Listener.CallbackData;
 import com.neo.media.Model.Album;
 import com.neo.media.Model.Banner;
 import com.neo.media.Model.Comment;
+import com.neo.media.Model.KeyWord;
 import com.neo.media.Model.MetadataString;
 import com.neo.media.Model.Return;
 import com.neo.media.Model.Ringtunes;
@@ -42,6 +43,7 @@ import static com.neo.media.Config.Constant.USER_ID;
  */
 
 public class ApiService {
+    private static final String TAG = "ApiService";
     ApiSeviceImpl apiSevice;
     ApiServicePostImp apiServicePostImp;
 
@@ -119,7 +121,6 @@ public class ApiService {
                     jsonString = jsonString.replaceAll("\\\\", "");
                     jsonString = jsonString.substring(11, jsonString.length() - 2);
                     System.out.print(jsonString);
-
                     ArrayList<Comment> list = Comment.getListEntity(jsonString);
                     Log.i("a bc", "" + list.size());
                     callbackData.onGetDataSuccess(list);
@@ -279,9 +280,10 @@ public class ApiService {
             }
         });
     }
+
     //get All Ringtunes By Album, Type, Singer
     public void api_suggestion_play(final CallbackData<Ringtunes> callbackData, String Service, String Provider,
-                                     String ParamSize, String P1, String P2, String P3) {
+                                    String ParamSize, String P1, String P2, String P3) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
         Call<ResponseBody> call = apiSevice.api_get_P3_SQL(Service, Provider, ParamSize, P1, P2, P3);
 
@@ -307,11 +309,40 @@ public class ApiService {
             }
         });
     }
+
     // Api search Ringtunes
     public void getSearchRingtunes(final CallbackData<Ringtunes> callbackData, String Service, String Provider,
                                    String ParamSize, String P1, String P2, String P3) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
         Call<ResponseBody> call = apiSevice.search_Ringtunes(Service, Provider, ParamSize, P1, P2, P3, Constant.USER_ID);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String jsonString = response.body().string();
+                    jsonString = jsonString.replaceAll("\\\\", "");
+                    jsonString = jsonString.substring(11, jsonString.length() - 2);
+                    System.out.print(jsonString);
+
+                    ArrayList<Ringtunes> list = Ringtunes.getListEntity(jsonString);
+                    callbackData.onGetDataSuccess(list);
+                } catch (Exception e) {
+                    callbackData.onGetDataFault(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callbackData.onGetDataFault(new Exception(t));
+            }
+        });
+    }
+
+    public void api_search_main_service(final CallbackData<Ringtunes> callbackData, String Service, String Provider,
+                                        String ParamSize, String P1, String P2, String P3, String P4, String P5) {
+        apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
+        Call<ResponseBody> call = apiSevice.api_get_P5_SQL(Service, Provider, ParamSize, P1, P2, P3, P4, P5);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -492,17 +523,22 @@ public class ApiService {
     public void getAllGroup(final CallbackData<GROUPS> callbackData, String Service, String Provider,
                             String ParamSize, String P1, String P2, String P3) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
+        Log.i("group", "inPut" + P1 + "P2" + P2 + "P3" + P3);
         Call<ResponseBody> getElement = apiSevice.getAllGroup(Service, Provider, ParamSize, P1, P2, P3);
 
         getElement.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
+                    response.code();
+                    Log.i("group", "" + response.code());
+                    Log.i("group", "" + response.body().toString());
                     GROUPS objGroups = new GROUPS();
                     Gson gson = new Gson();
                     ArrayList<GROUP> lisGroup = new ArrayList<GROUP>();
                     String num_of_clis;
                     String jsonString = response.body().string();
+                    Log.i("group", "" + jsonString);
                     jsonString = jsonString.replaceAll("\\\\", "");
                     jsonString = jsonString.substring(11, jsonString.length() - 2);
                     System.out.print(jsonString);
@@ -555,7 +591,7 @@ public class ApiService {
                                 GROUP group = gson.fromJson(object.toString(), GROUP.class);
                                 objGroups.setTotal("" + itotalGroup);
                                 lisGroup.add(group);
-                            } else if (i_num_of_clis ==1){
+                            } else if (i_num_of_clis == 1) {
                                 JSONObject jsonCLIS = new JSONObject(object.getString("CLIS"));
                                 String id_group = object.getString("id");
                                 String name = object.getString("name");
@@ -574,7 +610,7 @@ public class ApiService {
                                 objGr.setName(name);
                                 objGroups.setTotal("" + itotalGroup);
                                 lisGroup.add(objGr);
-                            }else {
+                            } else {
                                 String id_group = object.getString("id");
                                 String name = object.getString("name");
                                 String type = object.getString("id");
@@ -597,6 +633,7 @@ public class ApiService {
                     //items = sgroups.getGroup();
                     //  callbackData.onGetDataSuccess(items);
                 } catch (Exception e) {
+                    Log.i("group", "Lỗi" + response.code());
                     callbackData.onGetDataFault(e);
                 }
             }
@@ -642,7 +679,7 @@ public class ApiService {
     }
 
     // add cli to group by group
-    public void add_cli_to_group(final CallbackData<CLI> callbackData, String Service, String Provider,
+    public void add_cli_to_group(final CallbackData<JSONObject> callbackData, String Service, String Provider,
                                  String ParamSize, String sesionID, String msisdn, String groupID, final String caller_msisdn
     ) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
@@ -652,16 +689,21 @@ public class ApiService {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    ArrayList<CLI> list = new ArrayList<CLI>();
+                    ArrayList<String> list = new ArrayList<>();
                     String jsonString = response.body().string();
                     jsonString = jsonString.replaceAll("\\\\", "");
                     jsonString = jsonString.substring(11, jsonString.length() - 2);
                     System.out.print(jsonString);
                     JSONObject jsonObj = new JSONObject(jsonString);
-                    JSONObject jsonGroups = new JSONObject(jsonObj.getString("GROUPS"));
+                   /* String error = jsonObj.getString("ERROR");
+                    String ERROR_DESC = jsonObj.getString("ERROR_DESC");
+                    list.add(error);
+                    list.add(ERROR_DESC);
+                    if (error.equals("0"))*/
+                   /* JSONObject jsonGroups = new JSONObject(jsonObj.getString("GROUPS"));
                     JSONObject jsonGroup = new JSONObject(jsonGroups.getString("GROUP"));
-                    JSONObject jsonCLIS = new JSONObject(jsonGroup.getString("CLIS"));
-                    String[] array = caller_msisdn.split(",");
+                    JSONObject jsonCLIS = new JSONObject(jsonGroup.getString("CLIS"));*/
+                    /*String[] array = caller_msisdn.split(",");
                     Gson gson = new Gson();
                     int count_phone = array.length;
                     if (count_phone > 1) {
@@ -673,8 +715,8 @@ public class ApiService {
                     } else {
                         CLI clis = gson.fromJson(jsonCLIS.getString("CLI"), CLI.class);
                         list.add(clis);
-                    }
-                    callbackData.onGetDataSuccess(list);
+                    }*/
+                    callbackData.onGetObjectDataSuccess(jsonObj);
                     // callbackData.onGetObjectDataSuccess(clis);
                 } catch (Exception e) {
                     callbackData.onGetDataFault(e);
@@ -688,7 +730,18 @@ public class ApiService {
         });
     }
 
-    // delete cli to group
+    /**
+     * Delete cli to group.
+     *
+     * @param callbackData  the callback data
+     * @param Service       the service
+     * @param Provider      the provider
+     * @param ParamSize     the param size
+     * @param sesionID      the sesion id
+     * @param msisdn        the msisdn
+     * @param groupID       the group id
+     * @param caller_msisdn the caller msisdn
+     */
     public void delete_cli_to_group(final CallbackData<CLI> callbackData, String Service, String Provider,
                                     String ParamSize, String sesionID, String msisdn, String groupID, String caller_msisdn) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
@@ -742,13 +795,13 @@ public class ApiService {
                     JSONObject jsonObj = new JSONObject(jsonString);
                     JSONObject jsonItems = new JSONObject(jsonObj.getString("ITEMS"));
                     total = Integer.parseInt(jsonItems.getString("total"));
-                    if (total ==0){
+                    if (total == 0) {
                         callbackData.onGetDataSuccess(new ArrayList<Item>());
-                    }else if (total == 1){
-                        Item objItem= gson.fromJson(jsonItems.getString("ITEM"), Item.class);
+                    } else if (total == 1) {
+                        Item objItem = gson.fromJson(jsonItems.getString("ITEM"), Item.class);
                         items.add(objItem);
                         callbackData.onGetDataSuccess(items);
-                    }else if (total>1){
+                    } else if (total > 1) {
                         JSONArray jsonArray = jsonItems.getJSONArray("ITEM");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Item item = new Item();
@@ -778,7 +831,7 @@ public class ApiService {
 
     //get all conllection
     public void get_info_songs_collection(final CallbackData<Ringtunes> callbackData, String Service, String Provider,
-                                  String ParamSize, String P1, String P2) {
+                                          String ParamSize, String P1, String P2) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
         Call<ResponseBody> getElement = apiSevice.api_get_P2_sql(Service, Provider, ParamSize, P1, P2);
 
@@ -794,7 +847,7 @@ public class ApiService {
                     Gson gson = new Gson();
 
                     JSONArray jsonObj = new JSONArray(jsonString);
-                    for (int i = 0;i<jsonObj.length();i++){
+                    for (int i = 0; i < jsonObj.length(); i++) {
                         Ringtunes objRing = gson.fromJson(jsonObj.getJSONObject(i).toString(), Ringtunes.class);
                         items.add(objRing);
                     }
@@ -847,10 +900,10 @@ public class ApiService {
 
     // delete item from mylist
     public void log_info_charge_service(final CallbackData<String> callbackData, String Service, String Provider,
-                                        String ParamSize, String P1, String P2, String P3, String P4, String P5,String P6, String P7, String P8
+                                        String ParamSize, String P1, String P2, String P3, String P4, String P5, String P6, String P7, String P8
     ) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
-        Call<ResponseBody> call = apiSevice.api_log_info(Service, Provider, ParamSize, P1, P2, P3,P4, P5, P6, P7, P8);
+        Call<ResponseBody> call = apiSevice.api_log_info(Service, Provider, ParamSize, P1, P2, P3, P4, P5, P6, P7, P8);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -965,8 +1018,6 @@ public class ApiService {
                     JSONObject jsonObj = new JSONObject(jsonString);
                     Gson gson = new Gson();
                     JSONObject jsonItems = new JSONObject(jsonObj.getString("ITEMS"));
-                    // Meta_FUNDIAL_PROFILE fundial_ofapi = gson.fromJson(jsonString, Meta_FUNDIAL_PROFILE.class);
-                    //  Log.i("abc", fundial_ofapi.getFundial_profile().getRply().getError());
                     Item item = gson.fromJson(jsonItems.getString("ITEM"), Item.class);
                     callbackData.onGetObjectDataSuccess(item);
                 } catch (Exception e) {
@@ -1020,6 +1071,7 @@ public class ApiService {
     //3.20	ADD_GIFT_TO_PLAYLIST/tặng bài hát
     public void addGiftToPlayList(final CallbackData<String> callbackData, String Service, String Provider,
                                   String ParamSize, String P1, String P2, String P3, String P4, String P5) {
+
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
         Call<ResponseBody> call = apiSevice.addGifttoPlayList(Service, Provider, ParamSize, P1, P2, P3, P4, P5);
 
@@ -1096,12 +1148,53 @@ public class ApiService {
                     String jsonString = response.body().string();
                     jsonString = jsonString.replaceAll("\\\\", "");
                     jsonString = jsonString.substring(11, jsonString.length() - 2);
+                    //  System.out.print(jsonString);
+                    JSONObject jsonObj = new JSONObject(jsonString);
+                    String Error = jsonObj.getString("ERROR");
+                    String ERROR_DESC = jsonObj.getString("ERROR_DESC");
+                    if (Error.equals("0")) {
+                        Gson gson = new Gson();
+                        subscriber = gson.fromJson(jsonString, com.neo.media.CRBTModel.subscriber.class);
+                        callbackData.onGetObjectDataSuccess(subscriber);
+                    } else {
+                        subscriber.setERROR(Error);
+                        subscriber.setERROR_DESC(ERROR_DESC);
+                        callbackData.onGetObjectDataSuccess(subscriber);
+                    }
+                    //    JSONObject jsonObj = new JSONObject(jsonString);
+
+                } catch (Exception e) {
+                    callbackData.onGetDataFault(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //callbackData.onGetDataFault(t);
+            }
+        });
+    }
+
+    //3.10	api_subscriber_sms/đăng ký qua sms
+    public void api_subscriber_sms(final CallbackData<String> callbackData, String Service, String Provider,
+                                   String ParamSize, String P1, String P2) {
+        apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
+        Call<ResponseBody> call = apiSevice.api_get_P2_CRBT(Service, Provider, ParamSize, P1, P2);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    List<String> list = new ArrayList<>();
+                    String jsonString = response.body().string();
+                    jsonString = jsonString.replaceAll("\\\\", "");
+                    jsonString = jsonString.substring(11, jsonString.length() - 2);
                     System.out.print(jsonString);
 
                     JSONObject jsonObj = new JSONObject(jsonString);
                     Gson gson = new Gson();
-                    subscriber = gson.fromJson(jsonString, com.neo.media.CRBTModel.subscriber.class);
-                    callbackData.onGetObjectDataSuccess(subscriber);
+                   /* subscriber = gson.fromJson(jsonString, com.neo.media.CRBTModel.subscriber.class);
+                    callbackData.onGetObjectDataSuccess(subscriber);*/
                 } catch (Exception e) {
                     callbackData.onGetDataFault(e);
                 }
@@ -1141,6 +1234,7 @@ public class ApiService {
             }
         });
     }
+
     public void update_token(final CallbackData<String> callbackData, String Service, String Provider,
                              String ParamSize, String P1, String P2) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
@@ -1167,6 +1261,7 @@ public class ApiService {
             }
         });
     }
+
     // lấy luật phát nhac
     public void getAllProfile(final CallbackData<PROFILE> callbackData, String Service, String Provider,
                               String ParamSize, String P1, String P2, String P3, String P4) {
@@ -1467,7 +1562,7 @@ public class ApiService {
 
     //USER_INIT/init thông tin user theo sdt
     public void api_promotion_idx(final CallbackData<Topic> callbackData, String Service, String Provider,
-                                          String ParamSize, String P1) {
+                                  String ParamSize, String P1) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
         Call<ResponseBody> call = apiSevice.api_get_P1_sql(Service, Provider, ParamSize, P1);
 
@@ -1494,7 +1589,18 @@ public class ApiService {
         });
     }
 
-    // login vinaportal
+    /**
+     * Api login vinaportal.
+     *
+     * @param callbackData the callback data
+     * @param Service      service name
+     * @param Provider     the provider
+     * @param ParamSize    the param size
+     * @param P1           p1: username
+     * @param P2           p2: pass
+     * @param P3           p3: user id
+     */
+// login vinaportal
     public void api_login_vinaportal(final CallbackData<String> callbackData, String Service, String Provider,
                                      String ParamSize, String P1, String P2, String P3) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
@@ -1506,6 +1612,7 @@ public class ApiService {
                 try {
                     ArrayList<String> arrayList = new ArrayList<String>();
                     String jsonString = response.body().string();
+
                     jsonString = jsonString.replaceAll("\\\\", "");
                     jsonString = jsonString.substring(12, jsonString.length() - 3);
                     System.out.print(jsonString);
@@ -1533,6 +1640,7 @@ public class ApiService {
             }
         });
     }
+
     public void api_get_infouser(final CallbackData<Info_User> callbackData, String Service, String Provider,
                                  String ParamSize, String P1, String P2) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
@@ -1546,7 +1654,7 @@ public class ApiService {
                     String jsonString = response.body().string();
                     jsonString = jsonString.replaceAll("\\\\", "");
                     jsonString = jsonString.substring(12, jsonString.length() - 3);
-                    JSONObject jsonObject= new JSONObject(jsonString);
+                    JSONObject jsonObject = new JSONObject(jsonString);
                     String sHoten = jsonObject.getString("HOTEN");
                     String sMobile = jsonObject.getString("MOBILE");
                     String sSUB_REGISTED = jsonObject.getString("SUB_REGISTED");
@@ -1558,7 +1666,7 @@ public class ApiService {
                     objInfo.setSUB_REGISTED(sSUB_REGISTED);
 
                     callbackData.onGetObjectDataSuccess(objInfo);
-                  //  callbackData.onGetDataSuccess(lisBanner);
+                    //  callbackData.onGetDataSuccess(lisBanner);
                 } catch (Exception e) {
                     callbackData.onGetDataFault(e);
                 }
@@ -1572,7 +1680,7 @@ public class ApiService {
     }
 
     public void api_update_infouser(final CallbackData<String> callbackData, String Service, String Provider,
-                                 String ParamSize, String P1, String P2, String P3, String P4, String P5, String P6) {
+                                    String ParamSize, String P1, String P2, String P3, String P4, String P5, String P6) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
         Call<ResponseBody> call = apiSevice.api_get_P6_SQL_value(Service, Provider, ParamSize, P1, P2, P3, P4, P5, P6);
 
@@ -1587,6 +1695,112 @@ public class ApiService {
                     callbackData.onGetObjectDataSuccess(Error);
                 } catch (Exception e) {
                     callbackData.onGetDataFault(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void api_push_gift(final CallbackData<String> callbackData, String Service, String Provider,
+                              String ParamSize, String P1, String P2) {
+        apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
+        Call<ResponseBody> call = apiSevice.api_get_P2_CRBT(Service, Provider, ParamSize, P1, P2);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    ArrayList<String> arrayList = new ArrayList<String>();
+                    String jsonString = response.body().string();
+                    jsonString = jsonString.replaceAll("\\\\", "");
+                    jsonString = jsonString.substring(12, jsonString.length() - 3);
+                    System.out.print(jsonString);
+                    JSONObject jsonObj = new JSONObject(jsonString);
+                    String Error = jsonObj.getString("ERROR");
+                    String MESSAGE = jsonObj.getString("MESSAGE");
+                    String pass = jsonObj.getString("RESULT");
+                    Error = Error.replace(" ", "");
+                    MESSAGE = MESSAGE.replace(" ", "");
+                    pass = pass.replace(" ", "");
+                    arrayList.add(Error);
+                    arrayList.add(MESSAGE);
+                    arrayList.add(pass);
+                    callbackData.onGetDataSuccess(arrayList);
+                } catch (Exception e) {
+                    //  callbackData.onGetDataFault(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void api_search_keyword_top(final CallbackData<KeyWord> callbackData, String Service, String Provider,
+                                       String ParamSize, String P1) {
+        apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
+        Call<ResponseBody> call = apiSevice.api_get_P1_sql(Service, Provider, ParamSize, P1);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    ArrayList<String> arrayList = new ArrayList<String>();
+                    String jsonString = response.body().string();
+                    jsonString = jsonString.replaceAll("\\\\", "");
+                    jsonString = jsonString.substring(11, jsonString.length() - 2);
+
+                    ArrayList<KeyWord> list = KeyWord.getLisElement(jsonString);
+                    callbackData.onGetDataSuccess(list);
+                    //JSONObject jsonObj = new JSONObject(jsonString);
+                    //String Error = jsonObj.getString("return");
+
+                } catch (Exception e) {
+                    callbackData.onGetDataFault(e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void api_checkver(final CallbackData<String> callbackData, String Service, String Provider,
+                             String ParamSize, String P1, String P2) {
+        apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
+        Call<ResponseBody> call = apiSevice.api_get_P2_sql(Service, Provider, ParamSize, P1, P2);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    ArrayList<String> arrayList = new ArrayList<String>();
+                    String jsonString = response.body().string();
+                    jsonString = jsonString.replaceAll("\\\\", "");
+                    jsonString = jsonString.substring(12, jsonString.length() - 3);
+                    System.out.print(jsonString);
+                    JSONObject jsonObj = new JSONObject(jsonString);
+                    String Error = jsonObj.getString("ERROR");
+                    String MESSAGE = jsonObj.getString("MESSAGE");
+                    String pass = jsonObj.getString("NEED_UPDATE");
+                    Error = Error.replace(" ", "");
+                    //MESSAGE = MESSAGE.replace(" ", "");
+                    pass = pass.replace(" ", "");
+                    arrayList.add(Error);
+                    arrayList.add(MESSAGE);
+                    arrayList.add(pass);
+                    callbackData.onGetDataSuccess(arrayList);
+
+                } catch (Exception e) {
+                    //  callbackData.onGetDataFault(e);
                 }
             }
 

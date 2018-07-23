@@ -6,14 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.neo.media.CRBTModel.Item;
-import com.neo.media.Fragment.Collection.PresenterConllection;
+import com.neo.media.Fragment.CaNhan.Collection.PresenterConllection;
 import com.neo.media.R;
 import com.neo.media.untils.setOnItemClickListener;
 
@@ -72,12 +71,12 @@ public class AdapterCollectionGroup extends RecyclerView.Adapter<AdapterCollecti
         holder.txtRingtunesSinger.setText(item.getContent_artist());
         holder.txtRingtunesCounter.setText("HSD :" + item.getExpiration_date());
         holder.txtRingtunesPrice.setText("" + item.getContent_billing_desc());
-      /*  if (item.is_check) {
-            holder.img_Recycle.setVisibility(View.VISIBLE);
-        }else holder.img_Recycle.setVisibility(View.GONE);*/
-      if (item.is_check){
+        if (item.is_check) {
+            holder.img_chose.setImageResource(R.drawable.icon_chose);
+        }else  holder.img_chose.setImageResource(R.drawable.icon_unchose);
+      /*if (item.is_check){
           holder.cb_conllection.setChecked(true);
-      }else holder.cb_conllection.setChecked(false);
+      }else holder.cb_conllection.setChecked(false);*/
 
 
     }
@@ -101,12 +100,12 @@ public class AdapterCollectionGroup extends RecyclerView.Adapter<AdapterCollecti
         @BindView(R.id.item_price_collection)
         TextView txtRingtunesPrice;
         @BindView(R.id.img_recycle_item_collection)
-        ImageView img_Recycle;
+        ImageView img_chose;
         @BindView(R.id.linner_conllection_group)
         RelativeLayout linner_conllection_group;
-        @BindView(R.id.cb_collection)
+     /*   @BindView(R.id.cb_collection)
         CheckBox cb_conllection;
-
+*/
 
         public TopicViewHoder(View itemView) {
             super(itemView);

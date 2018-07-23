@@ -6,11 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.neo.media.CRBTModel.Item;
-import com.neo.media.Fragment.Collection.PresenterConllection;
+import com.neo.media.Fragment.CaNhan.Collection.FragmentConllection;
+import com.neo.media.Fragment.CaNhan.Collection.PresenterConllection;
 import com.neo.media.R;
 import com.neo.media.untils.setOnItemClickListener;
 
@@ -26,7 +28,7 @@ import static com.neo.media.Config.Constant.IMAGE_URL;
  * Created by QQ on 7/7/2017.
  */
 
-public class AdapterCollection extends RecyclerView.Adapter<AdapterCollection.TopicViewHoder>  {
+public class AdapterCollection extends RecyclerView.Adapter<AdapterCollection.TopicViewHoder> {
     private List<Item> listItems;
     private Context context;
     private Activity activity;
@@ -58,7 +60,7 @@ public class AdapterCollection extends RecyclerView.Adapter<AdapterCollection.To
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         final Item item = listItems.get(position);
-        if (item.getImage_url()!=null){
+        if (item.getImage_url() != null) {
             String urlImage = IMAGE_URL + item.getImage_url();
             Glide.with(context).load(urlImage).into(holder.imgRingtunes);
         }
@@ -66,7 +68,15 @@ public class AdapterCollection extends RecyclerView.Adapter<AdapterCollection.To
         holder.txtRingtunesSinger.setText(item.getContent_artist());
         holder.txtRingtunesCounter.setText("HSD :" + item.getExpiration_date());
         holder.txtRingtunesPrice.setText("" + item.getContent_billing_desc());
-
+        if (item.is_check) {
+            holder.img_play_item_ringtunes.setVisibility(View.VISIBLE);
+        } else holder.img_play_item_ringtunes.setVisibility(View.GONE);
+        holder.img_play_item_ringtunes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentConllection.deleteItem(context, item);
+            }
+        });
 
     }
 
@@ -88,12 +98,14 @@ public class AdapterCollection extends RecyclerView.Adapter<AdapterCollection.To
         TextView txtRingtunesCounter;
         @BindView(R.id.item_price_collection)
         TextView txtRingtunesPrice;
+        @BindView(R.id.img_play_item_ringtunes)
+        ImageView img_play_item_ringtunes;
 
         public TopicViewHoder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-           itemView.setOnLongClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override

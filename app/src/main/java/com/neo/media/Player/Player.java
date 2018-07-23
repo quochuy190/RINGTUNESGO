@@ -50,6 +50,7 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
     // Player status
     private boolean isPaused;
 
+
     private Player() {
         mPlayer = new MediaPlayer();
         mPlayList = new PlayList();
@@ -74,7 +75,10 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
         }
         mPlayList = list;
     }
-    public void log_Info_Charge_Server(String P1, String P2, String P3, String P4, String P5, String P6,String P7, String P8) {
+
+    public void log_Info_Charge_Server(String P1, String P2, String P3,
+                                       String P4, String P5, String P6,
+                                       String P7, String P8) {
         ApiService apiService = new ApiService();
         String Service = "log_info_charge_service";
         String Provider = "default";
@@ -94,12 +98,14 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
             public void onGetObjectDataSuccess(String Object) {
 
             }
-        }, Service, Provider, ParamSize, P1, P2, P3, P4, P5, P6,P7,P8);
+        }, Service, Provider, ParamSize, P1, P2, P3, P4, P5, P6, P7, P8);
     }
 
     @Override
     public boolean play() {
         i("isPaused------>", "" + isPaused);
+        if (mPlayer == null || mPlayList == null)
+            return false;
         if (isPaused) {
             mPlayer.start();
             notifyPlayStatusChanged(true);
@@ -110,7 +116,8 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
             Ringtunes song = mPlayList.getCurrentSong();
             i(TAG, "playsong ------->>>>" + song.getProduct_name());
             Log.i(TAG, "playsong ------->>>>" + song.getPath());
-            log_Info_Charge_Server("app listen "+song.getId(), Constant.sSessionID, Constant.sMSISDN,
+           // String sSessionId = Prefs.with()
+            log_Info_Charge_Server("app listen " + song.getId(), Constant.sSessionID, Constant.sMSISDN,
                     "", "2", "0", "", Constant.USER_ID);
             try {
                 mPlayer.reset();
@@ -158,7 +165,7 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
     @Override
     public boolean play(Ringtunes song) {
         if (song == null) return false;
-
+        if (mPlayList == null) return false;
         isPaused = false;
         mPlayList.getSongs().clear();
         mPlayList.getSongs().add(song);
@@ -183,7 +190,7 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
         isPaused = false;
         boolean hasNext = mPlayList.hasNext(false);
         if (hasNext) {
-            Ringtunes next = mPlayList.nextNormal();
+            Ringtunes next = mPlayList.next();
             if (next == null) {
                 pause();
             } else
@@ -197,11 +204,13 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
 
     @Override
     public boolean pause() {
-        if (mPlayer.isPlaying()) {
-            mPlayer.pause();
-            isPaused = true;
-            notifyPlayStatusChanged(false);
-            return true;
+        if (mPlayer != null) {
+            if (mPlayer.isPlaying()) {
+                mPlayer.pause();
+                isPaused = true;
+                notifyPlayStatusChanged(false);
+                return true;
+            }
         }
         return false;
     }
@@ -326,11 +335,15 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener, Medi
             callback.onComplete(song);
         }
     }
+
     private void isComplete(boolean isComplete) {
-       fragmentDetailBuySongs.PlayerCompete(isComplete);
+        if (fragmentDetailBuySongs != null)
+            fragmentDetailBuySongs.PlayerCompete(isComplete);
     }
+
     private void isPlaying(boolean isPlay) {
-        fragmentDetailBuySongs.PlayerCompete(isPlay);
+        if (fragmentDetailBuySongs != null)
+            fragmentDetailBuySongs.PlayerCompete(isPlay);
     }
 
     @Override

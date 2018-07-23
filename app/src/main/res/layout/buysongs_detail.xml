@@ -235,38 +235,6 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_18sp" />
 
-                <RelativeLayout
-                    android:id="@+id/relative_input_commnet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5"
-                    android:background="@color/background_item"
-                    android:visibility="gone">
-
-                    <EditText
-                        android:id="@+id/input_content_buysongs"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/dp30"
-                        android:background="@drawable/spr_backgroup_edittext"
-                        android:gravity="center_vertical"
-                        android:imeOptions="actionSend"
-                        android:inputType="textImeMultiLine"
-                        android:padding="@dimen/dp5"
-                        android:textSize="@dimen/text_15sp" />
-
-                    <ImageView
-                        android:id="@+id/img_buysong_send_comment"
-                        android:layout_width="@dimen/dp30"
-                        android:layout_height="@dimen/dp30"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:padding="@dimen/dp1"
-                        android:src="@drawable/send_comment" />
-                </RelativeLayout>
-
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycle_comment"
                     android:layout_width="match_parent"

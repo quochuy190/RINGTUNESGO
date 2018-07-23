@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/relative_tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/app_bar_main2" />
+
+        <ImageView
+            android:layout_marginLeft="@dimen/dp5"
+            android:id="@+id/img_back_dieukoan"
+            android:layout_width="@dimen/dp45"
+            android:layout_height="@dimen/dp45"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp14"
+            android:src="@drawable/back_white" />
+
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/txt_title_add_profiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp45"
+            android:text="Điều khoản dịch vụ"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_17sp"
+            android:visibility="visible" />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btn_ok_add_profile"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp30"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/button_continue"
+            android:text="@string/alert_ok"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:clipToPadding="true"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txt_dieukhoan"
+                android:text="@string/dieukhoan"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+
+
+</LinearLayout>

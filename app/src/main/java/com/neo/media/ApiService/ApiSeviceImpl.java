@@ -297,7 +297,19 @@ public interface ApiSeviceImpl {
                                        @Query("P1") String P1,
                                        @Query("P2") String P2
     );
-
+    @GET("services/RbtServices/ref?response=application/json&")
+    Call<ResponseBody> api_get_P1_CRBT(@Query("Service") String Service,
+                                       @Query("Provider") String Provider,
+                                       @Query("ParamSize") String ParamSize,
+                                       @Query("P1") String P1
+    );
+    @GET("RbtServices/ref?response=application/json&")
+    Call<ResponseBody> api_push_gift(@Query("Service") String Service,
+                                       @Query("Provider") String Provider,
+                                       @Query("ParamSize") String ParamSize,
+                                       @Query("P1") String P1,
+                                       @Query("P2") String P2
+    );
     @GET("services/SqlServices/ref?response=application/json&")
     Call<ResponseBody> api_get_P2_sql(@Query("Service") String Service,
                                       @Query("Provider") String Provider,
@@ -338,6 +350,17 @@ public interface ApiSeviceImpl {
                                       @Query("P1") String P1,
                                       @Query("P2") String P2,
                                       @Query("P3") String P3
+    );
+
+    @GET("services/SqlServices/ref?response=application/json&")
+    Call<ResponseBody> api_get_P5_SQL(@Query("Service") String Service,
+                                      @Query("Provider") String Provider,
+                                      @Query("ParamSize") String ParamSize,
+                                      @Query("P1") String P1,
+                                      @Query("P2") String P2,
+                                      @Query("P3") String P3,
+                                      @Query("P4") String P4,
+                                      @Query("P5") String P5
     );
 
     @GET("services/SqlServices/value?response=application/json&")

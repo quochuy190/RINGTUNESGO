@@ -37,20 +37,8 @@
              android:screenOrientation="portrait">
 
          </activity>-->
-
-        <activity
-            android:name="com.neo.media.View.Login.ActivityLogin"
-            android:screenOrientation="portrait">
-
-        </activity>
-
-        <activity
-            android:name="com.neo.media.View.Register.ActivityRegisterOTP"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name="com.neo.media.View.Splash_Screen.SplashScreen"
-            android:screenOrientation="portrait">
+        <activity android:name=".Activity.ActivityWelcom"
+           android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,22 +47,55 @@
         </activity>
 
         <activity
-            android:name="com.neo.media.View.Xacthuc_thuebao.ActivityXacthuc"
+            android:name="com.neo.media.View.Login.ActivityLogin"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:screenOrientation="portrait"
-            android:name="com.neo.media.Fragment.Stop_Pause.FragmentStopPause">
+            android:name="com.neo.media.Activity.ActivityMainHome"
+            android:screenOrientation="portrait">
 
         </activity>
 
         <activity
-            android:taskAffinity=""
-            android:name="com.neo.media.MainNavigationActivity"
-            android:label="@string/title_activity_main_navigation"
+            android:name="com.neo.media.Contact.ViewActivity.ActivityListContact_Get_Add_Group"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.neo.media.Fragment.Profiles.FragmentProfiles"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.neo.media.Fragment.Profiles.Add_Profile.Fragment_AddProfiles"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.neo.media.Fragment.Profiles.Add_Profile.Fragment_EditProfile"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Fragment.CaNhan.Groups.AddGroup.FragmentAddGroup"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.neo.media.View.Register.ActivityRegisterOTP"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name="com.neo.media.View.Splash_Screen.SplashScreen"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name="com.neo.media.View.Xacthuc_thuebao.ActivityXacthuc"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".Contact.ViewActivity.ActivityListContact">
 
         </activity>
 
@@ -99,6 +120,13 @@
                 <action android:name="com.bebeboo.funringvn.ACTION.STOP_SERVICE" />
             </intent-filter>
         </service>
+        <activity
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:name=".Activity.ActivityNotifycation">
+
+        </activity>
     </application>
 
 </manifest>

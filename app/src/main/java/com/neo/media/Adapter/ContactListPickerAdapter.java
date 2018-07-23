@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.neo.media.Config.Config;
 import com.neo.media.Config.Constant;
 import com.neo.media.Model.PhoneContactModel;
+import com.neo.media.MyApplication;
+
 import com.neo.media.R;
 import com.neo.media.untils.DialogUtil;
 
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
-import static com.neo.media.MainNavigationActivity.datasvina;
+
 import static com.neo.media.View.ActivityContacts.count;
 import static com.neo.media.View.ActivityContacts.option;
 
@@ -96,9 +98,9 @@ public class ContactListPickerAdapter extends SearchAdapter<PhoneContactModel> i
                         temp.setChecked(!temp.isChecked());
                         scb.setChecked(temp.isChecked());
                         if (temp.isChecked()) {
-                            for (int i = 0; i < datasvina.size(); i++) {
-                                if (!datasvina.get(i).getPhoneNumber().equals(temp.getPhoneNumber())) {
-                                    datasvina.get(i).setChecked(false);
+                            for (int i = 0; i < MyApplication.datasvina.size(); i++) {
+                                if (!MyApplication.datasvina.get(i).getPhoneNumber().equals(temp.getPhoneNumber())) {
+                                    MyApplication.datasvina.get(i).setChecked(false);
                                 }
                             }
                             notifyDataSetChanged();
@@ -108,9 +110,9 @@ public class ContactListPickerAdapter extends SearchAdapter<PhoneContactModel> i
                         temp.setChecked(!temp.isChecked());
                         scb.setChecked(temp.isChecked());
                         if (temp.isChecked()) {
-                            for (int i = 0; i < datasvina.size(); i++) {
-                                if (!datasvina.get(i).getPhoneNumber().equals(temp.getPhoneNumber())) {
-                                    datasvina.get(i).setChecked(false);
+                            for (int i = 0; i < MyApplication.datasvina.size(); i++) {
+                                if (!MyApplication.datasvina.get(i).getPhoneNumber().equals(temp.getPhoneNumber())) {
+                                    MyApplication.datasvina.get(i).setChecked(false);
                                 }
                             }
                             notifyDataSetChanged();

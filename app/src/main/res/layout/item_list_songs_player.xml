@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative_contacts"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/spr_item_player_song"
+    android:padding="@dimen/dp7">
+
+    <!-- Title Of Song-->
+    <TextView
+        android:id="@+id/txt_name_lis_song"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Đừng để thời gian bên nhau là thói quen"
+        android:textColor="@color/text_home"
+        android:textSize="@dimen/text_17sp"
+        android:typeface="sans" />
+
+    <!-- Artist Name -->
+    <TextView
+        android:id="@+id/txt_namesinger_lis_song"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_name_lis_song"
+        android:layout_marginTop="@dimen/dp3"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:paddingBottom="2dp"
+        android:text="Just gona stand there and ..."
+        android:textColor="@color/text_home"
+        android:textSize="@dimen/text_13sp" />
+
+
+    <!-- Rightend Arrow -->
+    <ImageView
+        android:padding="@dimen/dp5"
+        android:id="@+id/img_list_song_player"
+        android:layout_width="@dimen/dp40"
+        android:layout_height="@dimen/dp40"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+ />
+</RelativeLayout>

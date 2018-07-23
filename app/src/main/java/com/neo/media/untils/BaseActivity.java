@@ -1,21 +1,22 @@
 package com.neo.media.untils;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
+
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected AlertDialog alertDialog;
     boolean layout = true;
@@ -85,7 +86,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
 
-    protected ProgressDialog dialog;
+    protected SweetAlertDialog dialog;
     private Handler StopDialogLoadingHandler = new Handler();
 
 
@@ -97,11 +98,10 @@ public abstract class BaseActivity extends ActionBarActivity {
                     dialog.dismiss();
                 }
             }
-        }, 3000);
-        dialog = new ProgressDialog(this);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("Loading. Please wait...");
-        dialog.setIndeterminate(true);
+        }, 20000);
+        dialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
+                .setTitleText("Loading");
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
 
         if (dialog != null && !dialog.isShowing()) {
@@ -114,5 +114,20 @@ public abstract class BaseActivity extends ActionBarActivity {
             dialog.dismiss();
         }
     }
+    public void show_notification(String title, String contents){
+        new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+                .setTitleText(title)
+                .setContentText(contents)
+                .setConfirmText("Đóng")
+                .showCancelButton(true)
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                    }
+                }).show();
+    }
+
+
 
 }

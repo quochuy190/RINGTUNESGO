@@ -1,202 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:overScrollMode="never">
-
+    >
     <RelativeLayout
+        android:id="@+id/relative_tabbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/relative_tabbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <include layout="@layout/app_bar_main2"/>
-            <ImageView
-                android:id="@+id/img_back_addprofile"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/dp14"
-                android:src="@drawable/back_white"
-                android:layout_marginLeft="@dimen/dp5"
-                android:layout_width="@dimen/dp45"
-                android:layout_height="@dimen/dp45"/>
-            <TextView
-                android:padding="@dimen/dp5"
-                android:layout_marginLeft="@dimen/dp50"
-                android:layout_centerVertical="true"
-                android:id="@+id/txt_title_add_profiles"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="THÊM CÀI ĐẶT MỚI"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_18sp"
-                android:visibility="visible" />
+        <include layout="@layout/app_bar_main2" />
 
-        </RelativeLayout>
-        <View
-            android:background="@color/cardview_shadow_start_color"
-            android:layout_below="@+id/relative_tabbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1">
-        </View>
         <ImageView
+            android:id="@+id/img_back_addprofile"
+            android:layout_width="@dimen/dp45"
+            android:layout_height="@dimen/dp45"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp5"
+            android:padding="@dimen/dp14"
+            android:src="@drawable/back_white" />
+
+        <TextView
+            android:id="@+id/txt_title_add_profiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp50"
-            android:layout_marginRight="@dimen/dp50"
-            android:adjustViewBounds="true"
-            android:padding="@dimen/dp15"
-            android:id="@+id/img_logo"
-            android:src="@drawable/ringtunes_go_icon"
-            android:layout_below="@+id/relative_tabbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:id="@+id/linner_setup_addprofile"
-            android:layout_below="@+id/img_logo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <TextView
-
-                android:textColor="@color/black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:padding="@dimen/dp5"
-                android:singleLine="true"
-                android:text="Chọn kiểu cài đặt"
-                android:textSize="@dimen/text_15sp" />
-            <Spinner
-                android:id="@+id/spn_type_setup"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5"
-                android:layout_weight="3"
-                android:padding="@dimen/dp5">
-            </Spinner>
-
-
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_below="@+id/linner_setup_addprofile"
-            android:id="@+id/id_linner_add_contact"
-            android:visibility="gone"
-            android:gravity="center"
-            android:layout_marginBottom="@dimen/dp5"
-            android:layout_marginTop="@dimen/dp5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Spinner
-                android:visibility="gone"
-                android:id="@+id/spn_addprofile_buy_group"
-                android:layout_width="@dimen/dp200_singer"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5"
-                android:padding="@dimen/dp5">
-            </Spinner>
-            <LinearLayout
-                android:visibility="gone"
-                android:orientation="horizontal"
-                android:id="@+id/linner_add_buy_cli"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <EditText
-
-                    android:inputType="number"
-                    android:padding="@dimen/dp5"
-                    android:id="@+id/ed_add_phone_dialog"
-                    android:layout_width="@dimen/dp200_singer"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/spr_backgroup_edittext"
-                    android:gravity="center"
-                    android:hint="Nhập số điện thoại"
-                    android:textColor="@color/text_name_song"
-                    />
-                <ImageView
-                    android:layout_toRightOf="@id/ed_add_phone_dialog"
-                    android:id="@+id/img_add_contact_dialog"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:src="@drawable/icon_contact"
-                    android:layout_width="@dimen/dp30"
-                    android:layout_height="@dimen/dp30" />
-            </LinearLayout>
-
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/linner_time_addprofile"
-            android:layout_below="@+id/id_linner_add_contact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:textColor="@color/black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:padding="@dimen/dp5"
-                android:singleLine="true"
-                android:text="Chọn chế độ thời gian"
-                android:textSize="@dimen/text_15sp" />
-
-            <Spinner
-                android:id="@+id/spn_time_setup"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5"
-                android:layout_weight="3"
-                android:padding="@dimen/dp5"></Spinner>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_below="@+id/linner_time_addprofile"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/txt_chonbai"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp5"
-                android:background="@color/title_fragment_all"
-                android:padding="@dimen/dp5"
-                android:text="Chọn bài hát"
-                android:textColor="@color/purple"
-                android:textSize="@dimen/text_17sp"
-                android:visibility="visible" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycle_colletion_addprofile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5">
-
-            </android.support.v7.widget.RecyclerView>
-            <LinearLayout
-                android:layout_marginBottom="@dimen/dp5"
-                android:layout_marginTop="@dimen/dp3"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:textSize="@dimen/text_13sp"
-                    android:textColor="@color/white"
-                    android:id="@+id/btn_ok_add_profile"
-                    android:background="@drawable/button_continue"
-                    android:text="Thêm cài đặt"
-                    android:layout_width="@dimen/dp120"
-                    android:layout_height="@dimen/dp35" />
-            </LinearLayout>
-
-        </LinearLayout>
+            android:padding="@dimen/dp5"
+            android:text="Cài đặt luật phát nhạc"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_18sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
 
     </RelativeLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:layout_below="@+id/relative_tabbar"
+                android:background="@color/cardview_shadow_start_color"></View>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/linner_setup_addprofile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_logo"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp5"
+                    android:singleLine="true"
+                    android:text="Chọn kiểu cài đặt Ringtunes"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_group_add_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp5">
+
+                </android.support.v7.widget.RecyclerView>
+
+
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_margin="@dimen/dp5"
+                android:background="@drawable/spr_buton_dialog"
+                android:id="@+id/linner_phone_add_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linner_setup_addprofile"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_below="@id/txt_title"
+                    android:id="@+id/linner_getcontact_addprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <RelativeLayout
+                        android:id="@+id/relative_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+                        <EditText
+                            android:textSize="@dimen/text_14sp"
+                            android:layout_marginLeft="@dimen/dp10"
+                            android:id="@+id/ed_add_phone_addprofile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dp35"
+                            android:backgroundTint="@color/white"
+                            android:hint="- Nhập SĐT hoặc lấy từ danh bạ --"
+                            android:inputType="phone"
+                            android:padding="@dimen/dp7"
+                            android:textColor="@color/text_name_song" />
+                        <TextView
+                            android:id="@+id/txt_delete_phone"
+                            android:layout_width="@dimen/dp30"
+                            android:layout_height="@dimen/dp30"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:gravity="center"
+                            android:text="x"
+                            android:textColor="@color/purple"
+                            android:textSize="@dimen/dp20"
+                            android:visibility="gone" />
+                        <ImageView
+
+                            android:background="@drawable/spr_item_groupt"
+                            android:id="@+id/img_add_contact_addprofile"
+                            android:layout_width="@dimen/dp30"
+                            android:layout_height="@dimen/dp30"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp10"
+                            android:layout_marginRight="@dimen/dp7"
+                            android:src="@drawable/icon_contact" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp5"
+                android:orientation="vertical"
+                android:id="@+id/linner_time_addprofile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_linner_add_contact"
+                android:gravity="center_vertical">
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="Chọn chế độ thời gian"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_time_add_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp5">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linner_time_addprofile"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_chonbai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:textStyle="bold"
+                    android:padding="@dimen/dp5"
+                    android:text="Chọn bài hát"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17sp"
+                    android:visibility="visible" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_colletion_addprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp5">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btn_ok_add_profile"
+                        android:layout_width="@dimen/dp150"
+                        android:layout_height="@dimen/dp35"
+                        android:background="@drawable/spr_buton_dialog"
+                        android:text="Thêm cài đặt"
+                        android:textColor="@color/purple"
+                        android:textSize="@dimen/text_13sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</LinearLayout>

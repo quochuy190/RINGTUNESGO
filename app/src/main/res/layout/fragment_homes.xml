@@ -8,8 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.widget.NestedScrollView
-        xmlns:custom="http://schemas.android.com/apk/res-auto"
+    <android.support.v4.widget.NestedScrollView xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,6 +27,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone">
+
                 <ProgressBar
                     android:id="@+id/progressBar"
                     android:layout_width="30dp"
@@ -36,19 +36,20 @@
 
 
             </LinearLayout>
+
             <com.daimajia.slider.library.SliderLayout
-                android:visibility="gone"
                 android:id="@+id/slider1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp150"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:focusable="true"
+                android:visibility="gone"
                 custom:auto_cycle="true"
                 custom:indicator_visibility="visible"
                 custom:pager_animation="Accordion"
-                custom:pager_animation_span="1100"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                custom:pager_animation_span="1100" />
 
             <com.daimajia.slider.library.Indicators.PagerIndicator
                 android:id="@+id/custom_indicator"
@@ -78,17 +79,16 @@
                 android:layout_marginBottom="20dp" />
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
-                android:layout_marginBottom="1dp">
+                android:layout_marginBottom="1dp"
+                android:visibility="gone">
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/vp_showroom_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
-                </android.support.v4.view.ViewPager>
+                    android:layout_height="200dp"></android.support.v4.view.ViewPager>
 
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tbl_showroom_detail"
@@ -99,14 +99,13 @@
                     app:tabBackground="@drawable/spr_selector"
                     app:tabGravity="center"
                     app:tabIndicatorColor="@android:color/holo_red_dark"
-                    app:tabIndicatorHeight="0dp">
-                </android.support.design.widget.TabLayout>
+                    app:tabIndicatorHeight="0dp"></android.support.design.widget.TabLayout>
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/slidertest"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
                 android:layout_marginBottom="1dp"
                 android:visibility="visible">
 
@@ -131,10 +130,10 @@
 
             <LinearLayout
                 android:id="@+id/content_home_fragment"
-                android:layout_marginTop="@dimen/dp10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/slidertest"
+                android:layout_marginTop="@dimen/dp5"
                 android:background="@color/white"
                 android:orientation="vertical"
                 tools:context="com.neo.media.Fragment.Home.View.FragmentHome">
@@ -142,118 +141,108 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycle_slogan"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5"
-                    android:id="@+id/carview_home_event"
-                    custom:cardCornerRadius="@dimen/dp5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycle_home_event"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </android.support.v7.widget.RecyclerView>
-
-                </android.support.v7.widget.CardView>
-                <LinearLayout
-                    android:layout_marginTop="@dimen/dp5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </LinearLayout>
-
-                <include
-                    layout="@layout/header_ringtunes_moi"
-                    />
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5"
-                    android:id="@+id/list_ringtunes_new"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:focusable="false">
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5">
+
                 </android.support.v7.widget.RecyclerView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_home_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"></LinearLayout>
+                <include layout="@layout/header_ringtunes_hot" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list_ringtunes_hot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:background="@color/white"
+                    android:focusable="false"
+                    android:orientation="horizontal">
+
+                </android.support.v7.widget.RecyclerView>
+
                 <!--chủ đề hot-->
 
                 <include layout="@layout/header_album_search" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5"
                     android:id="@+id/list_topic_hot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
                     android:background="@color/white"
-                    android:focusable="false">
-                </android.support.v7.widget.RecyclerView>
+                    android:focusable="false"></android.support.v7.widget.RecyclerView>
 
                 <!--album hot-->
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp5"
                     android:background="@color/white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <include layout="@layout/header_album_hot" />
 
                     <android.support.v7.widget.RecyclerView
-                        android:layout_marginLeft="@dimen/dp5"
-                        android:layout_marginRight="@dimen/dp5"
                         android:id="@+id/list_album_hot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false">
-                    </android.support.v7.widget.RecyclerView>
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:focusable="false"></android.support.v7.widget.RecyclerView>
 
                 </LinearLayout>
 
                 <!--ringtunes hot-->
-                <include layout="@layout/header_ringtunes_hot" />
+                <include layout="@layout/header_ringtunes_moi" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:id="@+id/list_ringtunes_hot"
+                    android:id="@+id/list_ringtunes_new"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
                     android:background="@color/white"
                     android:focusable="false">
+
                 </android.support.v7.widget.RecyclerView>
                 <!--ca si-->
                 <include layout="@layout/header_type" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5"
                     android:id="@+id/list_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:focusable="false">
-                </android.support.v7.widget.RecyclerView>
-                <!--type-->
-                <include layout="@layout/header_singer" />
-                <android.support.v7.widget.RecyclerView
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
+                    android:background="@color/white"
+                    android:focusable="false"></android.support.v7.widget.RecyclerView>
+                <!--type-->
+                <include layout="@layout/header_singer" />
+
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/list_singer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
                     android:background="@color/white"
-                    android:focusable="false">
-                </android.support.v7.widget.RecyclerView>
+                    android:focusable="false"></android.support.v7.widget.RecyclerView>
             </LinearLayout>
 
         </RelativeLayout>

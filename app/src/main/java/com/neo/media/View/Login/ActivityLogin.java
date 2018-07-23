@@ -1,19 +1,18 @@
 package com.neo.media.View.Login;
 
-import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.neo.media.CRBTModel.Info_User;
 import com.neo.media.CRBTModel.subscriber;
@@ -21,15 +20,16 @@ import com.neo.media.Model.Login;
 import com.neo.media.R;
 import com.neo.media.RealmController.RealmController;
 import com.neo.media.untils.BaseActivity;
-import com.neo.media.untils.DialogUtil;
 import com.neo.media.untils.MD5;
 import com.neo.media.untils.PhoneNumber;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import me.alexrs.prefs.lib.Prefs;
 
 import static com.neo.media.R.layout.login;
 
@@ -65,15 +65,29 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
     boolean isShowpass = false;
     @BindView(R.id.img_showpass)
     ImageView img_showpass;
-    boolean isCheckedRemember;
+    boolean isCheckedRemember = true;
+    private int is_count_api = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        is_count_api = 0;
+        ImageView back = (ImageView) findViewById(R.id.back);
+        TextView txt_appbar = (TextView) findViewById(R.id.txt_appbar);
+        back.setVisibility(View.VISIBLE);
+        txt_appbar.setVisibility(View.VISIBLE);
+        txt_appbar.setText("Đăng nhập");
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         realm = RealmController.with(this).getRealm();
         presenterLogin = new PresenterLogin(this);
         //initNetwork();
+        remember_pass.setChecked(true);
         initEvent();
     }
 
@@ -108,11 +122,10 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
 
     @Override
     public void initData() {
-        pre = getSharedPreferences("data", MODE_PRIVATE);
-        userID = pre.getString("user_id", "");
-        userPortal = pre.getString("user_portal", "");
-        passPortal = pre.getString("pass_portal", "");
-        isCheckedRemember = pre.getBoolean("isCheckedRemember", false);
+        userID = Prefs.with(ActivityLogin.this).getString("user_id", "");
+        userPortal = Prefs.with(ActivityLogin.this).getString("user_portal", "");
+        passPortal = Prefs.with(ActivityLogin.this).getString("pass_portal", "");
+        isCheckedRemember = Prefs.with(ActivityLogin.this).getBoolean("isCheckedRemember", false);
         objLogin = new Login();
     }
 
@@ -122,26 +135,29 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
             public void onClick(View v) {
                 initNetwork();
                 if (!is3g && !isWifi) {
-                    Toast.makeText(getApplicationContext(), "Bạn hãy kết nỗi mạng để tiếp tục sử dụng dịch vụ", Toast.LENGTH_LONG).show();
+                    show_notification("Thông báo", "Bạn hãy kết nỗi mạng để tiếp tục sử dụng dịch vụ");
+                    //  Toast.makeText(getApplicationContext(), "Bạn hãy kết nỗi mạng để tiếp tục sử dụng dịch vụ", Toast.LENGTH_LONG).show();
                 } else {
                     if (edt_taikhoan_Login.getText().length() > 0 && edt_matkhau_Login.getText().length() > 0) {
-
                         if (PhoneNumber.StandartTelco(edt_taikhoan_Login.getText().toString()).equals("VINA")) {
-                            String s = edt_matkhau_Login.getText().toString();
+                            //String s = edt_matkhau_Login.getText().toString();
                             String pass = md.getMD5(edt_matkhau_Login.getText().toString()).toUpperCase();
                             username = PhoneNumber.convertTo84PhoneNunber(edt_taikhoan_Login.getText().toString());
+                            showDialogLoading();
+                            is_count_api = 0;
                             presenterLogin.LoginVinaphonePortal(username, pass, userID);
                         } else
-                            DialogUtil.showDialog(ActivityLogin.this, "Sai tài khoản",
-                                    "Bạn phải nhập vào số điện thoại của Vinaphone");
+                            show_notification("Thông báo", "Bạn phải nhập vào số điện thoại của mạng Vinaphone");
+                           /* DialogUtil.showDialog(ActivityLogin.this, "Sai tài khoản",
+                                    "Bạn phải nhập vào số điện thoại của Vinaphone");*/
 
-                    } else Toast.makeText(ActivityLogin.this,
-                            "Mời bạn nhập vào Tài khoản và mật khẩu để đăng nhập", Toast.LENGTH_SHORT).show();
+                    } else
+                        show_notification("Thông báo", "Mời bạn nhập vào tài khoản và mật khẩu để đăng nhập");
+
                 }
-
-
             }
         });
+
         img_showpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,6 +189,7 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
                 realm.beginTransaction();
                 realm.copyToRealmOrUpdate(info_user);
                 realm.commitTransaction();
+                hideDialogLoading();
                 finish();
             } else if (subscriber.getERROR().equals("102")) {
                 info_user.setsPhone(username);
@@ -186,7 +203,9 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
                 realm.beginTransaction();
                 realm.copyToRealmOrUpdate(info_user);
                 realm.commitTransaction();
-                final Dialog dialog_yes = new Dialog(this);
+                hideDialogLoading();
+                finish();
+                /*final Dialog dialog_yes = new Dialog(this);
                 dialog_yes.setContentView(R.layout.dialog_yes_no);
                 TextView txt_buysongs = (TextView) dialog_yes.findViewById(R.id.dialog_message);
                 Button yes = (Button) dialog_yes.findViewById(R.id.btn_dialog_yes);
@@ -214,7 +233,7 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
                         finish();
                     }
                 });
-                dialog_yes.show();
+                dialog_yes.show();*/
 
             }
         } else finish();
@@ -222,105 +241,73 @@ public class ActivityLogin extends BaseActivity implements InterfaceLogin.View {
 
     @Override
     public void showDataLogin(List<String> list) {
+        hideDialogLoading();
         if (list.size() > 0) {
-            objLogin.setsUserName(userID);
-            objLogin.setsSessinonID(list.get(2));
-            objLogin.setMsisdn(username);
-            objLogin.setLogin(true);
-            realm.beginTransaction();
-            realm.copyToRealmOrUpdate(objLogin);
-            realm.commitTransaction();
+            Prefs.with(this).save("msisdn", username);
+            Prefs.with(this).save("sessionID", list.get(2));
+            Prefs.with(this).save("isLogin", true);
+            Prefs.with(this).save("is_Show_Subscriber", true);
+            Prefs.with(this).save("is_Phien_DN", true);
             if (remember_pass.isChecked()) {
-                SharedPreferences.Editor editor = pre.edit();
-                editor.putString("msisdn", username);
-                editor.putString("sessionID", list.get(2));
-                editor.commit();
             } else {
                 edt_matkhau_Login.setText("");
             }
-            presenterLogin.get_detail_subsriber(list.get(2), username);
+            finish();
+            //presenterLogin.get_detail_subsriber(list.get(2), username);
         } else {
-            Toast.makeText(this, "Lỗi hệ thống, mời thử lại" , Toast.LENGTH_SHORT).show();
+            new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+                    .setTitleText("Thông báo")
+                    .setContentText("Hệ thống đang bận mời thử lại sau")
+                    .setConfirmText("Đóng")
+                    .showCancelButton(true)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismiss();
+                        }
+                    }).show();
         }
-
-
     }
 
     @Override
     public void showDataLoginVinaphonePortal(List<String> list) {
         if (list.size() > 0) {
+            Log.i("login", list.get(1));
             if (list.get(0).equals("0") && list.get(1).equals("SUCCESS")) {
-                SharedPreferences.Editor editor = pre.edit();
-                editor.putString("user_portal", edt_taikhoan_Login.getText().toString());
-                editor.putString("pass_portal", edt_matkhau_Login.getText().toString());
+                Prefs.with(this).save("user_portal", edt_taikhoan_Login.getText().toString());
+                Prefs.with(this).save("pass_portal", edt_matkhau_Login.getText().toString());
+                Prefs.with(this).save("pass_sql_server", list.get(2));
                 if (remember_pass.isChecked()) {
-                    editor.putBoolean("isCheckedRemember", true);
+                    Prefs.with(this).save("isCheckedRemember", true);
+                    //editor.putBoolean("isCheckedRemember", true);
                 } else
-                    editor.putBoolean("isCheckedRemember", false);
-                editor.commit();
-                objLogin.setsUserName(userID);
-                objLogin.setsPassWord(list.get(2));
-                objLogin.setMsisdn(username);
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(objLogin);
-                realm.commitTransaction();
+                    Prefs.with(this).save("isCheckedRemember", true);
                 presenterLogin.Login(userID, list.get(2));
             } else {
-                Toast.makeText(this, "Lỗi", Toast.LENGTH_SHORT).show();
+                hideDialogLoading();
+                if (list.get(0).equals("1"))
+                show_notification("Lỗi", "Tài khoản hoặc password không hợp lệ");
             }
-        }else Toast.makeText(this, "Lỗi hệ thống, mời thử lại", Toast.LENGTH_SHORT).show();
-    }
-
-    /*public void hideDialogLoading() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-        }
-    }
-
-    protected ProgressDialog dialog;
-    private Handler StopDialogLoadingHandler = new Handler();
-
-    public void showDialogLoading() {
-        StopDialogLoadingHandler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                if (dialog != null && dialog.isShowing()) {
-                    dialog.dismiss();
-                }
-            }
-        }, 10000);
-        if (dialog == null) {
-            dialog = new ProgressDialog(this);
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.setMessage(getString(R.string.alert_message_loading));
-            dialog.setIndeterminate(true);
-            dialog.setCanceledOnTouchOutside(false);
-        }
-        if (dialog != null && !dialog.isShowing()) {
-            dialog.show();
+        } else {
+            show_notification("Lỗi kết nối", "Kiểm tra lại kết nối mạng, hoặc mời bạn thử phương thức đăng nhập khác." +
+                    " Xin cảm ơn");
         }
     }
 
-    public void showDialogLoading1s() {
-        StopDialogLoadingHandler.postDelayed(new Runnable() {
+    @Override
+    public void show_api_error() {
+        show_notification("Lỗi kết nối", "Kiểm tra lại kết nối mạng, hoặc mời bạn thử phương thức đăng nhập khác." +
+                " Xin cảm ơn");
+      /*  if (is_count_api < 2) {
+            is_count_api++;
+            String pass = md.getMD5(edt_matkhau_Login.getText().toString()).toUpperCase();
+            username = PhoneNumber.convertTo84PhoneNunber(edt_taikhoan_Login.getText().toString());
+            //showDialogLoading();
+            presenterLogin.LoginVinaphonePortal(username, pass, userID);
+        } else {
+            is_count_api = 0;
+            hideDialogLoading();
 
-            @Override
-            public void run() {
-                if (dialog != null && dialog.isShowing()) {
-                    dialog.dismiss();
-                }
-            }
-        }, 1000);
-        if (dialog == null) {
-            dialog = new ProgressDialog(this);
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.setMessage(getString(R.string.alert_message_loading));
-            dialog.setIndeterminate(true);
-            dialog.setCanceledOnTouchOutside(false);
-        }
-        if (dialog != null && !dialog.isShowing()) {
-            dialog.show();
-        }
-    }*/
+        }*/
+    }
 }

@@ -52,6 +52,7 @@ public class AdapterSlogan extends RecyclerView.Adapter<AdapterSlogan.TopicViewH
         final Topic topic = listTopic.get(position);
         if (topic.getNAME()!=null)
             holder.txt_name_slogan.setText(topic.getNAME());
+        else holder.txt_name_slogan.setText(topic.getPackage_name());
         if (topic.getDescription()!=null)
             holder.txt_depcrition_slogan.setText(topic.getDescription());
     }

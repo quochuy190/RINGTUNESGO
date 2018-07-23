@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
+    <android.support.design.widget.TabLayout
+        app:tabBackground="@drawable/tab_selector"
+        app:tabIndicatorHeight="0dp"
+        app:tabGravity="center"
+        android:layout_centerHorizontal="true"
+        app:tabTextColor="@android:color/darker_gray"
+        app:tabSelectedTextColor="@color/white"
+        android:id="@+id/tab_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+      >
+
+    </android.support.design.widget.TabLayout>
+    <TextView
+        android:id="@+id/txt_done"
+        android:visibility="gone"
+        android:padding="@dimen/dp5"
+        android:textSize="@dimen/text_17sp"
+        android:textColor="@color/white"
+        android:text="Hoàn thành"
+        android:layout_marginBottom="@dimen/dp30"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

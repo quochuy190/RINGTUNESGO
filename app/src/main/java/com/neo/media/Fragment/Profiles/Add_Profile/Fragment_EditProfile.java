@@ -2,37 +2,31 @@ package com.neo.media.Fragment.Profiles.Add_Profile;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.neo.media.Adapter.AdapterCollectionGroup;
+import com.neo.media.Adapter.AdapterTime_Group;
 import com.neo.media.CRBTModel.GROUPS;
 import com.neo.media.CRBTModel.Item;
 import com.neo.media.CRBTModel.PROFILE;
 import com.neo.media.Config.Constant;
-import com.neo.media.Fragment.Profiles.FragmentProfiles;
-import com.neo.media.MainNavigationActivity;
 import com.neo.media.Model.Ringtunes;
+import com.neo.media.Model.Time_Group;
 import com.neo.media.MyApplication;
 import com.neo.media.R;
 import com.neo.media.RealmController.RealmController;
-import com.neo.media.untils.BaseFragment;
+import com.neo.media.untils.BaseActivity;
 import com.neo.media.untils.CustomUtils;
-import com.neo.media.untils.FragmentUtil;
 import com.neo.media.untils.setOnItemClickListener;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +34,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-
-import static android.content.Context.MODE_PRIVATE;
+import me.alexrs.prefs.lib.Prefs;
 
 /**
  * Created by QQ on 10/1/2017.
  */
 
-public class Fragment_EditProfile extends BaseFragment implements Add_Profile_Inteface.View {
+public class Fragment_EditProfile extends BaseActivity implements Add_Profile_Inteface.View {
     public static Fragment_EditProfile fragment_addProfiles;
 
     public static Fragment_EditProfile getInstance() {
@@ -77,8 +70,8 @@ public class Fragment_EditProfile extends BaseFragment implements Add_Profile_In
     String content_id;
     String setup_profle = "0";
     String setup_time = "0";
-    @BindView(R.id.spn_time_setup_edit)
-    Spinner spn_time_setup_profile;
+ /*   @BindView(R.id.spn_time_setup_edit)
+    Spinner spn_time_setup_profile;*/
     String profile_id = "";
     String name_profile = "";
     PROFILE objProfile;
@@ -92,14 +85,42 @@ public class Fragment_EditProfile extends BaseFragment implements Add_Profile_In
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
+        objProfile = new PROFILE();
+        initTimeGroup();
+        initDatas();
+        realm = RealmController.with(this).getRealm();
+        presenterAddProfiles = new PresenterAddProfiles(this);
+        SharedPreferences pre = getSharedPreferences("data", MODE_PRIVATE);
+        //id_Singer= pre.getString("isSinger", "");
+     /*   sesionID = pre.getString("sessionID", "");
+        msisdn = pre.getString("msisdn", "");*/
+        sesionID = Prefs.with(this).getString("sessionID", "");
+        msisdn = Prefs.with(this).getString("msisdn", "");
+        presenterAddProfiles.getConllection(sesionID, msisdn);
+
+        init();
+        initSpinner();
+        initEvent();
     }
 
-    @Nullable
+    @Override
+    public int setContentViewId() {
+        return R.layout.fragment_edit_profiles;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+ /*   @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_profiles, container, false);
         ButterKnife.bind(this, view);
         objProfile = new PROFILE();
+        initTimeGroup();
         initData();
         realm = RealmController.with(this).getRealm();
         presenterAddProfiles = new PresenterAddProfiles(this);
@@ -108,30 +129,41 @@ public class Fragment_EditProfile extends BaseFragment implements Add_Profile_In
         sesionID = pre.getString("sessionID", "");
         msisdn = pre.getString("msisdn", "");
         presenterAddProfiles.getConllection(sesionID, msisdn);
+
         init();
         initSpinner();
         initEvent();
 
         return view;
-    }
+    }*/
 
-    private void initData() {
+    private void initDatas() {
         objProfile = MyApplication.profile_bundle;
         if (objProfile != null) {
             caller_type = objProfile.getCaller_type();
             if (caller_type.equals("DEFAULT")) {
                 name_profile = "Tất cả số gọi đến";
             } else if (caller_type.equals("CLI")) {
-                name_profile = "Số ĐT: " + objProfile.getCaller_id();
+                name_profile = "Một số gọi đến: " + objProfile.getCaller_id();
             } else if (caller_type.equals("GROUP")) {
                 if (objProfile.getCaller_name() != null)
-                    name_profile = "Nhóm: " + objProfile.getCaller_name();
+                    name_profile = "Nhóm gọi đến: " + objProfile.getCaller_name();
                 else
-                    name_profile = "Nhóm: " + objProfile.getCaller_id();
+                    name_profile = "Nhóm gọi dến: " + objProfile.getCaller_id();
             }
             if (objProfile.getTimeBase() != null)
                 setup_time = CustomUtils.getTime_Profile(objProfile.getTimeBase().getTime_category_4().getFrom_time());
             else setup_time = "0";
+            if (objProfile.getTimeBase()!= null){
+                for (int i = 0;i<lisTime.size();i++){
+                    if (lisTime.get(i).getFrom_time().equals(objProfile.getTimeBase().getTime_category_4().getFrom_time())){
+                        lisTime.get(i).setCheck(true);
+                    }
+                }
+                from_time = objProfile.getTimeBase().getTime_category_4().getFrom_time();
+                to_time = objProfile.getTimeBase().getTime_category_4().getTo_time();
+            }
+            adapter_time.notifyDataSetChanged();
             content_id = objProfile.getContent_id();
             profile_id = objProfile.getProfile_id();
             caller_id = objProfile.getCaller_id();
@@ -139,12 +171,58 @@ public class Fragment_EditProfile extends BaseFragment implements Add_Profile_In
 
     }
 
+    AdapterTime_Group adapter_time;
+    @BindView(R.id.recycle_time_edit_profile)
+    RecyclerView recycle_time_addgroup;
+    List<Time_Group> lisTime;
+
+    private void initTimeGroup() {
+        lisTime = new ArrayList<>();
+        lisTime.add(new Time_Group("Cả ngày", false, "00:00:00", "23:59:59"));
+        lisTime.add(new Time_Group("Ban ngày (08:00 - 17:00)", false, "08:00:00", "17:00:00"));
+        lisTime.add(new Time_Group("Ban ngày 1 (09:00 - 18:00)", false, "09:00:00", "18:00:00"));
+        lisTime.add(new Time_Group("Ban ngày 2 (07:30 - 16:00)", false, "07:30:00", "16:30:00"));
+        lisTime.add(new Time_Group("Buổi tối (17:01 - 07:59)", false, "17:01:00", "07:59:00"));
+        lisTime.add(new Time_Group("Buổi tối 1 (18:01 - 08:59)", false, "18:01:00", "08:59:00"));
+        lisTime.add(new Time_Group("Buổi tối 2 (16:31 - 07:29)", false, "16:31:00", "07:29:00"));
+
+        adapter_time = new AdapterTime_Group(lisTime, this);
+        mLayoutManager = new GridLayoutManager(this, 1);
+        recycle_time_addgroup.setHasFixedSize(true);
+        recycle_time_addgroup.setNestedScrollingEnabled(false);
+        recycle_time_addgroup.setLayoutManager(mLayoutManager);
+        recycle_time_addgroup.setItemAnimator(new DefaultItemAnimator());
+        recycle_time_addgroup.setAdapter(adapter_time);
+        adapter_time.notifyDataSetChanged();
+
+        adapter_time.setSetOnItemClickListener(new setOnItemClickListener() {
+            @Override
+            public void OnItemClickListener(final int position) {
+                for (int i = 0; i < lisTime.size(); i++) {
+                    if (i == position) {
+                        lisTime.get(i).setCheck(true);
+                        from_time = lisTime.get(position).getFrom_time();
+                        to_time = lisTime.get(position).getTo_time();
+                    } else lisTime.get(i).setCheck(false);
+                }
+                //content_id = lisItem.get(position).getContent_id();
+                adapter_time.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void OnLongItemClickListener(int position) {
+            }
+        });
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        MainNavigationActivity.appbar.setVisibility(View.GONE);
-        if (setup_time != null && setup_time.length() > 0)
-            spn_time_setup_profile.setSelection(Integer.parseInt(setup_time));
+        //MainNavigationActivity.appbar.setVisibility(View.GONE);
+       /* if (setup_time != null && setup_time.length() > 0)
+            spn_time_setup_profile.setSelection(Integer.parseInt(setup_time));*/
         txt_name_edit_profile.setText(name_profile);
     }
 
@@ -156,10 +234,10 @@ public class Fragment_EditProfile extends BaseFragment implements Add_Profile_In
 
     private void initSpinner() {
 
-        ArrayAdapter<String> adapter_time = new ArrayAdapter<String>(getContext(),
+        ArrayAdapter<String> adapter_time = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, spn_time_setup);
         adapter_time.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_time_setup_profile.setAdapter(adapter_time);
+       // spn_time_setup_profile.setAdapter(adapter_time);
     }
 
 
@@ -167,10 +245,10 @@ public class Fragment_EditProfile extends BaseFragment implements Add_Profile_In
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentUtil.popBackStack(getActivity());
+               finish();
             }
         });
-        spn_time_setup_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*spn_time_setup_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -209,7 +287,7 @@ public class Fragment_EditProfile extends BaseFragment implements Add_Profile_In
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,8 +299,8 @@ public class Fragment_EditProfile extends BaseFragment implements Add_Profile_In
 
     private void init() {
         listConllection = new ArrayList<>();
-        adapterCollection = new AdapterCollectionGroup(listConllection, getContext());
-        mLayoutManager = new GridLayoutManager(getContext(), 1);
+        adapterCollection = new AdapterCollectionGroup(listConllection, this);
+        mLayoutManager = new GridLayoutManager(this, 1);
         recycleConllection.setHasFixedSize(true);
         recycleConllection.setNestedScrollingEnabled(false);
         recycleConllection.setLayoutManager(mLayoutManager);
@@ -291,17 +369,22 @@ public class Fragment_EditProfile extends BaseFragment implements Add_Profile_In
         if (string.size() > 0) {
             if (string.get(0).equals("0")) {
                 // FragmentProfiles.
-                FragmentProfiles.get_profile();
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                if (fm.getBackStackEntryCount() > 0) {
-                    fm.popBackStack();
-                }
+                new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Thông báo")
+                        .setContentText("Sửa luật phát nhạc thành công")
+                        .setConfirmText("Đóng")
+                        .showCancelButton(true)
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                                finish();
+                            }
+                        }).show();
+
             } else {
-                Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                if (fm.getBackStackEntryCount() > 0) {
-                    fm.popBackStack();
-                }
+                Toast.makeText(this, "Lỗi hệ thống", Toast.LENGTH_SHORT).show();
+               finish();
             }
 
         }

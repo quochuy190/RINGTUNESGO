@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.neo.media.CRBTModel.PROFILE;
-import com.neo.media.Fragment.Collection.PresenterConllection;
+import com.neo.media.Fragment.CaNhan.Collection.PresenterConllection;
+import com.neo.media.Fragment.Profiles.FragmentProfiles;
 import com.neo.media.R;
 import com.neo.media.untils.setOnItemClickListener;
 
@@ -56,9 +56,9 @@ public class AdapterProfiles extends RecyclerView.Adapter<AdapterProfiles.TopicV
     @Override
     public void onBindViewHolder(final TopicViewHoder holder, int position) {
         final PROFILE item = listItems.get(position);
-        if (position==0){
+        if (position == 0) {
             holder.view_profile.setVisibility(View.GONE);
-        }else
+        } else
             holder.view_profile.setVisibility(View.VISIBLE);
         //String urlImage = IMAGE_URL + ringtunes.getImage_file();
         //Glide.with(context).load(urlImage).into(holder.imgRingtunes);
@@ -87,12 +87,22 @@ public class AdapterProfiles extends RecyclerView.Adapter<AdapterProfiles.TopicV
         } else if (item.getContent_entity().equals("NONE")) {
             holder.txt_setup_number_songs.setText("Nhạc chuông mặc định");
         }
-        if (item.getTime_category().equals("-1")||item.getTimeBase().getTime_category_4().getFrom_time().equals("00:00:00")) {
+        if (item.getTime_category().equals("-1") || item.getTimeBase().getTime_category_4().getFrom_time().equals("00:00:00")) {
             holder.txt_setup_time.setText("Cả ngày");
         } else {
             holder.txt_setup_time.setText(item.getTimeBase().getTime_category_4().getFrom_time() + " - "
                     + item.getTimeBase().getTime_category_4().getTo_time());
         }
+        if (item.isDelete()) {
+            holder.img_dot_profile.setVisibility(View.VISIBLE);
+        } else holder.img_dot_profile.setVisibility(View.GONE);
+        holder.img_dot_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentProfiles.delete_profile(context,item.getProfile_id());
+            }
+        });
+
 
     }
 
@@ -110,18 +120,11 @@ public class AdapterProfiles extends RecyclerView.Adapter<AdapterProfiles.TopicV
         TextView txt_setup_time;
         @BindView(R.id.profile_number_songs)
         TextView txt_setup_number_songs;
-        @BindView(R.id.txt_edit_profile)
-        TextView txt_edit_profile;
-        @BindView(R.id.txt_delete_profile)
-        TextView txt_delete_profile;
         @BindView(R.id.img_dot_profile)
         ImageView img_dot_profile;
-        @BindView(R.id.linner_edit)
-        LinearLayout linner_edit;
         @BindView(R.id.view_profile)
         View view_profile;
-       /* @BindView(R.id.item_img_dot_menu)
-        ImageView img_dot_menu;*/
+
 
         public TopicViewHoder(View itemView) {
             super(itemView);

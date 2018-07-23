@@ -7,18 +7,19 @@
     <color name="red">#ff0000</color>
     <color name="black">#060606</color>
     <color name="white">#FFFFFF</color>
-
-    <color name="white_backgroup">#dbf9f8f8</color>
+    <color name="mo_nen">#00f1efef</color>
+    <color name="text_group">#4a3c6d</color>
+    <color name="white_backgroup">#deece9e9</color>
     <color name="text_color1">#00030a</color>
     <color name="mp.list.background">#1ADDF9FF</color>
     <color name="mp.list.background.selected">#6CDDF9FF</color>
     <color name="title_singer_search">#666666</color>
     <color name="song_search_album">#101933</color>
     <color name="funringvn">#E0171F</color>
-    <color name="bg_app">#fff</color>
+        <color name="bg_app">#fff</color>
     <color name="color_bg_playing_small">#101933</color>
     <color name="line_app">#efeeee</color>
-    <color name="bg_progress">#c6c6c6</color>
+    <color name="bg_progress">#a9a6a6</color>
     <color name="info_singer">#f5f5f5</color>
     <color name="text_color2">#225A9D</color>
     <color name="orange">#fcb11a</color>
@@ -26,13 +27,13 @@
     <color name="two">#FCC92D</color>
     <color name="three">#7DD220</color>
     <color name="four">#1D5EB1</color>
-    <color name="five">#13a4d1</color>
+    <color name="five">#a8dff1</color>
 
     <color name="main_color">#1D5EB1</color>
     <color name="text_alpha">#666666</color>
     <color name="yellow">#CD950C</color>
-    <color name="background">#a6aec8e6</color>
-
+    <color name="background">#c099bce4</color>
+    <color name="toolbar">#c0c5c7ca</color>
     <color name="viewBg">#f1f5f8</color>
     <color name="album_title">#4c4c4c</color>
     <color name="text_name_song">#3e3450</color>
@@ -55,12 +56,16 @@
     <color name="start">#0bdedbdb</color>
     <color name="end">#fb4a4a4a</color>
     <color name="backgroud_search">#9d736767</color>
-    <color name="backgroud_event">#45201f1f</color>
+    <color name="backgroud_favorite">#a85c5757</color>
+    <color name="backgroud_play_full">#d88f8b8b</color>
+    <color name="backgroud_event">#3e423f43</color>
     <color name="backgroud_tabbar">#54b3acb4</color>
     <color name="backgroud_full">#e4595656</color>
-
-
-
-
+    <color name="backgroud_item_group">#3abfb1ca</color>
+    <color name="tabcolor">#FFFFFF</color>
+    <color name="tabselect">#f40404</color>
+    <color name="background_title_dialog">#b7afc6</color>
+    <color name="item_song_player">#d8eceaef</color>
+    <color name="white_background">#77d0cfd2</color>
 
 </resources>

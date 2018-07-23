@@ -4,24 +4,29 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.neo.media.Activity.ActivityMainHome;
 import com.neo.media.ApiService.ApiService;
-import com.neo.media.MainNavigationActivity;
 import com.neo.media.R;
 import com.neo.media.RealmController.RealmController;
 import com.neo.media.untils.BaseActivity;
 
 import io.realm.Realm;
+import me.alexrs.prefs.lib.Prefs;
 
 public class SplashScreen extends BaseActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "SplashScreen";
     Realm realm;
+
+    ImageView img_splash;
    // public static Storage storage; // this Preference comes for free from the library
     /**
      * Duration of wait
      **/
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
+    private final int SPLASH_DISPLAY_LENGTH = 500;
     Intent mainIntent = new Intent();
     ApiService apiService;
 
@@ -34,9 +39,12 @@ public class SplashScreen extends BaseActivity {
        // setContentView(R.layout.activity_splash_screen);
         realm = RealmController.with(this).getRealm();
         apiService = new ApiService();
-        mainIntent.setClass(SplashScreen.this, MainNavigationActivity.class);
+        Prefs.with(this).save("is_Phien_DN", true);
+        Prefs.with(this).save("is_checkver", true);
+        mainIntent.setClass(SplashScreen.this, ActivityMainHome.class);
         final SharedPreferences fr = getSharedPreferences("data", MODE_PRIVATE);
-
+        img_splash = (ImageView) findViewById(R.id.img_splash);
+        Glide.with(this).load(R.drawable.img_plash).into(img_splash);
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
         new Handler().postDelayed(new Runnable() {

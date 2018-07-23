@@ -25,7 +25,7 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
 
     @Override
     public void getByTopic(String id, String page, String number) {
-       viewRingtunes.showDialogLoading();
+      // viewRingtunes.showDialogLoading();
         String Service = "hot_detail_detail_service";
         String Provider = "default";
         String ParamSize = "4";
@@ -39,17 +39,17 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
 
             @Override
             public void onGetDataFault(Exception e) {
-
+                viewRingtunes.hideDialogLoading();
             }
 
             @Override
             public void onGetObjectDataSuccess(Ringtunes Object) {
-
+                viewRingtunes.hideDialogLoading();
             }
         }, Service, Provider, ParamSize, P1, page, number, Constant.USER_ID);
     }
     public void getByEvent(String Service,String id, String page, String number, String userID) {
-        viewRingtunes.showDialogLoading();
+       // viewRingtunes.showDialogLoading();
         String Provider = "default";
         String ParamSize = "4";
         apiService.getRingtunes_ByTocpic(new CallbackData<Ringtunes>() {
@@ -72,8 +72,8 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
     }
     @Override
     public void getByAlbum(String id, String type, String page, String number) {
-        viewRingtunes.hideDialogLoading();
-        viewRingtunes.showDialogLoading();
+      //  viewRingtunes.hideDialogLoading();
+      //  viewRingtunes.showDialogLoading();
         String Service = "album_detail_detail_service";
         String Provider = "default";
         String ParamSize = "5";
@@ -103,8 +103,8 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
 
     @Override
     public void getByType(String id, String type, String page, String nuber) {
-        viewRingtunes.hideDialogLoading();
-        viewRingtunes.showDialogLoading();
+     //   viewRingtunes.hideDialogLoading();
+       // viewRingtunes.showDialogLoading();
         String Service = "category_detail_detail_service";
         String Provider = "default";
         String ParamSize = "5";
@@ -135,8 +135,8 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
 
     @Override
     public void getBySinger(String id, String type, String page, String nuber) {
-        viewRingtunes.hideDialogLoading();
-        viewRingtunes.showDialogLoading();
+     //   viewRingtunes.hideDialogLoading();
+      //  viewRingtunes.showDialogLoading();
         String Service = "singer_detail_main_service";
         String Provider = "default";
         String ParamSize = "5";
@@ -166,8 +166,8 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
 
     @Override
     public void log_Info_Charge_Server(String P1, String P2, String P3, String P4, String P5) {
-        viewRingtunes.hideDialogLoading();
-        viewRingtunes.showDialogLoading();
+     //   viewRingtunes.hideDialogLoading();
+      //  viewRingtunes.showDialogLoading();
         String Service = "log_info_charge_service";
         String Provider = "default";
         String ParamSize = "5";
@@ -194,8 +194,8 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
 
     @Override
     public void getByRingtunesHot(String top_type, String page, String index) {
-        viewRingtunes.hideDialogLoading();
-        viewRingtunes.showDialogLoading();
+       // viewRingtunes.hideDialogLoading();
+        //viewRingtunes.showDialogLoading();
         String Service = "ringtunes_hot_detail_service";
         String Provider = "default";
         String ParamSize = "4";
@@ -221,8 +221,8 @@ public class Presenter_Detail_Ringtunes implements Presenter_Detail_RingtunesImp
 
     @Override
     public void getByRingtunesNew(String top_type, String page, String index) {
-        viewRingtunes.hideDialogLoading();
-        viewRingtunes.showDialogLoading();
+      //  viewRingtunes.hideDialogLoading();
+     //   viewRingtunes.showDialogLoading();
         String Service = "index_ringtune_new_service";
         String Provider = "default";
         String ParamSize = "4";

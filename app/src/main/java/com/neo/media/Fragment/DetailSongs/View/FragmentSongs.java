@@ -1,24 +1,18 @@
 package com.neo.media.Fragment.DetailSongs.View;
 
-import android.app.NotificationManager;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +21,16 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.neo.media.Adapter.AdapterRingtunes;
+import com.neo.media.Activity.ActivityMainHome;
+import com.neo.media.Adapter.AdapterListSongs;
 import com.neo.media.Adapter.AdapterSongsCustom;
 import com.neo.media.Config.Config;
 import com.neo.media.Config.Constant;
 import com.neo.media.Fragment.BuySongs.View.FragmentDetailBuySongs;
 import com.neo.media.Fragment.DetailSongs.Presenter.Presenter_Detail_Ringtunes;
-import com.neo.media.MainNavigationActivity;
+import com.neo.media.Fragment.Favorite.FragmentPlayerFull;
 import com.neo.media.Model.Ringtunes;
+import com.neo.media.MyApplication;
 import com.neo.media.R;
 import com.neo.media.untils.BaseFragment;
 import com.neo.media.untils.FragmentUtil;
@@ -47,8 +43,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.content.Context.NOTIFICATION_SERVICE;
-import static com.neo.media.MainNavigationActivity.appbar;
 import static com.neo.media.MyApplication.player_ring;
 
 /**
@@ -67,14 +61,14 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
     TextView txt_title;*/
 /*    @BindView(R.id.img_back_lisSongs)
     ImageView img_back_lisSongs;*/
-    AdapterRingtunes adapterRingtunes;
+    AdapterListSongs adapterRingtunes;
     AdapterSongsCustom adapterSongsCustom;
     List<Ringtunes> lisRing;
     private String url_image_title;
     String id;
     String title;
     int page = 1;
-    int index = 20;
+    int index = 30;
     boolean isLoading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     RecyclerView.LayoutManager mLayoutManager;
@@ -82,13 +76,13 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
     public ProgressBar progressBar;
     SharedPreferences pre;
     public String option;
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.movie_poster)
     ImageView imgHeader;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     String type_event;
+    @BindView(R.id.img_playall)
+    ImageView img_playall;
 
     public static FragmentSongs getInstance() {
         if (fragment == null) {
@@ -106,6 +100,7 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
         super.onCreate(savedInstanceState);
         initData();
         page = 1;
+        presenter_detail_ringtunes = new Presenter_Detail_Ringtunes(this);
         showData(page, index);
     }
 
@@ -124,8 +119,11 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
 
             }
         });
+
         return view;
     }
+
+    private boolean isFavorite = false;
 
     private void initData() {
         lisRing = new ArrayList<>();
@@ -136,23 +134,20 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
         title = pre.getString("title", "");
         option = pre.getString("option", "");
         url_image_title = pre.getString("url_image_title", "");
-
+        //Glide.with(getContext()).load(url_image_title).
+        isFavorite = pre.getBoolean("isFavorite", false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //  txt_title.setText(""+title);
-        MainNavigationActivity.appbar.setVisibility(View.GONE);
+        ActivityMainHome.relative_tab.setVisibility(View.GONE);
+
     }
 
 
-  /*  private void initPulltoRefresh() {
-        swipeRefreshLayout.setOnRefreshListener(this);
-    }*/
-
     private void init() {
-        adapterRingtunes = new AdapterRingtunes(lisRing, getContext());
+        adapterRingtunes = new AdapterListSongs(lisRing, getContext());
         mLayoutManager = new GridLayoutManager(getContext(), 1);
         // recycleSongs.setNestedScrollingEnabled(false);
         recycleSongs.setHasFixedSize(true);
@@ -170,8 +165,13 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
                 editor.putBoolean("isHome", false);
                 editor.putString("idSinger", lisRing.get(position).getSinger_id());
                 editor.commit();
+
                 if (!FragmentDetailBuySongs.getInstance().isAdded())
-                    FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+                    FragmentUtil.pushFragmentLayoutMain(getFragmentManager(), R.id.fame_main, FragmentDetailBuySongs.getInstance(),
+                            TAG);
+               /* if (!FragmentDetailBuySongs.getInstance().isAdded())
+                    FragmentUtil.pushFragment(getActivity().getSupportFragmentManager(), R.id.fame_main,
+                            FragmentDetailBuySongs.getInstance(), null);*/
             }
 
             @Override
@@ -182,6 +182,19 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
     }
 
     private void initEvent() {
+        img_playall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyApplication.lisPlayRing.clear();
+                if (lisRing.size() > 1) {
+                    for (int i = 1; i < lisRing.size(); i++) {
+                        MyApplication.lisPlayRing.add(lisRing.get(i));
+                    }
+                    if (!FragmentPlayerFull.getInstance().isAdded())
+                        FragmentUtil.addFragmentData(getActivity(), FragmentPlayerFull.getInstance(), true, null);
+                }
+            }
+        });
         recycleSongs.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -193,6 +206,24 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
                     GridLayoutManager layoutmanager = (GridLayoutManager) recyclerView.getLayoutManager();
+                    visibleItemCount = layoutmanager.getChildCount();
+                    totalItemCount = layoutmanager.getItemCount();
+                    pastVisiblesItems = layoutmanager.findFirstVisibleItemPosition();
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        if (!isLoading) {
+                            isLoading = true;
+                            lisRing.add(null);
+                            adapterRingtunes.notifyDataSetChanged();
+                            page++;
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showData(page, index);
+                                }
+                            }, 500);
+                        }
+                    }
+                 /*   GridLayoutManager layoutmanager = (GridLayoutManager) recyclerView.getLayoutManager();
                     visibleItemCount = layoutmanager.getChildCount();
                     totalItemCount = layoutmanager.getItemCount();
                     pastVisiblesItems = layoutmanager.findFirstVisibleItemPosition();
@@ -216,11 +247,11 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
                             };
                             countDownTimer.start();
                         }
-                    }
+                    }*/
                 }
             }
         });
-      /*  img_back_lisSongs.setOnClickListener(new View.OnClickListener() {
+       /* img_back_lisSongs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                FragmentUtil.popBackStack(getActivity());
@@ -229,7 +260,7 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
     }
 
     private void showData(int page, int index) {
-        presenter_detail_ringtunes = new Presenter_Detail_Ringtunes(this);
+
         switch (option) {
             case Config.TOPIC:
                 presenter_detail_ringtunes.getByTopic(id, "" + page, "" + index);
@@ -262,11 +293,23 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
     @Override
     public void showListRingtunes(final List<Ringtunes> listRingtunes) {
         hideDialogLoading();
-        if (listRingtunes != null && listRingtunes.size() > 0) {
-            isLoading = false;
-            lisRing.addAll(listRingtunes);
+        if (page > 1) {
+            lisRing.remove(lisRing.size() - 1);
+            adapterRingtunes.notifyDataSetChanged();
+            if (listRingtunes != null && listRingtunes.size() > 0) {
+                isLoading = false;
+                lisRing.addAll(listRingtunes);
+                adapterRingtunes.notifyDataSetChanged();
+            }
+        } else {
+            lisRing.add(0, new Ringtunes("", url_image_title));
+            if (listRingtunes != null && listRingtunes.size() > 0) {
+                isLoading = false;
+                lisRing.addAll(listRingtunes);
+            }
             adapterRingtunes.notifyDataSetChanged();
         }
+
     }
 
     @Override
@@ -282,7 +325,14 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
     @Override
     public void onPause() {
         super.onPause();
-        appbar.setVisibility(View.VISIBLE);
+        //     appbar.setVisibility(View.VISIBLE);
+        if (isFavorite) {
+            SharedPreferences.Editor editor = pre.edit();
+            editor.putBoolean("isFavorite", false);
+            editor.commit();
+            ActivityMainHome.relative_tab.setVisibility(View.GONE);
+        } else
+            ActivityMainHome.relative_tab.setVisibility(View.VISIBLE);
     }
 
 
@@ -301,45 +351,27 @@ public class FragmentSongs extends BaseFragment implements View_RingtunesImpl, S
 
     }
 
+    @SuppressLint("RestrictedApi")
     private void setToolbar() {
         Glide.with(getContext()).load(Constant.IMAGE_URL + url_image_title).into(imgHeader);
-        collapsingToolbar.setContentScrimColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        collapsingToolbar.setTitle(title);
+        //collapsingToolbar.setContentScrimColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+       /* collapsingToolbar.setTitle(title);
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedToolbar);
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedToolbar);
-        collapsingToolbar.setTitleEnabled(true);
+        collapsingToolbar.setTitleEnabled(true);*/
 
         if (toolbar != null) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
+                /*actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDefaultDisplayHomeAsUpEnabled(true);*/
+
             }
         } else {
             // Don't inflate. Tablet is in landscape mode.
-        }
-    }
-
-    public void showNotification(String title) {
-        int notification = 113;
-        NotificationCompat.Builder mBuilder =
-                (NotificationCompat.Builder) new NotificationCompat.Builder(getContext())
-                        // .setSmallIcon(R.drawable.icon_bag_playing)
-                        .setLargeIcon(BitmapFactory.decodeResource(getContext().getResources(),
-                                R.mipmap.icon_pause_service))
-                        .setContentTitle(title)
-                        .setContentText("Mời bạn nhấn để cập nhật version");
-
-        NotificationManager mNotifyMgr =
-                (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(notification, mBuilder.build());
-
-    }
-
-    public void hideDialogLoadingSongs() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
         }
     }
 

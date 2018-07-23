@@ -8,11 +8,23 @@ public class PhoneContactModel {
     String name, phoneNumber, avatarSrc;
     boolean isChecked;
     boolean isNotChange;
+    boolean isShowDelete;
+
+    public PhoneContactModel() {
+    }
 
     public PhoneContactModel(String name, String phoneNumber, String avatarSrc) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.avatarSrc = avatarSrc;
+    }
+
+    public boolean isShowDelete() {
+        return isShowDelete;
+    }
+
+    public void setShowDelete(boolean showDelete) {
+        isShowDelete = showDelete;
     }
 
     public boolean isNotChange() {

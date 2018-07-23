@@ -55,5 +55,15 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:padding="@dimen/dp5"
+        android:id="@+id/img_delete_cli"
+        android:src="@drawable/delete_item"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp5"
+        android:layout_width="@dimen/dp40"
+        android:layout_height="@dimen/dp40" />
+
 
 </RelativeLayout>

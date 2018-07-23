@@ -46,16 +46,14 @@
             android:layout_height="@dimen/dp1">
         </View>
         <ImageView
-            android:layout_marginLeft="@dimen/dp50"
-            android:layout_marginRight="@dimen/dp50"
             android:adjustViewBounds="true"
-            android:padding="@dimen/dp15"
             android:id="@+id/img_logo"
-            android:src="@drawable/ringtunes_go_icon"
+            android:src="@drawable/banner"
             android:layout_below="@+id/relative_tabbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/linner_setup_addprofile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,23 +61,30 @@
             android:layout_below="@+id/img_logo"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
-
             <TextView
                 android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:singleLine="true"
+                android:text="Kiểu cài đặt Ringtunes"
+                android:textSize="@dimen/text_17sp" />
+            <TextView
                 android:id="@+id/txt_name_edit_profile"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="@dimen/dp5"
                 android:singleLine="true"
-                android:text=""
-                android:textSize="@dimen/text_18sp" />
+                android:textSize="@dimen/text_17sp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_marginTop="@dimen/dp3"
             android:id="@+id/linner_time_addprofile"
             android:layout_below="@+id/linner_setup_addprofile"
@@ -88,23 +93,22 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:padding="@dimen/dp5"
                 android:singleLine="true"
-                android:text="Thời gian"
-                android:textSize="@dimen/text_15sp" />
+                android:text="Cài đặt chế độ thời gian"
+                android:textSize="@dimen/text_17sp" />
 
-            <Spinner
-                android:gravity="left"
-                android:id="@+id/spn_time_setup_edit"
-                android:layout_width="0dp"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_time_edit_profile"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5"
-                android:layout_weight="5"
-                android:padding="@dimen/dp5"></Spinner>
+                android:padding="@dimen/dp5">
+
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
         <LinearLayout
@@ -113,16 +117,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/txt_chonbai"
+                android:textStyle="bold"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp5"
-                android:background="@color/title_fragment_all"
                 android:padding="@dimen/dp5"
+                android:singleLine="true"
                 android:text="Chọn bài hát"
-                android:textColor="@color/purple"
-                android:textSize="@dimen/text_17sp"
-                android:visibility="visible" />
+                android:textSize="@dimen/text_17sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycle_colletion_edit_profile"
@@ -143,9 +145,9 @@
                 <Button
                     android:id="@+id/btn_update_profile"
                     android:text="Sửa cài đặt"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_continue"
-                    android:layout_width="@dimen/dp120"
+                    android:textColor="@color/purple"
+                    android:background="@drawable/spr_buton_dialog"
+                    android:layout_width="@dimen/dp150"
                     android:layout_height="@dimen/dp35" />
 
             </LinearLayout>

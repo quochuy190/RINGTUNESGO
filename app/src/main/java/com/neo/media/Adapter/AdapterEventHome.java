@@ -75,6 +75,10 @@ public class AdapterEventHome extends RecyclerView.Adapter<AdapterEventHome.Topi
 
         if (topic.getPackage_name() != null)
             holder.txt_name_event.setText(topic.getPackage_name());
+        else if(topic.getNAME()!=null){
+            holder.txt_name_event.setText(topic.getNAME());
+        }
+
 
     }
 

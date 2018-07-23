@@ -29,17 +29,16 @@ public interface PresenterSongsImpl {
         void getBySinger(String id, String type, String index, String nuber);
         void getSearch(String key, String page, String index);
         void get_info_songs_by_id(String id, String userID);
+        void api_push_notification_gift(String sdt, String content);
     }
 
     interface View {
+        void showDialogLoading();
+        void hideDialogLoading();
         void showGiftSongsSuccess(List<String> list);
-
         void ShowBuySongsSuccess(List<String> list);
-
         void ShowItems(Item items);
-
         void showComment(List<Comment> listComment);
-
         void showMessage(String message);
         void show_add_comment_success(String s);
         void show_lis_songs_bysinger(List<Ringtunes> lisRingtunes);

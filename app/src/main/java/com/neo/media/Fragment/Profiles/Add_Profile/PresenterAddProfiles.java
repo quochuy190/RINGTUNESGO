@@ -89,6 +89,7 @@ public class PresenterAddProfiles implements Add_Profile_Inteface.Presenter {
     @Override
     public void add_profile(String sesionID, String msisdn, String content_id, String caller_type
             , String caller_id, String from_time, String to_time) {
+        fragment_addProfiles.showDialogLoading();
         String Service = "ADD_PROFILE_WITH_TIMER";
         String Provider = "default";
         String ParamSize = "7";
@@ -96,6 +97,7 @@ public class PresenterAddProfiles implements Add_Profile_Inteface.Presenter {
         apiService.add_Profiles(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
+                fragment_addProfiles.hideDialogLoading();
                 if (arrayList.size() > 0) {
                     fragment_addProfiles.showaddProfile(arrayList);
                 }
@@ -103,12 +105,12 @@ public class PresenterAddProfiles implements Add_Profile_Inteface.Presenter {
 
             @Override
             public void onGetDataFault(Exception e) {
-
+                fragment_addProfiles.hideDialogLoading();
             }
 
             @Override
             public void onGetObjectDataSuccess(String Object) {
-
+                fragment_addProfiles.hideDialogLoading();
             }
         }, Service, Provider, ParamSize, sesionID, msisdn, content_id, caller_type, caller_id, from_time, to_time);
     }
@@ -116,6 +118,7 @@ public class PresenterAddProfiles implements Add_Profile_Inteface.Presenter {
     @Override
     public void updateProfile(String sesionID, String msisdn, String profile_id, String content_id, String caller_type,
                               String caller_id, String from_time, String to_time) {
+        fragment_editProfile.showDialogLoading();
         String Service = "UPDATE_PROFILE_WITH_TIMER";
         String Provider = "default";
         String ParamSize = "8";
@@ -123,6 +126,7 @@ public class PresenterAddProfiles implements Add_Profile_Inteface.Presenter {
         apiService.update_Profiles(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
+                fragment_editProfile.hideDialogLoading();
                 if (arrayList.size() > 0) {
                     fragment_editProfile.show_update_profile(arrayList);
                 }
@@ -130,12 +134,12 @@ public class PresenterAddProfiles implements Add_Profile_Inteface.Presenter {
 
             @Override
             public void onGetDataFault(Exception e) {
-
+                fragment_editProfile.hideDialogLoading();
             }
 
             @Override
             public void onGetObjectDataSuccess(String Object) {
-
+                fragment_editProfile.hideDialogLoading();
             }
         }, Service, Provider, ParamSize, sesionID, msisdn,profile_id, content_id, caller_type, call_id, from_time, to_time);
     }

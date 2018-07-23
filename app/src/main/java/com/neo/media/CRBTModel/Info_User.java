@@ -9,16 +9,22 @@ import io.realm.annotations.PrimaryKey;
  * Created by QQ on 8/17/2017.
  */
 
-public class Info_User extends RealmObject implements Serializable{
+public class Info_User extends RealmObject implements Serializable {
     @PrimaryKey
     private String sPhone;
     //Chuỗi định danh request
     private String req_id;
     //trạng thái thuê bao (đang active, hoặc đã hủy)
+    //2 = đang active
+    //4 = đã hủy
     private String status;
     //trạng thái thuê bao(đang tạm ngưng dịch vụ, hoặc đang kích hoạt)
+    //0 = đang tạm ngưng
+    //1 = đang kích hoạt
     private String service_status;
     //kiểu thuê bao (thuê bao doanh nghiệp, hoặc thuê bao thuờng)
+     /*  0 = thuê bao thuờng
+    1 = thuê bao doanh nghiệp*/
     private String is_corporate;
     //ngày đăng ký
     private String register_date;

@@ -1,17 +1,22 @@
 package com.neo.media.untils;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.CONNECTIVITY_SERVICE;
 
 public class BaseFragment extends Fragment {
 
@@ -42,7 +47,12 @@ public class BaseFragment extends Fragment {
         return FIRST_TIME_START;
     }
 
-    protected ProgressDialog dialog;
+    SweetAlertDialog dialog;
+
+    public void initDialogRequest() {
+
+    }
+
     private Handler StopDialogLoadingHandler = new Handler();
 
 
@@ -54,11 +64,10 @@ public class BaseFragment extends Fragment {
                     dialog.dismiss();
                 }
             }
-        }, 5000);
-        dialog = new ProgressDialog(getActivity());
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("Loading. Please wait...");
-        dialog.setIndeterminate(true);
+        }, 10000);
+        dialog = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE)
+                .setTitleText("Loading");
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
 
         if (dialog != null && !dialog.isShowing()) {
@@ -67,12 +76,48 @@ public class BaseFragment extends Fragment {
     }
 
     public void hideDialogLoading() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-        }
+        CountDownTimer countDownTimer = new CountDownTimer(500, 100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        }.start();
+
     }
 
-    public void showDialogLoadingtime(int time) {
+    public boolean initNetwork() {
+        boolean is3g, isWifi;
+        ConnectivityManager manager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
+        //For 3G check
+        is3g = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+                .isConnectedOrConnecting();
+        //For WiFi Check
+        isWifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+                .isConnectedOrConnecting();
+        if (is3g || isWifi) {
+            return true;
+        } else return false;
+
+    }
+    public boolean init3G() {
+        boolean is3g;
+        ConnectivityManager manager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
+        //For 3G check
+        is3g = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+                .isConnectedOrConnecting();
+        //For WiFi Check
+        if (is3g) {
+            return true;
+        } else return false;
+    }
+   /* public void showDialogLoadingtime(int time) {
         StopDialogLoadingHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -113,7 +158,7 @@ public class BaseFragment extends Fragment {
         if (dialog != null && !dialog.isShowing()) {
             dialog.show();
         }
-    }
+    }*/
 
 
     protected void showAlertError(String message) {
@@ -138,6 +183,20 @@ public class BaseFragment extends Fragment {
                 alert.show();
             }
         });
+    }
+
+    public void show_notification(String title, String content) {
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE)
+                .setTitleText(title)
+                .setContentText(content)
+                .setConfirmText("Đóng")
+                .showCancelButton(true)
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                    }
+                }).show();
     }
 
     protected void showAlertSuccess(String message) {

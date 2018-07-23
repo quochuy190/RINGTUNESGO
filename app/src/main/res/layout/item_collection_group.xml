@@ -24,7 +24,7 @@
                 android:layout_width="@dimen/dp50"
                 android:layout_height="@dimen/dp50"
                 android:padding="@dimen/dp5"
-                android:src="@mipmap/ringtunes_final" />
+                android:src="@drawable/singer_purple" />
         </LinearLayout>
 
         <LinearLayout
@@ -41,10 +41,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginBottom="@dimen/dp3"
                     android:id="@+id/item_name_collection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp3"
                     android:singleLine="true"
                     android:text="We don't talk any more"
                     android:textColor="@color/text_name_song"
@@ -99,21 +99,11 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginRight="@dimen/dp10"
                 android:padding="@dimen/dp3"
-                android:src="@drawable/checkbox"
-                android:visibility="gone" />
+                android:src="@drawable/icon_unchose"
+                android:visibility="visible" />
 
         </LinearLayout>
 
     </LinearLayout>
-    <CheckBox
-        android:theme="@style/checkBoxStyle"
-        android:id="@+id/cb_collection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:clickable="false"
-        android:focusable="true"
-        android:focusableInTouchMode="false" />
 
 </RelativeLayout>

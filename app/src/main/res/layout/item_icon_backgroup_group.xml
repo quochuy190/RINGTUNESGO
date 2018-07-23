@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_margin="@dimen/dp3"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/icon_group_background"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/group_0"
+        android:layout_width="@dimen/dp60_background_group"
+        android:layout_height="@dimen/dp60_background_group" />
+    <ImageView
+        android:id="@+id/icon_chose_group"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/checkbox"
+        android:layout_width="@dimen/dp35"
+        android:layout_height="@dimen/dp35" />
+
+</RelativeLayout>

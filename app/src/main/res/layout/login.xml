@@ -4,14 +4,11 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
+    <include layout="@layout/app_bar_main2"></include>
     <ImageView
-        android:layout_marginTop="@dimen/dp20"
-        android:layout_marginLeft="@dimen/dp50"
-        android:layout_marginRight="@dimen/dp50"
         android:adjustViewBounds="true"
-        android:padding="@dimen/dp15"
         android:id="@+id/img_logo"
-        android:src="@drawable/ringtunes_go_icon"
+        android:src="@drawable/banner"
         android:layout_below="@+id/relative_tabbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -143,13 +140,13 @@
 
     <Button
         android:textSize="@dimen/text_20sp"
-        android:textColor="@color/white"
+        android:textColor="@color/purple"
         android:id="@+id/btn_dangnhap_Login"
         android:layout_width="@dimen/dp200_singer"
         android:layout_height="@dimen/dp40"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp40"
-        android:background="@drawable/button_continue"
+        android:background="@drawable/spr_buton_dialog"
         android:text="Đăng nhập" />
 
 

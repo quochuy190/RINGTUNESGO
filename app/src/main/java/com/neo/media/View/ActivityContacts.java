@@ -31,13 +31,12 @@ import android.widget.Toast;
 import com.neo.media.Adapter.ContactListPickerAdapter;
 import com.neo.media.CRBTModel.CLI;
 import com.neo.media.Config.Config;
-import com.neo.media.Fragment.BuySongs.View.FragmentDetailBuySongs;
+import com.neo.media.Fragment.BuySongs.View.FragmenGiftRingtunes;
 import com.neo.media.Fragment.DetailSongs.View.FragmentSongs;
-import com.neo.media.Fragment.Groups.AddGroup.FragmentAddGroup;
-import com.neo.media.Fragment.Groups.GroupMember.FragmentGroupMember;
-import com.neo.media.Fragment.Groups.GroupMember.PresenterGroupMember;
+import com.neo.media.Fragment.CaNhan.Groups.AddGroup.FragmentAddGroup;
+import com.neo.media.Fragment.CaNhan.Groups.GroupMember.FragmentGroupMember;
+import com.neo.media.Fragment.CaNhan.Groups.GroupMember.PresenterGroupMember;
 import com.neo.media.Fragment.Profiles.Add_Profile.Fragment_AddProfiles;
-import com.neo.media.MainNavigationActivity;
 import com.neo.media.Model.PhoneContactModel;
 import com.neo.media.Model.Ringtunes;
 import com.neo.media.MyApplication;
@@ -45,6 +44,7 @@ import com.neo.media.R;
 import com.neo.media.RealmController.RealmController;
 import com.neo.media.untils.BaseFragment;
 import com.neo.media.untils.CustomUtils;
+import com.neo.media.untils.KeyboardUtil;
 import com.neo.media.untils.PhoneNumber;
 
 import java.util.ArrayList;
@@ -58,9 +58,9 @@ import io.realm.Realm;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.neo.media.MainNavigationActivity.datas;
-import static com.neo.media.MainNavigationActivity.datasvina;
-import static com.neo.media.MainNavigationActivity.listGitSongs;
+import static com.neo.media.MyApplication.datas;
+import static com.neo.media.MyApplication.datasvina;
+import static com.neo.media.MyApplication.listGitSongs;
 
 
 /**
@@ -143,7 +143,7 @@ public class ActivityContacts extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         datasvina = new ArrayList<>();
-        datas = new ArrayList<>();
+        MyApplication.datas = new ArrayList<>();
         listGitSongs = new ArrayList<>();
         lisCLI = new ArrayList<>();
         count = 0;
@@ -153,7 +153,7 @@ public class ActivityContacts extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        MainNavigationActivity.appbar.setVisibility(View.GONE);
+       // MainNavigationActivity.appbar.setVisibility(View.GONE);
     }
 
     @Override
@@ -200,7 +200,7 @@ public class ActivityContacts extends BaseFragment {
                 bean.setChecked(!bean.isChecked());
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.cb_contact);
                 checkBox.setChecked(bean.isChecked());
-                listGitSongs.add(bean);
+                MyApplication.listGitSongs.add(bean);
                 //mark
             }
         });
@@ -379,13 +379,13 @@ public class ActivityContacts extends BaseFragment {
                                         }
                                     }
                                     phone = phone + listGitSongs.get(0).getPhoneNumber();
-                                    FragmentDetailBuySongs.ed_getphone.setText(phone);
-                                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                                    FragmenGiftRingtunes.ed_getphone.setText(phone);
+                                   // inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                                     FragmentManager fm_gift = getActivity().getSupportFragmentManager();
                                     if (fm_gift.getBackStackEntryCount() > 0) {
                                         fm_gift.popBackStack();
                                     }
-                                    FragmentDetailBuySongs.dialog_getphone.show();
+                                   // FragmentDetailBuySongs.dialog_getphone.show();
                                     break;
                                 case Config.GROUP_MEMBER:
                                     List<PhoneContactModel> listPhone = new ArrayList<PhoneContactModel>();
@@ -412,8 +412,9 @@ public class ActivityContacts extends BaseFragment {
                                         editor.commit();
                                         FragmentGroupMember.txt_delete_phone.setVisibility(View.VISIBLE);
                                         FragmentGroupMember.ed_getphone_group.setText(phone_all);
-                                        FragmentGroupMember.dialog.show();
-                                        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                                        FragmentGroupMember.ok.setVisibility(View.VISIBLE);
+                                      //  FragmentGroupMember.contact.setVisibility(View.GONE);
+                                       // inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                                         FragmentManager fm_group_member = getActivity().getSupportFragmentManager();
                                         if (fm_group_member.getBackStackEntryCount() > 0) {
                                             fm_group_member.popBackStack();
@@ -469,9 +470,7 @@ public class ActivityContacts extends BaseFragment {
                             String phone_addprofile = listGitSongs.get(0).getPhoneNumber();
                             Fragment_AddProfiles.ed_cli_add_profile.setText(phone_addprofile);
                         }
-
-                        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().
-                                getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        KeyboardUtil.hideSoftKeyboard(getActivity());
                         FragmentManager fm = getActivity().getSupportFragmentManager();
                         if (fm.getBackStackEntryCount() > 0) {
                             fm.popBackStack();
@@ -485,13 +484,14 @@ public class ActivityContacts extends BaseFragment {
                             }
                         }
                         phone = phone + listGitSongs.get(0).getPhoneNumber();
-                        FragmentDetailBuySongs.ed_getphone.setText(phone);
-                        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        FragmenGiftRingtunes.ed_getphone.setText(phone);
+                        KeyboardUtil.hideSoftKeyboard(getActivity());
+                        //inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                         FragmentManager fm_gift = getActivity().getSupportFragmentManager();
                         if (fm_gift.getBackStackEntryCount() > 0) {
                             fm_gift.popBackStack();
                         }
-                        FragmentDetailBuySongs.dialog_getphone.show();
+                      //  FragmentDetailBuySongs.dialog_getphone.show();
                         break;
                     case Config.GROUP_MEMBER:
                         List<PhoneContactModel> listPhone = new ArrayList<PhoneContactModel>();
@@ -518,8 +518,10 @@ public class ActivityContacts extends BaseFragment {
                             editor.commit();
                             FragmentGroupMember.txt_delete_phone.setVisibility(View.VISIBLE);
                             FragmentGroupMember.ed_getphone_group.setText(phone_all);
-                            FragmentGroupMember.dialog.show();
-                            inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                            FragmentGroupMember.ok.setVisibility(View.VISIBLE);
+                           // FragmentGroupMember.contact.setVisibility(View.GONE);
+                            KeyboardUtil.hideSoftKeyboard(getActivity());
+                          //  inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                             FragmentManager fm_group_member = getActivity().getSupportFragmentManager();
                             if (fm_group_member.getBackStackEntryCount() > 0) {
                                 fm_group_member.popBackStack();
@@ -545,7 +547,7 @@ public class ActivityContacts extends BaseFragment {
                                 }
                             }
                             FragmentAddGroup.ed_add_phone_addgroup.setText(sAddGroup);
-                            inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                            KeyboardUtil.hideSoftKeyboard(getActivity());
                             FragmentManager fm_group_member = getActivity().getSupportFragmentManager();
                             if (fm_group_member.getBackStackEntryCount() > 0) {
                                 fm_group_member.popBackStack();

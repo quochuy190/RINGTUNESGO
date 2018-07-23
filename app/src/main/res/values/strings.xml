@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">RingTunes</string>
+    <string name="app_name">Ringtunes</string>
     <string name="title_activity_main2">Main2Activity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="txt_favorite">Danh sách yêu thích còn đang trống. Bạn có thể tạo danh sách yêu thích bằng cách thả tim vào bài hát bạn yêu thích để thêm bài hát đó vào danh sách yêu thích dành riêng cho bạn</string>
     <string name="action_settings">Settings</string>
 
     <string name="update_success">cập nhật thành công!</string>
@@ -73,28 +73,43 @@
     <string name="infomation">THÔNG TIN THUÊ BAO</string>
     <!--login-->
     <string name="welcome">Chào mừng đến với RingtunesGo</string>
-    <string name="welcome_detail">Bạn hãy nhập vào số điện thoại khi đăng nhập lần đầu</string>
+    <string name="welcome_detail">Bạn chưa đăng nhập Ringtunes. Bạn hãy nhập vào số điện thoại để xác nhận đăng nhập Ringtunes lần đầu</string>
     <string name="input_phone">- Nhập vào số điện thoại</string>
     <string name="ringtunes_go_logo">RINGTUNESGO</string>
     <string name="ringtunes_slogan">Yêu phút đợi chờ</string>
     <string name="waiting_code">Đợi vài phút hệ thống gửi tin nhắn mã code về máy của bạn</string>
-    <string name="add_subcriber">Mời bạn đăng ký sử dụng dịch vụ Ringtunes để có thể sử dụng những bản nhạc
-        chờ tuyệt vời của chúng tôi.</string>
+    <string name="add_subcriber">Mời bạn chọn gói dịch vụ phù hợp để có nhạc chở Ringtunes đủ chất dành cho những người thân yêu.</string>
     <string name="add_subcriber_success">Chúc mừng Quý Khách đã đăng ký thành công dịch vụ Ringtunes của
         Vinaphone.Dịch vụ sẽ được kích hoạt sau 5 phút, dịch vụ sẽ được tự động gia hạn.</string>
-    <string name="stop_subcriber">Bạn có chắc chắn muốn hủy dịch vụ không?
-Bộ sưu tập cá nhân và các chế độ cài đặt của quý khách sẽ bị xóa khỏi hệ thống.
-Quý khách có muốn tiếp tục hay không?</string>
+    <string name="stop_subcriber">Để huỷ dịch vụ, quý khách vui lòng soạn tin nhắn "Huỷ" gửi 9194</string>
     <string name="resume_subcriber">Bạn đang tạm ngưng sự dụng dịch vụ, Mời bạn chọn KÍCH HOẠT dể có
         thể sử dụng lại dịch vụ nhạc chờ Ringtues Go</string>
-
+    <string name="tamdung">Bạn có muốn tạm dừng dịch vụ, Sau khi tạm ngừng dịch vụ, người gọi tới sẽ không nghe được các bài hát bạn đã cài đặt khi bạn được gọi.</string>
     <string-array name="sex">invit
         <item>Male</item>
         <item>Female</item>
         <item>LGBT</item>
     </string-array>
     <string name="title_activity_main_navigation">RingtunesGo</string>
-
+    <string name="dieukhoan">
+Quý khách vui lòng đọc kỹ Thỏa Thuận Sử Dụng (“Thỏa Thuận”) trước khi tiến hành đăng nhập tài khoản, truy cập, sử dụng tất cả hoặc một phần của Ứng dụng Ringtunes Go do Tổng Công ty Truyền thông VNPT Media cung cấp. Bạn chấp thuận và đồng ý bị ràng buộc bởi các quy định và điều kiện trong Thỏa Thuận này khi thực hiện các thao tác trên đây.\n
+<b>1. Giới Thiệu Về ứng dụng Ringtunes Go</b> \n
+Ringtunes Go là ứng dụng nhạc chờ dành cho các thuê bao di động của VinaPhone. Các chức năng cơ bản bao gồm:\n
+-	Tìm kiếm và mua/tặng các bài hát làm nhạc chờ cho điện thoại di động sử dụng thuê bao VinaPhone\n
+-	Quản lý, cài đặt các luật phát nhạc chờ khi có cuộc gọi đến điện thoại của bạn.\n
+-	Cung cấp các bài hát, bản nhạc miễn phí, cập nhật các bài hát mới, được nhiều người yêu thích và các bài hát theo sự kiện.\n
+<b>2. Tài Khoản</b> \n
+Chỉ thuê bao VinaPhone đang hoạt động mới được phép mua/tặng/cài đặt nhạc chờ qua ứng dụng Ringtunes Go.
+Để sử dụng dịch vụ, bạn phải xác thực số thuê bao VinaPhone của mình bằng các phương thức hợp lệ do ứng dụng đưa ra.
+Bạn cam kết rằng việc sử dụng tài khoản phải tuân thủ các quy định của VNPT Media, đồng thời tất cả các thông tin bạn cung cấp cho chúng tôi là đúng, chính xác, đầy đủ với tại thời điểm được yêu cầu. Mọi quyền lợi và nghĩa vụ của bạn sẽ căn cứ trên thông tin tài khoản bạn đã đăng ký, do đó nếu có bất kỳ thông tin sai lệch nào chúng tôi sẽ không chịu trách nhiệm trong trường hợp thông tin đó làm ảnh hưởng hoặc hạn chế quyền lợi của bạn và người khác.\n
+ <b>3. Xử Lý Vi Phạm</b> \n
+Trường hợp bạn vi phạm bất kỳ quy định nào trong Thỏa Thuận này, VNPT Media có quyền ngay lập tức khóa tài khoản của bạn và/hoặc xóa bỏ toàn bộ các thông tin, nội dung vi phạm, đồng thời tùy thuộc vào tính chất, mức độ vi phạm bạn sẽ phải chịu trách nhiệm trước cơ quan có thẩm quyền, VNPT Media và bên thứ ba về mọi thiệt hại gây ra bởi hoặc xuất phát từ hành vi vi phạm của bạn. \n
+  <b>4. Cam Kết Bảo Mật Thông Tin</b> \n
+Chúng tôi cam kết giữ bí mật tất cả thông tin mà bạn cung cấp cho VNPT Media hoặc chúng tôi thu thập từ bạn và không tiết lộ với bất kỳ bên thứ ba nào trừ khi có yêu cầu từ Cơ quan Nhà nước có thẩm quyền.\n
+<b>5. Cước dịch vụ Và Các Khoản Thu </b>\n
+Cước dịch vụ bao gồm cước thuê bao và cước mua/tặng bài hát được niêm yết công khai trên ứng dụng.\n
+\n
+Trân trọng cảm ơn bạn đã sử dụng sản phẩm và dịch vụ của VNPT Media.</string>
     <!-- for FCM -->
     <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
         send downstream messages to this app.</string>
@@ -102,8 +117,16 @@ Quý khách có muốn tiếp tục hay không?</string>
     <string name="token_error_message">An error occurred while either fetching the InstanceID token,
         sending the fetched token to the server or subscribing to the PubSub topic. Please try
         running the sample again.</string>
-    "Rat tiec he thong dang ban. Quy Khach vui long thuc hien lai sau. De biet them chi tiet, Quy Khach vui long lien he tong dai 9191
+    "Rat tiec he thong dang ban. Quy Khach vui long thuc hien lai sau. De biet them chi tiet, Quy
+    Khach vui long lien he tong dai 9191
     <string name="error_44">"Rất tiệc hệ thống đang bận. Quý khách vui lòng thực hiện lại sau. Để biết thêm chi tiết vui long liên hệ tới tổng đài 9191. Xin cảm ơn</string>
     <string name="error_104">Tặng không thành công do bài hát đã có trong Bộ sưu tập của thuê bao nhận. Quý Khách vui lòng chọn bài hát khác</string>
+    <string name="notifi_profile">Bạn chưa cài đặt luật phát nhạc. Các cuộc gọi đến sẽ được phát ngẫu nhiên một bài hát trong bộ sưu tập của bạn. Hãy dành riêng cho những người đặc biệt của bạn những bản nhạc chờ cũng thật đặc biệt mỗi khi đợi bạn nhấc máy. Nếu bạn chưa có bài hát nào trong bộ sưu tập thì hãy nhanh tay mua bài hát.</string>
+    <string name="notifi_collection">Bạn chưa có bài hát nào trong bộ sưu tập. Vinaphone sẽ phát nhạc chờ mặc định cho các cuộc gọi đến của bạn. Hãy Tìm kiếm và cài đặt nhạc chờ cho cuộc gọi đến của bạn từ kho nhạc sống động của Ringtunes.</string>
+    <string name="txt_hint_getcontact">-Nhập SĐT hoặc lấy từ danh bạ</string>
+    <string name="message">Mạng 3G/4G quý khách đang sử dụng không thuộc mạng VinaPhone. Mời quý khách đăng nhập bằng hình thức khác.</string>
+    <string name="title_notification">Thông báo</string>
+
+
 </resources>
 

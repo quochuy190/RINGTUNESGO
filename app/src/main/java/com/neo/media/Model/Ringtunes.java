@@ -16,7 +16,7 @@ import java.util.List;
  * Created by QQ on 7/8/2017.
  */
 
-public class Ringtunes implements Serializable {
+public class Ringtunes  implements Serializable {
     public static Ringtunes ringtunes ;
     public static Ringtunes getInstance() {
         if (ringtunes == null) {
@@ -28,6 +28,7 @@ public class Ringtunes implements Serializable {
         }
         return ringtunes;
     }
+
     @SerializedName("ID")
     private String Id;
     @SerializedName("PRODUCT_NAME")
@@ -66,8 +67,10 @@ public class Ringtunes implements Serializable {
     private String pathfulltrack;
     @SerializedName("COUNTER")
     private String COUNTER;
-    boolean isFull;
+    private boolean isFull;
     private int duration;
+    private String sExpiration;
+    private boolean isFavorite;
 
     private boolean isPlaying;
 
@@ -88,6 +91,22 @@ public class Ringtunes implements Serializable {
     public Ringtunes() {
     }
 
+    public Ringtunes(String id, String image_file) {
+        Id = id;
+        this.image_file = image_file;
+    }
+
+    public static Ringtunes getRingtunes() {
+        return ringtunes;
+    }
+
+    public String getsExpiration() {
+        return sExpiration;
+    }
+
+    public void setsExpiration(String sExpiration) {
+        this.sExpiration = sExpiration;
+    }
 
     public static void setRingtunes(Ringtunes ringtunes) {
         Ringtunes.ringtunes = ringtunes;
@@ -268,4 +287,13 @@ public class Ringtunes implements Serializable {
     public void setHist(String hist) {
         this.hist = hist;
     }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_thongke"
+        icon="@drawable/ic_home"
+        title="Trang chủ"
+         />
+    <tab
+        id="@+id/tab_thuong"
+        icon="@drawable/ic_ios_search"
+        title="Tìm kiếm"
+        />
+    <tab
+        id="@+id/tab_favorite"
+        icon="@drawable/ic_favorite"
+        title="Yêu thích"
+        />
+    <tab
+        id="@+id/tab_dathang"
+        icon="@drawable/ic_ios_person_outline"
+        title="Cá nhân"
+         />
+
+</tabs>

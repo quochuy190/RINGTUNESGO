@@ -5,7 +5,6 @@ import android.util.Log;
 import com.neo.media.ApiService.ApiService;
 import com.neo.media.CRBTModel.Item;
 import com.neo.media.Config.Constant;
-import com.neo.media.Fragment.BuySongs.View.FragmentDetailBuySongs;
 import com.neo.media.Listener.CallbackData;
 import com.neo.media.Model.Comment;
 import com.neo.media.Model.Ringtunes;
@@ -20,13 +19,14 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
     //ApiContentItems apiContentItems;
 
     private ApiService apiSevice;
-    FragmentDetailBuySongs fragmentDetailBuySongs;
+    PresenterSongsImpl.View view;
 
 
-    public PresenterSongs(FragmentDetailBuySongs fragmentDetailBuySongs) {
+    public PresenterSongs(PresenterSongsImpl.View view) {
         apiSevice = new ApiService();
-        this.fragmentDetailBuySongs = fragmentDetailBuySongs;
+        this.view = view;
     }
+
 
     @Override
     public void login(String username, String pass) {
@@ -34,7 +34,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
     }
 
     @Override
-    public void log_Info_Charge_Server(String P1, String P2, String P3, String P4, String P5, String P6,String P7, String P8) {
+    public void log_Info_Charge_Server(String P1, String P2, String P3, String P4, String P5, String P6, String P7, String P8) {
         String Service = "log_info_charge_service";
         String Provider = "default";
         String ParamSize = "8";
@@ -53,7 +53,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
             public void onGetObjectDataSuccess(String Object) {
 
             }
-        }, Service, Provider, ParamSize, P1, P2, P3, P4, P5, P6,P7,P8);
+        }, Service, Provider, ParamSize, P1, P2, P3, P4, P5, P6, P7, P8);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
 
             @Override
             public void onGetObjectDataSuccess(Item Object) {
-                fragmentDetailBuySongs.ShowItems(Object);
+                view.ShowItems(Object);
             }
         }, Service, Provider, ParamSize, sesionID, msisdn, content_id);
     }
@@ -95,7 +95,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
             @Override
             public void onGetDataSuccess(ArrayList<Comment> arrayList) {
                 Log.i("bac", "" + arrayList.size());
-                fragmentDetailBuySongs.showComment(arrayList);
+                view.showComment(arrayList);
             }
 
             @Override
@@ -112,6 +112,8 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
 
     @Override
     public void addItemtoMyList(String sesionID, String msisdn, String expiration, String content_id) {
+
+        view.showDialogLoading();
         String Service = "ADD_ITEM_TO_MYLIST";
         String Provider = "default";
         String ParamSize = "4";
@@ -119,8 +121,9 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
         apiSevice.addItemToMyList(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
+                view.hideDialogLoading();
                 if (arrayList.size() > 0) {
-                    fragmentDetailBuySongs.ShowBuySongsSuccess(arrayList);
+                    view.ShowBuySongsSuccess(arrayList);
                 }
             }
 
@@ -140,15 +143,19 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
     @Override
     public void addGifttoPlayList(String sesionID, String msisdn, String phone_gift,
                                   String expiration, String content_id) {
+        view.showDialogLoading();
         String Service = "ADD_GIFT_TO_PLAYLIST";
         String Provider = "default";
         String ParamSize = "5";
-
         apiSevice.addGiftToPlayList(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
+                view.hideDialogLoading();
                 if (arrayList.size() > 0) {
-                    fragmentDetailBuySongs.showGiftSongsSuccess(arrayList);
+
+                    view.showGiftSongsSuccess(arrayList);
+
+
                 }
             }
 
@@ -184,7 +191,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
 
                                  @Override
                                  public void onGetObjectDataSuccess(String Object) {
-                                     fragmentDetailBuySongs.show_add_comment_success(Object);
+                                     view.show_add_comment_success(Object);
                                  }
                              }, Service, Provider, ParamSize, pid_id, pobject_id, pobject_type_id, pcreate_date, pis_public,
                 pcontent, pname, pchannel, pauthor, pparent_object_id, pUserId, pUserIp);
@@ -205,7 +212,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
             public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
                 //viewRingtunes.showSongsBySingerId(arrayList);
 
-                    fragmentDetailBuySongs.show_lis_songs_bysinger(arrayList);
+                view.show_lis_songs_bysinger(arrayList);
 
             }
 
@@ -233,7 +240,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
                 //viewRingtunes.showSongsBySingerId(arrayList);
                 if (arrayList.size() > 0) {
                     Log.i("abc", arrayList.size() + "");
-                    fragmentDetailBuySongs.show_lis_songs_bysinger(arrayList);
+                    view.show_lis_songs_bysinger(arrayList);
                 }
             }
 
@@ -246,7 +253,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
             public void onGetObjectDataSuccess(Ringtunes Object) {
 
             }
-        }, Service, Provider, ParamSize,Singer_id, song_id, UserID);
+        }, Service, Provider, ParamSize, Singer_id, song_id, UserID);
     }
 
     @Override
@@ -261,7 +268,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
         apiSevice.getSearchRingtunes(new CallbackData<Ringtunes>() {
             @Override
             public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
-                fragmentDetailBuySongs.show_lis_songs_bysinger(arrayList);
+                view.show_lis_songs_bysinger(arrayList);
                 //viewSearch.showListSearch(arrayList);
             }
 
@@ -279,7 +286,7 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
 
     @Override
     public void get_info_songs_by_id(String id, String userID) {
-        fragmentDetailBuySongs.showDialogLoading();
+        //view.showDialogLoading();
         String Service = "afp_service";
         String Provider = "default";
         String ParamSize = "2";
@@ -287,21 +294,44 @@ public class PresenterSongs implements PresenterSongsImpl.Presenter {
         apiSevice.get_info_songs_collection(new CallbackData<Ringtunes>() {
             @Override
             public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
-                fragmentDetailBuySongs.hideDialogLoading();
-                fragmentDetailBuySongs.show_lis_songs_by_id(arrayList);
+                view.hideDialogLoading();
+                view.show_lis_songs_by_id(arrayList);
             }
 
             @Override
             public void onGetDataFault(Exception e) {
-                fragmentDetailBuySongs.hideDialogLoading();
+                view.hideDialogLoading();
             }
 
             @Override
             public void onGetObjectDataSuccess(Ringtunes Object) {
-                fragmentDetailBuySongs.hideDialogLoading();
+                view.hideDialogLoading();
             }
         }, Service, Provider, ParamSize, id, userID);
     }
 
+    @Override
+    public void api_push_notification_gift(String sdt, String content) {
+        String Service = "PUSHGIFT";
+        String Provider = "default";
+        String ParamSize = "2";
 
+        apiSevice.api_push_gift(new CallbackData<String>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<String> arrayList) {
+                Log.i("abc", arrayList.size() + "");
+
+            }
+
+            @Override
+            public void onGetDataFault(Exception e) {
+                view.hideDialogLoading();
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(String Object) {
+                view.hideDialogLoading();
+            }
+        }, Service, Provider, ParamSize, sdt, content);
+    }
 }

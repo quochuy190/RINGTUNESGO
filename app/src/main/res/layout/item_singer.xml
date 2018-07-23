@@ -22,7 +22,7 @@
 
             <ImageView
                 android:scaleType="fitXY"
-                android:src="@drawable/charlie_puth"
+
                 android:id="@+id/item_img_singer"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"

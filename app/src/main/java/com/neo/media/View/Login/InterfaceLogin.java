@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface InterfaceLogin {
     interface Presenter{
-
         void LoginVinaphonePortal(String username, String password, String userId);
         void Login(String username, String pass);
         void get_detail_subsriber(String sesionID, String msisdn);
@@ -20,5 +19,6 @@ public interface InterfaceLogin {
         void showInfo_User(subscriber subscriber);
         void showDataLogin(List<String> list);
         void showDataLoginVinaphonePortal(List<String> list);
+        void show_api_error();
     }
 }

@@ -6,8 +6,10 @@
     android:background="@android:color/white"
     >
     <ImageView
+        android:adjustViewBounds="true"
+        android:id="@+id/img_splash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:src="@drawable/splash_screen" />
+        android:scaleType="fitXY"
+      />
 </RelativeLayout>

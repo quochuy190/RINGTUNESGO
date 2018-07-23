@@ -10,17 +10,18 @@ import java.util.ArrayList;
  * Created by QQ on 8/31/2017.
  */
 
-public class Presenter implements Xacthuc_Impl.Presenter{
+public class Presenter implements Xacthuc_Impl.Presenter {
     ApiService apiService;
     ActivityXacthuc viewXacthuc;
 
     public Presenter(ActivityXacthuc viewXacthuc) {
         this.viewXacthuc = viewXacthuc;
-        apiService= new ApiService();
+        apiService = new ApiService();
     }
 
     @Override
     public void login_3g(String userid) {
+
         apiService.login_3g(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
@@ -29,12 +30,12 @@ public class Presenter implements Xacthuc_Impl.Presenter{
 
             @Override
             public void onGetDataFault(Exception e) {
-
+                viewXacthuc.show_login_3g(new ArrayList<String>());
             }
 
             @Override
             public void onGetObjectDataSuccess(String Object) {
-
+                viewXacthuc.show_login_3g(new ArrayList<String>());
             }
         }, userid);
     }
@@ -48,21 +49,22 @@ public class Presenter implements Xacthuc_Impl.Presenter{
         apiService.api_login(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
-                if (arrayList.size()>0){
+                if (arrayList.size() > 0) {
                     viewXacthuc.showDataLogin(arrayList);
+                } else {
+                    viewXacthuc.showDataLogin(new ArrayList<String>());
                 }
 
             }
 
             @Override
             public void onGetDataFault(Exception e) {
-
+                viewXacthuc.showDataLogin(new ArrayList<String>());
             }
 
             @Override
             public void onGetObjectDataSuccess(String Object) {
-
-
+                viewXacthuc.showDataLogin(new ArrayList<String>());
             }
         }, Service, Provider, ParamSize, pass, username);
     }
@@ -78,16 +80,17 @@ public class Presenter implements Xacthuc_Impl.Presenter{
         apiService.get_SUBSCRIBER_DETAILS(new CallbackData<subscriber>() {
             @Override
             public void onGetDataSuccess(ArrayList<subscriber> arrayList) {
-
+                viewXacthuc.hideDialogLoading();
             }
 
             @Override
             public void onGetDataFault(Exception e) {
-
+                viewXacthuc.hideDialogLoading();
             }
 
             @Override
             public void onGetObjectDataSuccess(subscriber Object) {
+                viewXacthuc.hideDialogLoading();
                 if (Object != null && Object.getSUBID().length() > 0)
                     viewXacthuc.showInfo_User(Object);
             }

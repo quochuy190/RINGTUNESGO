@@ -1,3 +1,4 @@
+/*
 package com.neo.media.View;
 
 import android.os.Bundle;
@@ -11,9 +12,9 @@ import android.widget.Toast;
 
 import com.neo.media.Adapter.AdapterViewpager;
 import com.neo.media.Fragment.Home.View.FragmentHome;
-import com.neo.media.Fragment.Singer.View.FragmentSinger;
-import com.neo.media.Fragment.Topic.View.FragmentTocpic;
-import com.neo.media.Fragment.Type.View.FragmentType;
+import com.neo.media.Fragment.Home.Singer.View.FragmentSinger;
+import com.neo.media.Fragment.Home.Topic.View.FragmentTocpic;
+import com.neo.media.Fragment.Home.Type.View.FragmentType;
 import com.neo.media.R;
 import com.neo.media.untils.BaseFragment;
 import com.neo.media.untils.CustomTabLayout;
@@ -24,9 +25,11 @@ import butterknife.ButterKnife;
 
 import static com.neo.media.MainNavigationActivity.ab;
 
+*/
 /**
  * Created by QQ on 7/6/2017.
- */
+ *//*
+
 
 public class HomeFragment extends BaseFragment {
     public static String TAG = HomeFragment.class.getSimpleName();
@@ -34,10 +37,10 @@ public class HomeFragment extends BaseFragment {
     CustomTabLayout tbHome;
     public static CustomViewPager viewpagerHome;
     private boolean isPlaying;
-    static HomeFragment fragment;
+
     AdapterViewpager adapter;
     boolean isDoubleClick = false;
-
+    static HomeFragment fragment;
     public static HomeFragment getInstance() {
         if (fragment == null)
             fragment = new HomeFragment();
@@ -54,6 +57,7 @@ public class HomeFragment extends BaseFragment {
         init();
         return rootView;
     }
+*/
 /*
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +66,8 @@ public class HomeFragment extends BaseFragment {
         ButterKnife.bind(this);
 
 
-    }*/
+    }*//*
+
 
     @Override
     public void onResume() {
@@ -172,7 +177,8 @@ public class HomeFragment extends BaseFragment {
                         tbHome.getTabAt(3).setIcon(R.drawable.singer_purple);
                         //   tbHome.getTabAt(5).setIcon(R.drawable.setup_blue);
                         break;
-                  /*  case 4:
+                  */
+/*  case 4:
                         ab.setDisplayHomeAsUpEnabled(false);
                         ab.setDisplayShowHomeEnabled(false);
                         ab.setTitle("CA SĨ");
@@ -182,18 +188,25 @@ public class HomeFragment extends BaseFragment {
                         tbHome.getTabAt(3).setIcon(R.drawable.topic_blue);
                         tbHome.getTabAt(4).setIcon(R.drawable.singer_purple);
                         //    tbHome.getTabAt(5).setIcon(R.drawable.setup_blue);
-                        break;*/
-                  /*  case 5:
-                     *//*   ab.setDisplayHomeAsUpEnabled(false);
+                        break;*//*
+
+                  */
+/*  case 5:
+                     *//*
+*/
+/*   ab.setDisplayHomeAsUpEnabled(false);
                         ab.setDisplayShowHomeEnabled(false);
                         ab.setTitle("CÀI ĐẶT");*//*
+*/
+/*
                         tbHome.getTabAt(0).setIcon(R.drawable.home_blue);
                         tbHome.getTabAt(1).setIcon(R.drawable.album_blue);
                         tbHome.getTabAt(2).setIcon(R.drawable.stype_blue);
                         tbHome.getTabAt(3).setIcon(R.drawable.topic_blue);
                         tbHome.getTabAt(4).setIcon(R.drawable.singer_blue);
                         tbHome.getTabAt(5).setIcon(R.drawable.setup_purple);
-                        break;*/
+                        break;*//*
+
                 }
 
 
@@ -240,7 +253,8 @@ public class HomeFragment extends BaseFragment {
                         tbHome.getTabAt(3).setIcon(R.drawable.singer_purple);
                         //    tbHome.getTabAt(5).setIcon(R.drawable.setup_blue);
                         break;
-                   /* case 4:
+                   */
+/* case 4:
 
                         tbHome.getTabAt(0).setIcon(R.drawable.home_blue);
                         tbHome.getTabAt(1).setIcon(R.drawable.album_blue);
@@ -248,8 +262,10 @@ public class HomeFragment extends BaseFragment {
                         tbHome.getTabAt(3).setIcon(R.drawable.topic_blue);
                         tbHome.getTabAt(4).setIcon(R.drawable.singer_purple);
                         //    tbHome.getTabAt(5).setIcon(R.drawable.setup_blue);
-                        break;*/
-                    /*case 5:
+                        break;*//*
+
+                    */
+/*case 5:
 
                         tbHome.getTabAt(0).setIcon(R.drawable.home_blue);
                         tbHome.getTabAt(1).setIcon(R.drawable.album_blue);
@@ -257,7 +273,8 @@ public class HomeFragment extends BaseFragment {
                         tbHome.getTabAt(3).setIcon(R.drawable.topic_blue);
                         tbHome.getTabAt(4).setIcon(R.drawable.singer_blue);
                      //   tbHome.getTabAt(5).setIcon(R.drawable.setup_purple);
-                        break;*/
+                        break;*//*
+
                 }
             }
 
@@ -275,3 +292,4 @@ public class HomeFragment extends BaseFragment {
 
 
 }
+*/

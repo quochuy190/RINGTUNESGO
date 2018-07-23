@@ -20,19 +20,29 @@ public class FragmentUtil {
         activity.getSupportFragmentManager().popBackStack();
     }
 
+
     public static void clearAllBackStack(FragmentActivity activity) {
         FragmentManager fm = activity.getSupportFragmentManager();
+      //  fm.executePendingTransactions();
         fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
+
 
     /**
      * @param fragmentManager
      * @param fragment
      * @param data
      */
-    public static void pushFragment(FragmentManager fragmentManager, @NonNull Fragment fragment, @Nullable Bundle data) {
-      //  DebugLog.e("bundle data:" + data);
-        showFragment(fragmentManager, fragment, false, data, null, false);
+
+    public static void pushFragment(FragmentManager fragmentManager, int layout, @NonNull Fragment fragment, @Nullable Bundle data) {
+        //  DebugLog.e("bundle data:" + data);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (fragment != null && fragment.isAdded()) {
+            fragmentTransaction.remove(fragment);    // detach
+        }
+        fragmentTransaction.replace(layout, fragment);//R.id.content_frame is the layout you want to replace
+        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null);
     }
 
 
@@ -54,17 +64,18 @@ public class FragmentUtil {
      * @param data
      */
     public static void pushFragment(FragmentActivity activity, @NonNull Fragment fragment, @Nullable Bundle data) {
-     //   DebugLog.e("bundle data:" + data);
+        //   DebugLog.e("bundle data:" + data);
         showFragment(activity, fragment, true, data, null, false);
     }
 
     public static void pushFragmentAnimationRightToLeft(FragmentActivity activity, @NonNull Fragment fragment, @Nullable Bundle data) {
-     //   DebugLog.e("bundle data:" + data);
+        //   DebugLog.e("bundle data:" + data);
         showFragment(activity, fragment, true, data, null, true);
     }
 
+
     public static void pushFragmentAnimationLeftToRight(FragmentActivity activity, @NonNull Fragment fragment, @Nullable Bundle data) {
-    //    DebugLog.e("bundle data:" + data);
+        //    DebugLog.e("bundle data:" + data);
         showFragmentLeftToRight(activity, fragment, true, data, null, true);
     }
 
@@ -88,7 +99,7 @@ public class FragmentUtil {
      * @param data
      */
     public static void pushFragmentWithAnimation(FragmentActivity activity, @NonNull Fragment fragment, @Nullable Bundle data) {
-    //    DebugLog.e("bundle data:" + data);
+        //    DebugLog.e("bundle data:" + data);
         showFragment(activity, fragment, true, data, null, true);
     }
 
@@ -207,8 +218,23 @@ public class FragmentUtil {
             return;
         }
         FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+        if (!fragment.isAdded())
+            fragmentTransaction.add(R.id.fame_main, fragment, null);
+        if (isAddToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
 
-        fragmentTransaction.add(R.id.fame_main, fragment, null);
+//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    public static void addFragmentHome(FragmentActivity activity, @NonNull Fragment fragment, boolean isAddToBackStack) {
+        if (activity == null) {
+            return;
+        }
+        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.add(R.id.frame_home, fragment, null);
 
         if (isAddToBackStack) {
             fragmentTransaction.addToBackStack(null);
@@ -225,14 +251,14 @@ public class FragmentUtil {
         }
         FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
         if (bundle != null)
-          fragment.setArguments(bundle);
+            fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.fame_main, fragment, null);
         if (isAddToBackStack) {
             fragmentTransaction.addToBackStack(null);
         }
 
- //       fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-       // fragmentTransaction.commitAllowingStateLoss();
+        //       fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        // fragmentTransaction.commitAllowingStateLoss();
         fragmentTransaction.commit();
     }
 
@@ -262,53 +288,21 @@ public class FragmentUtil {
     }
 
 
-    public static void pushFragmentLayoutMain(FragmentManager manager, int layout, Fragment fragment, Bundle bundle, String TAG) {
+    public static void pushFragmentLayoutMain(FragmentManager manager, int layout, Fragment fragment, String TAG) {
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
-        fragmentTransaction.replace(layout, fragment,TAG);//R.id.content_frame is the layout you want to replace
+        fragmentTransaction.replace(layout, fragment, TAG);//R.id.content_frame is the layout you want to replace
         fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(TAG);
     }
+
     public static void replaceFragment(FragmentManager manager, int layout, Fragment fragment, String Back_TAG, String TAG) {
 
-        boolean fragmentPopped = manager.popBackStackImmediate (Back_TAG, 0);
-        if (!fragmentPopped){
+        boolean fragmentPopped = manager.popBackStackImmediate(Back_TAG, 0);
+        if (!fragmentPopped) {
             FragmentTransaction fragmentTransaction = manager.beginTransaction();
-            fragmentTransaction.replace(layout, fragment,TAG);//R.id.content_frame is the layout you want to replace
+            fragmentTransaction.replace(layout, fragment, TAG);//R.id.content_frame is the layout you want to replace
             fragmentTransaction.addToBackStack(Back_TAG);
             fragmentTransaction.commit();
         }
-
     }
-
-
-
-
-//    public static void showMenuFragment(FragmentActivity activity, @NonNull Fragment fragment, boolean isPushInsteadOfReplace, @Nullable Bundle data, @Nullable String tag, boolean isShowAnimation) {
-//        if (activity == null) {
-//            return;
-//        }
-//
-//        if (data != null) {
-//            fragment.setArguments(data);
-//        }
-//
-//        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-//
-//        if (isShowAnimation) {
-//            fragmentTransaction.setCustomAnimations(R.anim.slide_in_up,
-//                    R.anim.slide_out_up, R.anim.slide_in_up, R.anim.slide_out_up);
-//        }
-//
-//        fragmentTransaction.replace(R.id.layout_fragment_navitaion, fragment, tag);
-//        if (isPushInsteadOfReplace) {
-//            fragmentTransaction.addToBackStack(null);
-//        }
-//
-//        if (isShowAnimation) {
-//            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_NONE);
-//        } else {
-//            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//        }
-//
-//        fragmentTransaction.commitAllowingStateLoss();
-//    }
 }

@@ -23,7 +23,6 @@ public class PresenterRegisterOTP implements InterfaceRegisterOTP.Presenter, Int
 
     @Override
     public void getOTPcode(String msisdn, String sUserID) {
-        activityRegisterOTP.showDialogLoading();
         String Service = "OTP";
         String Provider = "default";
         String ParamSize = "2";
@@ -31,24 +30,19 @@ public class PresenterRegisterOTP implements InterfaceRegisterOTP.Presenter, Int
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
                 if (arrayList.size() > 0) {
-                    activityRegisterOTP.hideDialogLoading();
                     activityRegisterOTP.showGetOTP(arrayList);
                 } else {
-                    activityRegisterOTP.hideDialogLoading();
                     activityRegisterOTP.showGetOTP(new ArrayList<String>());
                 }
-
             }
 
             @Override
             public void onGetDataFault(Exception e) {
-                activityRegisterOTP.hideDialogLoading();
                 activityRegisterOTP.showGetOTP(new ArrayList<String>());
             }
 
             @Override
             public void onGetObjectDataSuccess(String Object) {
-                activityRegisterOTP.hideDialogLoading();
                 activityRegisterOTP.showGetOTP(new ArrayList<String>());
 
             }
@@ -57,7 +51,7 @@ public class PresenterRegisterOTP implements InterfaceRegisterOTP.Presenter, Int
 
     @Override
     public void xacthucOTP(String msisdn, String sUserID, String maOTP) {
-        activityRegisterOTP.showDialogLoading();
+       // activityRegisterOTP.showDialogLoading();
         String Service = "CF_OTP";
         String Provider = "default";
         String ParamSize = "3";
@@ -67,7 +61,6 @@ public class PresenterRegisterOTP implements InterfaceRegisterOTP.Presenter, Int
                 if (arrayList.size() > 0) {
                     activityRegisterOTP.showConfirmOTP(arrayList);
                 } else {
-                    activityRegisterOTP.hideDialogLoading();
                     activityRegisterOTP.showConfirmOTP(new ArrayList<String>());
                 }
 
@@ -76,13 +69,11 @@ public class PresenterRegisterOTP implements InterfaceRegisterOTP.Presenter, Int
 
             @Override
             public void onGetDataFault(Exception e) {
-                activityRegisterOTP.hideDialogLoading();
                 activityRegisterOTP.showConfirmOTP(new ArrayList<String>());
             }
 
             @Override
             public void onGetObjectDataSuccess(String Object) {
-                activityRegisterOTP.hideDialogLoading();
                 activityRegisterOTP.showConfirmOTP(new ArrayList<String>());
             }
         }, Service, Provider, ParamSize, msisdn, maOTP, sUserID);
@@ -99,7 +90,6 @@ public class PresenterRegisterOTP implements InterfaceRegisterOTP.Presenter, Int
                 if (arrayList.size() > 0) {
                     activityRegisterOTP.showDataLogin(arrayList);
                 } else {
-                    activityRegisterOTP.hideDialogLoading();
                     activityRegisterOTP.showDataLogin(new ArrayList<String>());
                 }
 
@@ -107,13 +97,11 @@ public class PresenterRegisterOTP implements InterfaceRegisterOTP.Presenter, Int
 
             @Override
             public void onGetDataFault(Exception e) {
-                activityRegisterOTP.hideDialogLoading();
                 activityRegisterOTP.showDataLogin(new ArrayList<String>());
             }
 
             @Override
             public void onGetObjectDataSuccess(String Object) {
-                activityRegisterOTP.hideDialogLoading();
                 activityRegisterOTP.showDataLogin(new ArrayList<String>());
 
             }

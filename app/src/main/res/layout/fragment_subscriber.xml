@@ -30,19 +30,10 @@
             android:textSize="@dimen/text_18sp"
             android:visibility="visible" />
     </RelativeLayout>
-    <View
-        android:background="@color/cardview_shadow_start_color"
-        android:layout_below="@+id/relative_tabbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1">
-    </View>
     <ImageView
-        android:layout_marginLeft="@dimen/dp50"
-        android:layout_marginRight="@dimen/dp50"
         android:adjustViewBounds="true"
-        android:padding="@dimen/dp15"
         android:id="@+id/img_logo"
-        android:src="@drawable/ringtunes_go_icon"
+        android:src="@drawable/banner"
         android:layout_below="@+id/relative_tabbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -59,35 +50,49 @@
         android:text="@string/add_subcriber"
         android:textSize="@dimen/text_17sp" />
 
-    <LinearLayout
-        android:layout_marginTop="@dimen/dp30"
-        android:gravity="center"
+    <TextView
+        android:id="@+id/txt_goituan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:visibility="gone"
-            android:layout_marginRight="@dimen/dp5"
-            android:layout_marginLeft="@dimen/dp5"
-            android:textColor="@color/white"
-            android:id="@+id/btn_tamdung"
-            android:layout_width="@dimen/dp120"
-            android:layout_height="@dimen/dp40"
-            android:layout_gravity="center"
-            android:background="@drawable/button_continue"
-            android:text="Tạm dừng" />
-        <Button
-            android:layout_marginRight="@dimen/dp5"
-            android:layout_marginLeft="@dimen/dp5"
-            android:textColor="@color/white"
-            android:id="@+id/btn_next_dangky"
-            android:layout_width="@dimen/dp120"
-            android:layout_height="@dimen/dp40"
-            android:layout_gravity="center"
-            android:background="@drawable/button_continue"
-            android:text="Đăng ký" />
-
-    </LinearLayout>
+        android:layout_height="@dimen/dp60"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp30"
+        android:background="@drawable/spr_green"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp5"
+        android:paddingRight="@dimen/dp5"
+        android:text="GÓI TUẦN  |   3000VNĐ/7 ngày"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_20sp_xacthuc"
+         />
+    <TextView
+        android:paddingLeft="@dimen/dp5"
+        android:paddingRight="@dimen/dp5"
+        android:id="@+id/txt_goithang"
+        android:background="@drawable/spr_tim"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp20"
+        android:gravity="center"
+        android:text="GÓI THÁNG  |   9000VNĐ/1 tháng"
+        android:textSize="@dimen/text_20sp_xacthuc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60" />
+    <TextView
+        android:paddingLeft="@dimen/dp5"
+        android:paddingRight="@dimen/dp5"
+        android:id="@+id/txt_goingay"
+        android:background="@drawable/spr_cam"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp20"
+        android:gravity="center"
+        android:text="GÓI NGÀY  |   1000VNĐ/1 ngày"
+        android:textSize="@dimen/text_20sp_xacthuc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60" />
 
 
 

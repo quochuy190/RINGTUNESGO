@@ -20,7 +20,6 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.neo.media.Adapter.AdapterAlbum;
 import com.neo.media.Adapter.AdapterEventHome;
 import com.neo.media.Adapter.AdapterRingtunes;
 import com.neo.media.Adapter.AdapterSinger;
@@ -32,7 +31,10 @@ import com.neo.media.Config.Config;
 import com.neo.media.Fragment.BuySongs.View.FragmentDetailBuySongs;
 import com.neo.media.Fragment.DetailSongs.View.FragmentSongs;
 import com.neo.media.Fragment.Home.Presenter.PresenterHome;
-import com.neo.media.Fragment.Singer.Presenter.Fragment_SingerDetail;
+import com.neo.media.Fragment.Home.Singer.Presenter.Fragment_SingerDetail;
+import com.neo.media.Fragment.Home.Singer.View.FragmentSinger;
+import com.neo.media.Fragment.Home.Topic.View.FragmentTocpic;
+import com.neo.media.Fragment.Home.Type.View.FragmentType;
 import com.neo.media.Model.Banner;
 import com.neo.media.Model.Ringtunes;
 import com.neo.media.Model.Singer;
@@ -40,7 +42,6 @@ import com.neo.media.Model.Topic;
 import com.neo.media.Model.Type;
 import com.neo.media.MyApplication;
 import com.neo.media.R;
-import com.neo.media.View.HomeFragment;
 import com.neo.media.untils.BaseFragment;
 import com.neo.media.untils.CustomSliderView;
 import com.neo.media.untils.DialogUtil;
@@ -58,7 +59,6 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
-import static com.neo.media.MainNavigationActivity.fragmentActivity;
 import static com.neo.media.MyApplication.player_ring;
 
 /**
@@ -100,7 +100,7 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     RelativeLayout viewAll_Singer;
     AdapterTopic adapterTopic;
     AdapterEventHome adapterEventHome;
-    AdapterAlbum adapterAlbum;
+
     AdapterRingtunes adapterRingtunes;
     AdapterSinger adapterSinger;
     AdapterSlogan adapterSlogan;
@@ -133,13 +133,14 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     List<Topic> lisSlogan;
     boolean is3g;
     boolean isWifi;
+    @BindView(R.id.slidertest)
+    RelativeLayout slidertest;
 
     public static FragmentHome getInstance() {
         if (fragment == null) {
             synchronized (FragmentSongs.class) {
                 if (fragment == null) {
                     fragment = new FragmentHome();
-
                 }
             }
         }
@@ -169,10 +170,9 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homes, container, false);
         ButterKnife.bind(this, view);
-        initNetwork();
+        isNetwork();
         objViewPager = (AutoScrollViewPager) view.findViewById(R.id.view_pager);
         objTabLayout = (TabLayout) view.findViewById(R.id.tbl_showroom_detail_test);
-
         init();
         initEvent();
         view.setOnClickListener(new View.OnClickListener() {
@@ -189,15 +189,13 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     public void onResume() {
         super.onResume();
         if (lisBanner_String.size() > 0) {
+            slidertest.setVisibility(View.VISIBLE);
             showViewpager(lisBanner_String);
-        }
+        } else slidertest.setVisibility(View.GONE);
     }
 
-    public static void addFragmentBuySongs() {
-        FragmentUtil.addFragment(fragmentActivity, FragmentDetailBuySongs.getInstance(), true);
-    }
 
-    public void initNetwork() {
+    public void isNetwork() {
         ConnectivityManager manager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
         //For 3G check
         is3g = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
@@ -220,28 +218,32 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
 
     //
     private void initEvent() {
-        viewAll_Topic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragment.viewpagerHome.setCurrentItem(2);
-            }
-        });
+
        /* viewAll_Album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HomeFragment.viewpagerHome.setCurrentItem(1);
             }
         });*/
+        viewAll_Topic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!FragmentTocpic.getInstance().isAdded())
+                    FragmentUtil.addFragment(getActivity(), FragmentTocpic.getInstance(), true);
+            }
+        });
         viewAll_Type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeFragment.viewpagerHome.setCurrentItem(1);
+                if (!FragmentType.getInstance().isAdded())
+                    FragmentUtil.addFragment(getActivity(), FragmentType.getInstance(), true);
             }
         });
         viewAll_Singer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeFragment.viewpagerHome.setCurrentItem(3);
+                if (!FragmentSinger.getInstance().isAdded())
+                    FragmentUtil.addFragment(getActivity(), FragmentSinger.getInstance(), true);
             }
         });
         viewAll_Ringtunes_hot.setOnClickListener(new View.OnClickListener() {
@@ -254,11 +256,13 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
                     editor.putString("id", "");
                     editor.putString("url_image_title", listRingHot.get(0).getImage_file());
                     editor.commit();
-                    FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
+                    if (!FragmentSongs.getInstance().isAdded())
+                        FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
                 }
 
             }
         });
+        // chuyển view
         viewAll_Ringtunes_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -269,7 +273,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
                     editor.putString("id", "");
                     editor.putString("url_image_title", lisRingNew.get(0).getImage_file());
                     editor.commit();
-                    FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
+                    if (!FragmentSongs.getInstance().isAdded())
+                        FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
                 }
             }
         });
@@ -340,8 +345,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         objViewPager.setInterval(5000);
         objTabLayout.setupWithViewPager(objViewPager);
 
-        if (lisStringBanner.size()>0){
-            if (lisBanner.size()>0){
+        if (lisStringBanner.size() > 0) {
+            if (lisBanner.size() > 0) {
                 objAdapter.setSetOnItemClickListener(new setOnItemClickListener() {
                     @Override
                     public void OnItemClickListener(int position) {
@@ -357,7 +362,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
             }
         }
     }
-    public void clickViewPage(String type, Banner objBaner){
+
+    public void clickViewPage(String type, Banner objBaner) {
         String subtype = objBaner.getSUBTYPE();
         String id = objBaner.getId();
         String image = objBaner.getImage();
@@ -367,7 +373,9 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
             editor.putString("id_songs", id);
             editor.putString("id_singer", "");
             editor.commit();
-            FragmentHome.addFragmentBuySongs();
+            if (!FragmentDetailBuySongs.getInstance().isAdded())
+                FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+            //  FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
         } else if (type.equals("2")) {
             SharedPreferences.Editor editor = fr.edit();
             switch (subtype) {
@@ -409,7 +417,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
             editor.putString("id", id);
             editor.putString("url_image_title", image);
             editor.commit();
-            FragmentUtil.addFragment(fragmentActivity, FragmentSongs.getInstance(), true);
+            if (!FragmentSongs.getInstance().isAdded())
+                FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
         }
     }
 
@@ -427,14 +436,24 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         adapterTopic.setOnIListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
-                SharedPreferences.Editor editor = fr.edit();
-                editor.putString("option", Config.TOPIC);
-                editor.putString("title", listTopic.get(position).getPackage_name());
-                editor.putString("id", listTopic.get(position).getId());
-                editor.putString("url_image_title", listTopic.get(position).getPhoto());
-                editor.commit();
-                if (!FragmentSongs.getInstance().isAdded())
-                    FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
+                if (!isClickItem) {
+                    isClickItem = true;
+                    SharedPreferences.Editor editor = fr.edit();
+                    editor.putString("option", Config.TOPIC);
+                    editor.putString("title", listTopic.get(position).getPackage_name());
+                    editor.putString("id", listTopic.get(position).getId());
+                    editor.putString("url_image_title", listTopic.get(position).getPhoto());
+                    editor.commit();
+                    if (!FragmentSongs.getInstance().isAdded())
+                        FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isClickItem = false;
+                        }
+                    }, 500);}
+
+
             }
 
             @Override
@@ -448,42 +467,14 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     @Override
     public void showListTopic(final List<Topic> list) {
         listTopic.clear();
+        MyApplication.lisHotTopic.clear();
         if (list != null && list.size() > 0) {
             listTopic.addAll(list);
+            MyApplication.lisHotTopic.addAll(list);
             adapterTopic.notifyDataSetChanged();
         }
     }
 
-    /*  @Override
-      public void showListAlbum(final List<Album> listAlbum) {
-          if (listAlbum != null && listAlbum.size() > 0) {
-              adapterAlbum = new AdapterAlbum(listAlbum, getContext());
-              mLayoutManager = new GridLayoutManager(getContext(), 2);
-              //  recyclerAlbumHot.setNestedScrollingEnabled(false);
-              recyclerAlbumHot.setLayoutManager(mLayoutManager);
-              recyclerAlbumHot.setItemAnimator(new DefaultItemAnimator());
-              recyclerAlbumHot.setAdapter(adapterAlbum);
-              adapterAlbum.notifyDataSetChanged();
-
-              adapterAlbum.setOnIListener(new setOnItemClickListener() {
-                  @Override
-                  public void OnItemClickListener(int position) {
-                      Bundle bundle = new Bundle();
-                      bundle.putString("option", Config.TOPIC);
-                      bundle.putString("title", listAlbum.get(position).getPackage_name());
-                      bundle.putString("id", listAlbum.get(position).getId());
-                      bundle.putString("url_image_title", listAlbum.get(position).getPhoto());
-                      FragmentUtil.addFragmentData(getActivity(), FragmentSongs.getInstance(), true, bundle);
-
-                  }
-
-                  @Override
-                  public void OnLongItemClickListener(int position) {
-
-                  }
-              });
-          }
-      }*/
     public void initPromotion() {
         adapterEventHome = new AdapterEventHome(lisPromotion, getContext());
         mLayoutManager = new GridLayoutManager(getContext(), 1);
@@ -498,22 +489,31 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         adapterEventHome.setOnIListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
-                SharedPreferences.Editor editor = fr.edit();
-                editor.putString("option", Config.EVENT);
-                editor.putString("id", lisPromotion.get(position).getId());
-                if (lisPromotion.get(position).getBigphoto() != null) {
-                    editor.putString("type_event", "promotion_details");
-                    editor.putString("url_image_title", lisPromotion.get(position).getPhoto());
-                    editor.putString("title", lisPromotion.get(position).getPackage_name());
-                }
-                if (lisPromotion.get(position).getTHUMBNAIL_IMAGE() != null) {
-                    editor.putString("type_event", "event_details");
-                    editor.putString("url_image_title", lisPromotion.get(position).getTHUMBNAIL_IMAGE());
-                    editor.putString("title", lisPromotion.get(position).getNAME());
-                }
-                editor.commit();
-                if (!FragmentSongs.getInstance().isAdded())
-                    FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
+                if (!isClickItem) {
+                    isClickItem = true;
+                    SharedPreferences.Editor editor = fr.edit();
+                    editor.putString("option", Config.EVENT);
+                    editor.putString("id", lisPromotion.get(position).getId());
+                    if (lisPromotion.get(position).getBigphoto() != null) {
+                        editor.putString("type_event", "promotion_details");
+                        editor.putString("url_image_title", lisPromotion.get(position).getBigphoto());
+                        editor.putString("title", lisPromotion.get(position).getNAME());
+                    }
+                    if (lisPromotion.get(position).getTHUMBNAIL_IMAGE() != null) {
+                        editor.putString("type_event", "event_details");
+                        editor.putString("url_image_title", lisPromotion.get(position).getTHUMBNAIL_IMAGE());
+                        editor.putString("title", lisPromotion.get(position).getNAME());
+                    }
+                    editor.commit();
+                    if (!FragmentSongs.getInstance().isAdded())
+                        FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isClickItem = false;
+                        }
+                    }, 500);}
+
             }
 
             @Override
@@ -564,7 +564,9 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     public void showPromotion(final List<Topic> list) {
         if (list != null && list.size() > 0) {
             lisPromotion.addAll(list);
+            MyApplication.img_banner_favorite = list.get(0).getIMAGE();
         }
+
         adapterEventHome.notifyDataSetChanged();
     }
 
@@ -572,30 +574,41 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         if (list != null && list.size() > 0) {
             lisPromotion.clear();
             lisPromotion.addAll(list);
+            MyApplication.lisPromotion.addAll(list);
+            MyApplication.img_banner_favorite = list.get(0).getIMAGE();
         }
         presenterHome.promotion_idx("promotion_idx", sUsername);
     }
 
+    AdapterRingtunes adapterHot;
+
     public void initRingtunesHot() {
-        adapterRingtunes = new AdapterRingtunes(listRingHot, getContext());
+        adapterHot = new AdapterRingtunes(listRingHot, getContext());
         mLayoutManager = new LinearLayoutManager(getContext());
         recyclerRingtunesHot.setNestedScrollingEnabled(false);
         recyclerAlbumHot.setHasFixedSize(true);
         recyclerRingtunesHot.setLayoutManager(mLayoutManager);
         recyclerRingtunesHot.setItemAnimator(new DefaultItemAnimator());
-        recyclerRingtunesHot.setAdapter(adapterRingtunes);
-        adapterRingtunes.notifyDataSetChanged();
+        recyclerRingtunesHot.setAdapter(adapterHot);
 
-        adapterRingtunes.setSetOnItemClickListener(new setOnItemClickListener() {
+        adapterHot.setSetOnItemClickListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
+                if (!isClickItem) {
+                    isClickItem = true;
                 SharedPreferences.Editor editor = fr.edit();
                 player_ring = listRingHot.get(position);
                 editor.putBoolean("isHome", true);
                 editor.putString("idSinger", listRingHot.get(position).getSinger_id());
                 editor.commit();
-                if (!FragmentSongs.getInstance().isAdded())
+                if (!FragmentDetailBuySongs.getInstance().isAdded())
                     FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isClickItem = false;
+                    }
+                }, 500);}
             }
 
             @Override
@@ -610,7 +623,7 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         listRingHot.clear();
         if (lisRingtunesHot != null && lisRingtunesHot.size() > 0) {
             listRingHot.addAll(lisRingtunesHot);
-            adapterRingtunes.notifyDataSetChanged();
+            adapterHot.notifyDataSetChanged();
         }
     }
 
@@ -627,20 +640,22 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         adapterRingtunes.setSetOnItemClickListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
-                SharedPreferences.Editor editor = fr.edit();
-                player_ring = lisRingNew.get(position);
-                editor.putBoolean("isHome", true);
-                editor.putString("idSinger", lisRingNew.get(position).getSinger_id());
-                editor.commit();
-                /*
-                    FragmentUtil.replaceFragment(getActivity().getSupportFragmentManager(), R.id.fame_main,
-                            FragmentDetailBuySongs.getInstance(), FragmentSongs.class.getSimpleName(),
-                            FragmentDetailBuySongs.class.getSimpleName());*/
-              /*  Bundle bundle = new Bundle();
-                bundle.putBoolean("isHome", true);
-                bundle.putSerializable("objRing", lisRingNew.get(position));*/
-                if (!FragmentDetailBuySongs.getInstance().isAdded())
-                    FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+                if (!isClickItem) {
+                    isClickItem = true;
+                    SharedPreferences.Editor editor = fr.edit();
+                    player_ring = lisRingNew.get(position);
+                    editor.putBoolean("isHome", true);
+                    editor.putString("idSinger", lisRingNew.get(position).getSinger_id());
+                    editor.commit();
+                    if (!FragmentDetailBuySongs.getInstance().isAdded())
+                        FragmentUtil.addFragment(getActivity(), FragmentDetailBuySongs.getInstance(), true);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isClickItem = false;
+                        }
+                    }, 500);}
+
 
             }
 
@@ -674,14 +689,24 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         adapterSinger.setOnIListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
-                SharedPreferences.Editor editor = fr.edit();
-                editor.putString("name_singer", listSinger.get(position).getSinger_name());
-                editor.putString("hits_singer", listSinger.get(position).getHits());
-                editor.putString("url_imgSinger", listSinger.get(position).getPhoto());
-                editor.putString("idSinger", listSinger.get(position).getId());
-                editor.commit();
-                if (!FragmentDetailBuySongs.getInstance().isAdded())
-                    FragmentUtil.addFragment(getActivity(), Fragment_SingerDetail.getInstance(), true);
+                if (!isClickItem) {
+                    isClickItem = true;
+                    SharedPreferences.Editor editor = fr.edit();
+                    MyApplication.isHome = true;
+                    editor.putString("name_singer", listSinger.get(position).getSinger_name());
+                    editor.putString("hits_singer", listSinger.get(position).getHits());
+                    editor.putString("url_imgSinger", listSinger.get(position).getPhoto());
+                    editor.putString("idSinger", listSinger.get(position).getId());
+                    editor.commit();
+                    if (!Fragment_SingerDetail.getInstance().isAdded())
+                        FragmentUtil.addFragment(getActivity(), Fragment_SingerDetail.getInstance(), true);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isClickItem = false;
+                        }
+                    }, 500);}
+
             }
 
             @Override
@@ -701,6 +726,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
 
     }
 
+    boolean isClickItem = false;
+
     public void initType() {
         adapterType = new AdapterType(listType, getContext());
         // mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -715,14 +742,25 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
         adapterType.setOnIListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
-                SharedPreferences.Editor editor = fr.edit();
-                editor.putString("option", Config.TYPE);
-                editor.putString("title", listType.get(position).getName());
-                editor.putString("id", listType.get(position).getId());
-                editor.putString("url_image_title", listType.get(position).getThumbnal_image());
-                editor.commit();
-                if (!FragmentSongs.getInstance().isAdded())
-                    FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
+                if (!isClickItem) {
+                    isClickItem = true;
+                    SharedPreferences.Editor editor = fr.edit();
+                    editor.putString("option", Config.TYPE);
+                    editor.putString("title", listType.get(position).getName());
+                    editor.putString("id", listType.get(position).getId());
+                    editor.putString("url_image_title", listType.get(position).getThumbnal_image());
+                    editor.commit();
+                    if (!FragmentSongs.getInstance().isAdded())
+                        FragmentUtil.addFragment(getActivity(), FragmentSongs.getInstance(), true);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isClickItem = false;
+                        }
+                    }, 500);
+
+                }
+
             }
 
             @Override
@@ -744,13 +782,17 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
     @Override
     public void showlistBanner(List<Banner> list) {
         if (list == null) return;
-        lisBanner.clear();
-        lisBanner_String.clear();
-        for (int i = 0; i < list.size(); i++) {
-            lisBanner_String.add(list.get(i).getIMAGE_FILE());
-        }
-        lisBanner.addAll(list);
-        showViewpager(lisBanner_String);
+        if (list.size() > 0) {
+            slidertest.setVisibility(View.VISIBLE);
+            lisBanner.clear();
+            lisBanner_String.clear();
+            for (int i = 0; i < list.size(); i++) {
+                lisBanner_String.add(list.get(i).getIMAGE_FILE());
+            }
+            lisBanner.addAll(list);
+            showViewpager(lisBanner_String);
+        } else slidertest.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -767,30 +809,8 @@ public class FragmentHome extends BaseFragment implements FragmentHomeImpl, Swip
 
     }
 
-
-
-
-/*    class RemindTask extends TimerTask {
-
-        @Override
-        public void run() {
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    if (page1 > 6) {//so anh trong view pager
-                        page1 = -1;
-                        objViewPager.setCurrentItem(page1++);
-                    } else {
-
-                        objViewPager.setCurrentItem(page1++);
-                    }
-                }
-            });
-
-        }
-    }*/
-
     private void initData() {
-        initNetwork();
+        isNetwork();
         if (!is3g && !isWifi) {
             DialogUtil.showDialog(getActivity(), "Thông báo", "Không có kết nối vui lòng kiểm tra lại mạng");
         } else {

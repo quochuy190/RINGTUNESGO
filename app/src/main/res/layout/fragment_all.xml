@@ -12,22 +12,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/tab_bar"
+            android:id="@+id/tab_bar_group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <include layout="@layout/app_bar_main2"/>
-            <TextView
-                android:layout_marginLeft="@dimen/dp35"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+            <include layout="@layout/app_bar_main2" />
+            <ImageView
+                android:id="@+id/img_back_group"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="@dimen/dp45"
                 android:layout_centerVertical="true"
-                android:id="@+id/txt_title_fragment"
+                android:layout_marginLeft="@dimen/dp5"
+                android:padding="@dimen/dp14"
+                android:src="@drawable/back_white" />
+
+            <TextView
+                android:id="@+id/txt_title_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp50"
                 android:padding="@dimen/dp5"
                 android:text="ABC"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_18sp"
+                android:textStyle="bold"
                 android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/txt_add_group1"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp35"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp8_playing"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp3"
+                android:paddingRight="@dimen/dp3"
+                android:text="Chọn"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_17sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <TextView
@@ -43,12 +69,13 @@
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
+            android:padding="@dimen/dp5"
             android:layout_marginTop="@dimen/dp3"
             android:layout_above="@+id/prb_loading_more_all"
             android:id="@+id/recycle_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tab_bar"
+            android:layout_below="@id/tab_bar_group"
             android:background="@color/white">
         </android.support.v7.widget.RecyclerView>
         <ProgressBar

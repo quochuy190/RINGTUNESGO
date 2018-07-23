@@ -4,8 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
+    <include layout="@layout/app_bar_main2"/>
 
     <LinearLayout
+        android:layout_marginTop="@dimen/dp40"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,13 +17,9 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_marginTop="@dimen/dp20"
-            android:layout_marginLeft="@dimen/dp50"
-            android:layout_marginRight="@dimen/dp50"
             android:adjustViewBounds="true"
-            android:padding="@dimen/dp15"
             android:id="@+id/img_logo"
-            android:src="@drawable/ringtunes_go_icon"
+            android:src="@drawable/banner"
             android:layout_below="@+id/relative_tabbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -41,7 +39,7 @@
             />
 
         <EditText
-            android:padding="@dimen/dp5"
+            android:padding="@dimen/dp10"
             android:background="@drawable/spr_backgroup_edittext"
             android:id="@+id/editTextNumber_otp"
             android:layout_width="match_parent"
@@ -56,13 +54,14 @@
             android:inputType="phone" />
 
         <Button
-            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textColor="@color/purple"
            android:layout_marginTop="@dimen/dp20"
             android:id="@+id/btn_next_register"
             android:layout_width="@dimen/dp150"
             android:layout_height="@dimen/dp40"
             android:layout_gravity="center"
-            android:background="@drawable/button_continue"
+            android:background="@drawable/spr_buton_dialog"
             android:text="Nhận mã OTP" />
 
     </LinearLayout>

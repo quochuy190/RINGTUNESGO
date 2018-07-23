@@ -40,7 +40,15 @@ public class PROFILE implements Serializable{
     @SerializedName("content_id")
     String content_id;
     String caller_name;
+    boolean isDelete;
 
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
 
     public String getCaller_name() {
         return caller_name;

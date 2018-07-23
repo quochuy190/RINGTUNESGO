@@ -7,11 +7,13 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.neo.media.Activity.ActivityMainHome;
 import com.neo.media.ApiService.ApiService;
 import com.neo.media.CRBTModel.subscriber;
 import com.neo.media.Listener.CallbackData;
-import com.neo.media.MainNavigationActivity;
+import com.neo.media.Model.KeyWord;
 import com.neo.media.Model.Ringtunes;
+import com.neo.media.MyApplication;
 import com.neo.media.Player.IPlayback;
 import com.neo.media.Player.PlaybackService;
 
@@ -27,8 +29,8 @@ import rx.subscriptions.CompositeSubscription;
 public class PresenterMainActivity implements MainActivityImpl.Presenter {
     private Context mContext;
     private ApiService apiService;
-    private FragmetSearch viewMainActivity;
-    private MainNavigationActivity viewMain;
+
+    private ActivityMainHome viewMain;
     private CompositeSubscription mSubscriptions;
     Subscription subscription;
     private PlaybackService mPlaybackService;
@@ -44,7 +46,7 @@ public class PresenterMainActivity implements MainActivityImpl.Presenter {
             // service that we know is running in our own process, we can
             // cast its IBinder to a concrete class and directly access it.
             mPlaybackService = ((PlaybackService.LocalBinder) service).getService();
-            viewMain.onPlaybackServiceBound(mPlaybackService);
+            //viewMain.onPlaybackServiceBound(mPlaybackService);
            // viewMain.onSongUpdated(mPlaybackService.getPlayingSong());
         }
 
@@ -54,25 +56,14 @@ public class PresenterMainActivity implements MainActivityImpl.Presenter {
             // Because it is running in our same process, we should never
             // see this happen.
             mPlaybackService = null;
-            viewMain.onPlaybackServiceUnbound();
+         //   viewMain.onPlaybackServiceUnbound();
         }
     };
 
-
-    public PresenterMainActivity(FragmetSearch viewMainActivity) {
-        mSubscriptions = new CompositeSubscription();
-        apiService = new ApiService();
-        this.viewMainActivity = viewMainActivity;
-    }
-
-    public PresenterMainActivity(Context mContext,MainNavigationActivity viewMain) {
-        this.mContext = mContext;
+    public PresenterMainActivity(ActivityMainHome viewMain) {
         this.viewMain = viewMain;
         apiService = new ApiService();
     }
-
-
-
     @Override
     public void getSearch(String key, String page, String index) {
         String Service = "search_main_service";
@@ -85,7 +76,7 @@ public class PresenterMainActivity implements MainActivityImpl.Presenter {
         apiService.getSearchRingtunes(new CallbackData<Ringtunes>() {
             @Override
             public void onGetDataSuccess(ArrayList<Ringtunes> arrayList) {
-                viewMainActivity.showListSearch(arrayList);
+
                 //viewSearch.showListSearch(arrayList);
             }
 
@@ -201,7 +192,7 @@ public class PresenterMainActivity implements MainActivityImpl.Presenter {
 
     @Override
     public void destroy() {
-        viewMainActivity = null;
+
         subscription.unsubscribe();
     }
 
@@ -224,7 +215,7 @@ public class PresenterMainActivity implements MainActivityImpl.Presenter {
         unbindPlaybackService();
         // Release context reference
         mContext = null;
-        viewMain = null;
+       // viewMain = null;
         mSubscriptions.clear();
     }
 
@@ -247,6 +238,56 @@ public class PresenterMainActivity implements MainActivityImpl.Presenter {
         }
     }
 
+    public void search_keyword_top(String userid) {
+        //fragmentSearchNew.showDialogLoading();
+        String Service = "search_keyword_top";
+        String Provider = "default";
+        String ParamSize = "1";
+        apiService.api_search_keyword_top(new CallbackData<KeyWord>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<KeyWord> arrayList) {
+                //fragmentSearchNew.hideDialogLoading();
+                if (arrayList.size()>0){
+                    MyApplication.listKeyword.clear();
+                    MyApplication.listKeyword.addAll(arrayList);
+                    //fragmentSearchNew.show_search_keyword(arrayList);
+                }else {
 
+                }
+            }
 
+            @Override
+            public void onGetDataFault(Exception e) {
+                //fragmentSearchNew.hideDialogLoading();
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(KeyWord Object) {
+               // fragmentSearchNew.hideDialogLoading();
+            }
+        }, Service, Provider, ParamSize, userid);
+    }
+
+    public void api_checkver(String version, String user_name) {
+        String Service = "CHECKVER";
+        String Provider = "default";
+        String ParamSize = "2";
+
+        apiService.api_checkver(new CallbackData<String>() {
+            @Override
+            public void onGetDataSuccess(ArrayList<String> arrayList) {
+                viewMain.show_checkver(arrayList);
+            }
+
+            @Override
+            public void onGetDataFault(Exception e) {
+
+            }
+
+            @Override
+            public void onGetObjectDataSuccess(String Object) {
+
+            }
+        }, Service,Provider, ParamSize, version, user_name);
+    }
 }

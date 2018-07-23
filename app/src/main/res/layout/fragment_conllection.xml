@@ -10,58 +10,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:id="@+id/relative_conllection"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tab_bar_conllection">
-            <View
-                android:background="@color/cardview_shadow_start_color"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp2"/>
-            <TextView
-                android:id="@+id/txt_title_conllection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp5"
-                android:text="BỘ SƯU TẬP CỦA BẠN"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_17sp" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list_songs_conllection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_title_conllection"
-                android:layout_marginTop="@dimen/dp2">
-
-            </android.support.v7.widget.RecyclerView>
-            <View
-                android:layout_below="@+id/list_songs_conllection"
-                android:background="@color/background_item"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp2"/>
-            <TextView
-                android:id="@+id/txt_title_song_same"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/list_songs_conllection"
-                android:padding="@dimen/dp5"
-                android:text="BÀI HÁT BẠN CÓ THỂ QUAN TÂM"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_17sp"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list_songs_conllection_same"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_title_song_same"
-                android:layout_marginTop="@dimen/dp2">
-
-            </android.support.v7.widget.RecyclerView>
-        </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/tab_bar_conllection"
             android:layout_width="match_parent"
@@ -81,6 +29,7 @@
                 />
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/txt_title_tabar_conllection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,23 +38,108 @@
                 android:padding="@dimen/dp5"
                 android:text="ABC"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_18sp"
+                android:textSize="@dimen/text_16sp"
                 android:visibility="visible" />
+            <TextView
+                android:visibility="visible"
+                android:id="@+id/txt_chon_bosuutap"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp5"
+                android:textSize="@dimen/text_16sp"
+                android:textColor="@color/black"
+                android:text="Chọn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/img_search_collection"
+                android:padding="@dimen/dp2"
+                android:visibility="gone"
+                android:src="@drawable/ic_ios_search"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp5"
+                android:layout_width="@dimen/dp40"
+                android:layout_height="@dimen/dp40" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/txt_notification_conllection"
+        <ImageView
+            android:src="@drawable/banner"
+            android:id="@+id/img_banner"
+            android:adjustViewBounds="true"
+            android:layout_below="@+id/tab_bar_conllection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="@dimen/dp5"
+            android:id="@+id/relative_conllection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tab_bar_conllection"
-            android:background="@color/white"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/dp10"
-            android:text="Thuê bao chưa đăng ký dịch vụ Ringtunes.
-            Hãy đăng ký để có thể tiếp tục sử dụng"
-            android:textColor="@color/text_name_song"
-            android:textSize="@dimen/text_18sp"
-            android:visibility="gone" />
+            android:layout_below="@+id/img_banner">
+            <View
+                android:background="@color/cardview_shadow_start_color"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp2"/>
+            <TextView
+                android:id="@+id/txt_notification_conllection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tab_bar_conllection"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/dp10"
+                android:text="@string/notifi_collection"
+                android:textColor="@color/text_name_song"
+                android:textSize="@dimen/text_18sp"
+                android:visibility="gone" />
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/txt_title_conllection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                android:text="Bộ sưu tập của bạn"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_17sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_songs_conllection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_title_conllection"
+                android:layout_marginTop="@dimen/dp2">
+
+            </android.support.v7.widget.RecyclerView>
+            <View
+                android:layout_below="@+id/list_songs_conllection"
+                android:background="@color/background_item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp2"/>
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/txt_title_song_same"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_songs_conllection"
+                android:padding="@dimen/dp5"
+                android:text="Bài hát bạn có thể quan tâm"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_17sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_songs_conllection_same"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_title_song_same"
+                android:layout_marginTop="@dimen/dp2">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+
+
 
     </RelativeLayout>
 

@@ -1,8 +1,9 @@
 package com.neo.media.View.Login;
 
+import android.util.Log;
+
 import com.neo.media.ApiService.ApiService;
 import com.neo.media.CRBTModel.subscriber;
-import com.neo.media.Fragment.BuySongs.View.FragmentDetailBuySongs;
 import com.neo.media.Listener.CallbackData;
 
 import java.util.ArrayList;
@@ -14,17 +15,13 @@ import java.util.ArrayList;
 public class PresenterLogin implements InterfaceLogin.Presenter {
     ApiService apiService;
     ActivityLogin viewLogin;
-    FragmentDetailBuySongs fragmentDetailBuySongs;
+
 
     public PresenterLogin(ActivityLogin viewLogin) {
         this.viewLogin = viewLogin;
         apiService = new ApiService();
     }
 
-    public PresenterLogin(FragmentDetailBuySongs fragmentDetailBuySongs) {
-        this.fragmentDetailBuySongs = fragmentDetailBuySongs;
-        apiService = new ApiService();
-    }
 
     @Override
     public void Login(String username, String pass) {
@@ -34,19 +31,24 @@ public class PresenterLogin implements InterfaceLogin.Presenter {
         apiService.api_login(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
+                Log.i("login", "success_login_ringtunes "+arrayList.size());
                 if (arrayList.size() > 0) {
                     viewLogin.showDataLogin(arrayList);
+                }else {
+                    viewLogin.showDataLogin(new ArrayList<String>());
                 }
             }
 
             @Override
             public void onGetDataFault(Exception e) {
+                Log.i("login", "onGetDataFault ");
                 viewLogin.showDataLogin(new ArrayList<String>());
+
             }
 
             @Override
             public void onGetObjectDataSuccess(String Object) {
-
+                viewLogin.showDataLogin(new ArrayList<String>());
 
             }
         }, Service, Provider, ParamSize, pass, username);
@@ -54,7 +56,6 @@ public class PresenterLogin implements InterfaceLogin.Presenter {
 
     @Override
     public void LoginVinaphonePortal(String username, String password, String userId) {
-        viewLogin.showDialogLoading();
         String Service = "PORTAL";
         String Provider = "default";
         String ParamSize = "3";
@@ -62,20 +63,21 @@ public class PresenterLogin implements InterfaceLogin.Presenter {
         apiService.api_login_vinaportal(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
+                Log.i("login", "success_vinaportal");
                 if (arrayList.size() > 0) {
                     viewLogin.showDataLoginVinaphonePortal(arrayList);
-                } else viewLogin.hideDialogLoading();
+                } else  viewLogin.showDataLoginVinaphonePortal(new ArrayList<String>());
             }
 
             @Override
             public void onGetDataFault(Exception e) {
-                viewLogin.hideDialogLoading();
-                viewLogin.showDataLoginVinaphonePortal(new ArrayList<String>());
+                Log.i("login", "DataFault_vina");
+                viewLogin.show_api_error();
             }
 
             @Override
             public void onGetObjectDataSuccess(String Object) {
-
+                viewLogin.showDataLoginVinaphonePortal(new ArrayList<String>());
 
             }
         }, Service, Provider, ParamSize, username, password, userId);
@@ -102,7 +104,7 @@ public class PresenterLogin implements InterfaceLogin.Presenter {
 
             @Override
             public void onGetObjectDataSuccess(subscriber Object) {
-                viewLogin.hideDialogLoading();
+
                 if (Object != null && Object.getSUBID().length() > 0)
                     viewLogin.showInfo_User(Object);
             }

@@ -21,6 +21,10 @@
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">#b5ccc8c8</item>
     </style>
+    <style name="text_type_search">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/purple</item>
+    </style>
 
     <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
         <item name="colorAccent">@color/purple</item>
@@ -35,15 +39,20 @@
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="android:textColorSecondary">@android:color/black</item>
         <item name="actionMenuTextColor">@android:color/black</item>
+
     </style>
     <style name="CollapsedToolbar" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ExpandedToolbar" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="BrandedSwitch" parent="AppTheme">
+        <item name="colorAccent">#a639ac</item>
+    </style>
 
 </resources>

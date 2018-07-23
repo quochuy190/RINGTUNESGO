@@ -1,3 +1,4 @@
+/*
 package com.neo.media.Adapter;
 
 import android.app.Activity;
@@ -15,9 +16,11 @@ import com.neo.media.R;
 
 import java.util.List;
 
+*/
 /**
  * Created by QQ on 8/21/2017.
- */
+ *//*
+
 
 public class AdapterDrawer extends ArrayAdapter<DrawerItem> {
 
@@ -120,3 +123,4 @@ public class AdapterDrawer extends ArrayAdapter<DrawerItem> {
         TextView ItemName;
     }
 }
+*/

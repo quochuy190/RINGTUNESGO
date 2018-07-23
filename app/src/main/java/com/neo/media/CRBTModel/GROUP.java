@@ -22,8 +22,30 @@ public class GROUP {
     //price
     @SerializedName("CLIS")
     private CLIS clis;
-
+    private int img_backgroup;
+    private boolean is_add_group;
     public GROUP() {
+    }
+
+    public GROUP(String name, boolean is_add_group) {
+        this.name = name;
+        this.is_add_group = is_add_group;
+    }
+
+    public boolean isIs_add_group() {
+        return is_add_group;
+    }
+
+    public void setIs_add_group(boolean is_add_group) {
+        this.is_add_group = is_add_group;
+    }
+
+    public int getImg_backgroup() {
+        return img_backgroup;
+    }
+
+    public void setImg_backgroup(int img_backgroup) {
+        this.img_backgroup = img_backgroup;
     }
 
     public String getId() {

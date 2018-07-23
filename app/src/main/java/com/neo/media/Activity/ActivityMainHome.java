@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -44,6 +45,7 @@ import me.alexrs.prefs.lib.Prefs;
  */
 
 public class ActivityMainHome extends AppCompatActivity {
+    private static final String TAG = "ActivityMainHome";
     public static ActionBar ab;
     @BindView(R.id.fame_main)
     FrameLayout frameLayout;
@@ -90,7 +92,8 @@ public class ActivityMainHome extends AppCompatActivity {
         String title = getIntent().getStringExtra("title");
         String id = getIntent().getStringExtra("id");
         String id_Singer = getIntent().getStringExtra("idsinger");
-
+        Constant.USER_ID = Prefs.with(this).getString("user_id", "");
+        Constant.sMSISDN = Prefs.with(this).getString("msisdn", "");
     }
 
 
@@ -165,29 +168,44 @@ public class ActivityMainHome extends AppCompatActivity {
     boolean is_token;
 
     public void getUserName() {
+        Log.i(TAG, "getUserName: ");
         //boolean is_user_id = fr.getBoolean("is_user_id", false);
         boolean is_user_id = Prefs.with(this).getBoolean("is_user_id", false);
         boolean is_token = Prefs.with(this).getBoolean("token_sucsess", false);
         if (is_user_id) {
-            presenterActivity.api_checkver(VERSION, user_id);
+            Log.i(TAG, "getUserName: check version");
+            boolean is_phien_dn = Prefs.with(this).getBoolean("is_checkver", false);
+            if (is_phien_dn) {
+                presenterActivity.api_checkver(VERSION, user_id);
+                Prefs.with(this).save("is_checkver", false);
+            }
+
         }
         //boolean is_token = fr.getBoolean("token_sucsess", false);
         if (!is_token) {
             FirebaseMessaging.getInstance().subscribeToTopic("testfcm");
             token = FirebaseInstanceId.getInstance().getToken();
+            Log.i(TAG, "getUserName: "+token);
             // Log.i(TAG, token);
             if (token != null && token.length() > 0) {
                 if (!is_user_id) {
+                    Log.i(TAG, "getUserName: tạo mới init");
                     Prefs.with(this).save("token", token);
                     presenterActivity.init_service(token, VERSION, ISMODEL, MODEL, VERSION_OS);
                 } else {
+                    Log.i(TAG, "getUserName: cap nhat init");
                     // Log.i(TAG, "update token");
                     presenterActivity.update_token(token, user_id);
                 }
             } else {
+
                 if (!is_user_id)
                     presenterActivity.init_service("update", VERSION, ISMODEL, MODEL, VERSION_OS);
             }
+        }else {
+            user_id = Prefs.with(this).getString("user_id", "");
+            Log.i(TAG, "getUserName: is token successful"+user_id);
+
         }
     }
 
@@ -234,19 +252,21 @@ public class ActivityMainHome extends AppCompatActivity {
             yes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
                     try {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                     } catch (android.content.ActivityNotFoundException anfe) {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                     }
+                    dialog_yes.dismiss();
                 }
             });
             TextView btn_delete_dialog = dialog_yes.findViewById(R.id.btn_delete_dialog);
             btn_delete_dialog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    dialog_yes.dismiss();
                 }
             });
             no.setText("Không");
@@ -268,12 +288,14 @@ public class ActivityMainHome extends AppCompatActivity {
             yes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
                     try {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                     } catch (android.content.ActivityNotFoundException anfe) {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                     }
+                    dialog_yes.dismiss();
                 }
             });
             TextView btn_delete_dialog = dialog_yes.findViewById(R.id.btn_delete_dialog);
@@ -334,6 +356,6 @@ public class ActivityMainHome extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Prefs.with(this).save("is_Phien_DN", false);
+       //  Prefs.with(this).save("is_Phien_DN", false);
     }
 }

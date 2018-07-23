@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.widget.Button;
 
 
 /**
@@ -81,20 +83,24 @@ public class DialogUtil {
 
     ClickDialog clickDialog;
 
-    public static void ShowAlertDialogAnimationUpBottom2Button(Context context, String title, String mes, String titlebutton1, String titlebutton2, final ClickDialog clickDialog) {
+    public static void ShowAlertDialogAnimationUpBottom2Button(Context context, String title, String mes,
+                                                               String sYes,
+                                                               String sNo,
+                                                               final ClickDialog clickDialog) {
 
         AlertDialog.Builder b = new AlertDialog.Builder(context);
         b.setCancelable(false);
         b.setTitle(title);
         b.setMessage(mes);
-        b.setPositiveButton(titlebutton1, new DialogInterface.OnClickListener() {
+        b.setPositiveButton(sYes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 clickDialog.onClickYesDialog();
             }
         });
-        b.setNegativeButton(titlebutton2, new DialogInterface.OnClickListener() {
+
+        b.setNegativeButton(sNo, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 clickDialog.onClickNoDialog();
@@ -104,8 +110,9 @@ public class DialogUtil {
         AlertDialog dialog = b.create();
 //        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation_2;
         dialog.show();
-
-
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        // Change the alert dialog buttons text and background color
+        negativeButton.setTextColor(Color.parseColor("#FFFF0400"));
     }
 
     public interface ClickDialog {

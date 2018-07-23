@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.neo.media.MainNavigationActivity">
-
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:gravity="center_vertical"
         android:id="@+id/relative_tab"
         android:layout_width="match_parent"
@@ -18,40 +16,23 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp50"
-            android:background="@color/ringtunes"
+            app:titleTextColor="@color/black"
+            android:layout_height="@dimen/dp40"
+            android:background="@color/white"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
-
-        <EditText
-            android:imeOptions="actionSearch"
-            android:visibility="gone"
-            android:id="@+id/ed_key_search"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp35"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp40"
-            android:layout_marginRight="@dimen/dp30"
-            android:backgroundTint="@color/ringtunes"
-            android:hint="Nhập vào thông tin tìm kiếm "
-            android:shadowColor="@color/white"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/text_14sp"
-            android:textStyle="italic" />
-
         <ImageView
-            android:padding="@dimen/dp5"
+            android:visibility="gone"
+            android:padding="@dimen/dp10"
             android:id="@+id/btn_key_search"
-            android:layout_width="@dimen/dp35"
-            android:layout_height="@dimen/dp35"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp2"
-            android:src="@drawable/search_white" />
+            android:layout_marginRight="@dimen/dp10"
+            android:src="@drawable/icon_search" />
 
     </RelativeLayout>
     <FrameLayout
@@ -62,18 +43,7 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/ln_player"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/dp55"
-        android:background="@color/player"
-        android:orientation="horizontal"
-        android:visibility="gone">
-        <include layout="@layout/bottomplayer" />
 
-    </LinearLayout>
+
 
 </RelativeLayout>

@@ -1,54 +1,39 @@
 package com.neo.media.Fragment.Profiles.Add_Profile;
 
-import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.neo.media.Adapter.AdapterCollectionGroup;
+import com.neo.media.Adapter.AdapterTime_Group;
+import com.neo.media.Adapter.Adapter_ListGroup_Profile;
 import com.neo.media.CRBTModel.GROUP;
 import com.neo.media.CRBTModel.GROUPS;
 import com.neo.media.CRBTModel.Item;
-import com.neo.media.Config.Config;
 import com.neo.media.Config.Constant;
-import com.neo.media.Fragment.Collection.ConllectionInteface;
-import com.neo.media.Fragment.Profiles.FragmentProfiles;
-import com.neo.media.MainNavigationActivity;
+import com.neo.media.Contact.ViewActivity.ActivityListContact;
+import com.neo.media.Fragment.CaNhan.Collection.ConllectionInteface;
 import com.neo.media.Model.GroupName;
-import com.neo.media.Model.PhoneContactModel;
 import com.neo.media.Model.Ringtunes;
+import com.neo.media.Model.Time_Group;
+import com.neo.media.MyApplication;
 import com.neo.media.R;
 import com.neo.media.RealmController.RealmController;
-import com.neo.media.View.ActivityContacts;
-import com.neo.media.untils.BaseFragment;
-import com.neo.media.untils.FragmentUtil;
+import com.neo.media.untils.BaseActivity;
+import com.neo.media.untils.KeyboardUtil;
 import com.neo.media.untils.PhoneNumber;
 import com.neo.media.untils.setOnItemClickListener;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,16 +41,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import me.alexrs.prefs.lib.Prefs;
 
-import static android.content.Context.MODE_PRIVATE;
-import static com.neo.media.MainNavigationActivity.listGitSongs;
-import static com.neo.media.View.ActivityContacts.MY_PERMISSIONS_REQUEST_READ_CONTACTS;
+import static com.neo.media.MyApplication.objPhone;
 
 /**
  * Created by QQ on 7/26/2017.
  */
 
-public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_Inteface.View, ConllectionInteface.View {
+public class Fragment_AddProfiles extends BaseActivity implements Add_Profile_Inteface.View, ConllectionInteface.View {
     public static Fragment_AddProfiles fragment_addProfiles;
 
     public static Fragment_AddProfiles getInstance() {
@@ -81,14 +65,14 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
     final String[] spn_stype_setup = {"Ringtunes cho tất cả", "Ringtunes cho một số", "Ringtunes cho một nhóm"};
     final String[] spn_time_setup = {"Cả ngày", "Ban ngày(08:00 - 17:00)", "Ban ngày 1(09:00 - 18:00)", "Ban ngày 2(07:30 - 16:30)",
             "Buổi tối(17:00 - 8:00)", "Buổi tối 1(18:00 - 09:00)", "Buổi tối 2(16:30 - 07:30)"};
-    @BindView(R.id.spn_type_setup)
-    Spinner spn_type_setup_profile;
-    @BindView(R.id.spn_time_setup)
-    Spinner spn_time_setup_profile;
+    /* @BindView(R.id.spn_type_setup)
+     Spinner spn_type_setup_profile;
+     @BindView(R.id.spn_time_setup)
+     Spinner spn_time_setup_profile;*/
     @BindView(R.id.recycle_colletion_addprofile)
     RecyclerView recycleAlbum;
-    @BindView(R.id.id_linner_add_contact)
-    RelativeLayout linner_add_contact;
+    /*    @BindView(R.id.id_linner_add_contact)
+        RelativeLayout linner_add_contact;*/
     AdapterCollectionGroup adapterCollection;
     List<Item> listConllection;
     RecyclerView.LayoutManager mLayoutManager;
@@ -101,18 +85,18 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
     String sesionID;
     String msisdn;
     public static EditText ed_cli_add_profile;
-    @BindView(R.id.img_add_contact_dialog)
+    @BindView(R.id.img_add_contact_addprofile)
     ImageView btn_getcontact;
-    String caller_type;
-    String from_time, to_time;
+    String caller_type = "ALL";
+    String from_time = "00:00:00", to_time = "23:59:59";
     String caller_id = "";
     String content_id;
     String setup_profle = "0";
     String setup_time = "0";
-    @BindView(R.id.spn_addprofile_buy_group)
-    Spinner spn_addprofile_buy_group;
-    @BindView(R.id.linner_add_buy_cli)
-    LinearLayout linner_add_buy_cli;
+    /*    @BindView(R.id.spn_addprofile_buy_group)
+        Spinner spn_addprofile_buy_group;
+        @BindView(R.id.linner_add_buy_cli)
+        LinearLayout linner_add_buy_cli;*/
     List<GroupName> lisNameGroup;
     Realm realm;
     boolean isUpdate;
@@ -122,7 +106,43 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
     ImageView img_back_addprofile;
     SharedPreferences pre;
 
-    @Nullable
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        objPhone = null;
+        listConllection = new ArrayList<>();
+        setup_profle = "0";
+        setup_time = "0";
+        ButterKnife.bind(this);
+        lisNameGroup = new ArrayList<>();
+        realm = RealmController.with(this).getRealm();
+        ed_cli_add_profile = (EditText) findViewById(R.id.ed_add_phone_addprofile);
+        ed_cli_add_profile.setText("");
+       /* pre = getSharedPreferences("data", MODE_PRIVATE);
+        //id_Singer= pre.getString("isSinger", "");
+        sesionID = pre.getString("sessionID", "");
+        msisdn = pre.getString("msisdn", "");*/
+        sesionID = Prefs.with(this).getString("sessionID", "");
+        msisdn = Prefs.with(this).getString("msisdn", "");
+        init();
+        presenterConllection = new PresenterAddProfiles(this);
+        presenterConllection.getAllGroup(sesionID, msisdn, "All");
+        presenterConllection.getConllection(sesionID, msisdn);
+        initSpinner();
+        initEvent();
+        initTimeGroup();
+    }
+
+    @Override
+    public int setContentViewId() {
+        return R.layout.fragment_add_profiles;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+  /*  @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_profiles, container, false);
@@ -130,7 +150,7 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
 
         lisNameGroup = new ArrayList<>();
         realm = RealmController.with(this).getRealm();
-        ed_cli_add_profile = (EditText) view.findViewById(R.id.ed_add_phone_dialog);
+        ed_cli_add_profile = (EditText) view.findViewById(R.id.ed_add_phone_addprofile);
         ed_cli_add_profile.setText("");
         pre = getActivity().getSharedPreferences("data", MODE_PRIVATE);
         //id_Singer= pre.getString("isSinger", "");
@@ -143,6 +163,7 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
         presenterConllection.getConllection(sesionID, msisdn);
         initSpinner();
         initEvent();
+        initTimeGroup();
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +171,7 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
             }
         });
         return view;
-    }
+    }*/
 
     @Override
     public void onPause() {
@@ -158,34 +179,49 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
         ed_cli_add_profile.setText("");
     }
 
-    private void initSpinnerGroup() {
-        List<String> lisName = new ArrayList<>();
-        lisNameGroup.add(0, new GroupName("obj", "Chọn một nhóm", "abc"));
-        if (lisNameGroup.size() > 0) {
-            for (int i = 0; i < lisNameGroup.size(); i++) {
-                if (lisNameGroup.get(i).getsNameLocal() != null && lisNameGroup.get(i).getsNameLocal().length() > 0)
-                    lisName.add(lisNameGroup.get(i).getsNameLocal());
-                else lisName.add(lisNameGroup.get(i).getsNameServer());
-            }
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_spinner_item, lisName);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_addprofile_buy_group.setAdapter(adapter);
-        spn_addprofile_buy_group.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    AdapterTime_Group adapter_time;
+    @BindView(R.id.recycle_time_add_profile)
+    RecyclerView recycle_time_addgroup;
+    List<Time_Group> lisTime;
+
+    private void initTimeGroup() {
+        lisTime = new ArrayList<>();
+        lisTime.add(new Time_Group("Cả ngày", true, "00:00:00", "23:59:59"));
+        lisTime.add(new Time_Group("Ban ngày (08:00 - 17:00)", false, "08:00:00", "17:00:00"));
+        lisTime.add(new Time_Group("Ban ngày 1 (09:00 - 18:00)", false, "09:00:00", "18:00:00"));
+        lisTime.add(new Time_Group("Ban ngày 2 (07:30 - 16:00)", false, "07:30:00", "16:30:00"));
+        lisTime.add(new Time_Group("Buổi tối (17:01 - 07:59)", false, "17:01:00", "07:59:00"));
+        lisTime.add(new Time_Group("Buổi tối 1 (18:01 - 08:59)", false, "18:01:00", "08:59:00"));
+        lisTime.add(new Time_Group("Buổi tối 2 (16:31 - 07:29)", false, "16:31:00", "07:29:00"));
+
+        adapter_time = new AdapterTime_Group(lisTime, this);
+        mLayoutManager = new GridLayoutManager(this, 1);
+        recycle_time_addgroup.setHasFixedSize(true);
+        recycle_time_addgroup.setNestedScrollingEnabled(false);
+        recycle_time_addgroup.setLayoutManager(mLayoutManager);
+        recycle_time_addgroup.setItemAnimator(new DefaultItemAnimator());
+        recycle_time_addgroup.setAdapter(adapter_time);
+        adapter_time.notifyDataSetChanged();
+
+        adapter_time.setSetOnItemClickListener(new setOnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    caller_id = lisNameGroup.get(position).getId_group();
+            public void OnItemClickListener(final int position) {
+                for (int i = 0; i < lisTime.size(); i++) {
+                    if (i == position) {
+                        lisTime.get(i).setCheck(true);
+                        from_time = lisTime.get(position).getFrom_time();
+                        to_time = lisTime.get(position).getTo_time();
+                    } else lisTime.get(i).setCheck(false);
                 }
+                //content_id = lisItem.get(position).getContent_id();
+                adapter_time.notifyDataSetChanged();
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void OnLongItemClickListener(int position) {
             }
         });
-
 
     }
 
@@ -193,86 +229,17 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
         img_back_addprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentUtil.popBackStack(getActivity());
-            }
-        });
-        spn_type_setup_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    setup_profle = "0";
-                    caller_type = "ALL";
-                    caller_id = "";
-                    linner_add_contact.setVisibility(View.GONE);
-                }
-                if (position == 1) {
-                    setup_profle = "1";
-                    linner_add_contact.setVisibility(View.VISIBLE);
-                    linner_add_buy_cli.setVisibility(View.VISIBLE);
-                    caller_type = "CLI";
-
-                }
-                if (position == 2) {
-                    initSpinnerGroup();
-                    setup_profle = "2";
-                    caller_type = "GROUP";
-                    linner_add_contact.setVisibility(View.VISIBLE);
-                    linner_add_buy_cli.setVisibility(View.GONE);
-                    spn_addprofile_buy_group.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-        spn_time_setup_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        from_time = "00:00:00";
-                        to_time = "23:59:59";
-                        break;
-                    case 1:
-                        from_time = "08:00:00";
-                        to_time = "17:00:00";
-                        break;
-                    case 2:
-                        from_time = "09:00:00";
-                        to_time = "18:00:00";
-                        break;
-                    case 3:
-                        from_time = "07:30:00";
-                        to_time = "16:30:00";
-                        break;
-                    case 4:
-                        from_time = "17:01:00";
-                        to_time = "07:59:00";
-                        break;
-                    case 5:
-                        from_time = "18:01:00";
-                        to_time = "08:59:00";
-                        break;
-                    case 6:
-                        from_time = "16:31:00";
-                        to_time = "07:29:00";
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                finish();
             }
         });
 
         btn_getcontact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                askForContactPermission();
+                MyApplication.sOption_getPhone = "GIFT";
+                objPhone = null;
+                KeyboardUtil.hideSoftKeyboard(Fragment_AddProfiles.this);
+                startActivity(new Intent(Fragment_AddProfiles.this, ActivityListContact.class));
             }
         });
 
@@ -282,41 +249,36 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
                 if (caller_type.equals("CLI"))
                     caller_id = PhoneNumber.convertTo84PhoneNunber(ed_cli_add_profile.getText().toString());
                 if (caller_id == null) {
-                    Toast.makeText(getContext(), "Bạn hãy chọn kiểu cài đặt", Toast.LENGTH_SHORT).show();
+                    show_notification("Thông báo", "Hãy chọn kiểu cài đặt");
+                    // Toast.makeText(getContext(), "Bạn hãy chọn kiểu cài đặt", Toast.LENGTH_SHORT).show();
                 } else if (content_id == null) {
-                    Toast.makeText(getContext(), "Bạn hãy chọn bài hát", Toast.LENGTH_SHORT).show();
+                    show_notification("Thông báo", "Hãy chọn bài hát");
+                    //Toast.makeText(getContext(), "Bạn hãy chọn bài hát", Toast.LENGTH_SHORT).show();
                 } else {
                     presenterConllection.add_profile(sesionID, msisdn, content_id, caller_type, caller_id,
                             from_time, to_time);
                 }
 
-               /* FragmentManager fm = getActivity().getSupportFragmentManager();
-                if (fm.getBackStackEntryCount() > 0) {
-                    fm.popBackStack();
-                }*/
+
             }
         });
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        listGitSongs = new ArrayList<PhoneContactModel>();
-        listConllection = new ArrayList<>();
-
-        //isUpdate = getArguments().getBoolean("isUpdate", false);
-        setup_profle = "0";
-        setup_time = "0";
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-        MainNavigationActivity.appbar.setVisibility(View.GONE);
-        spn_type_setup_profile.setSelection(Integer.parseInt(setup_profle));
+        if (objPhone != null) {
+            ed_cli_add_profile.setText(objPhone.getPhoneNumber());
+        } else {
+            ed_cli_add_profile.setText("");
+            ed_cli_add_profile.setHint("- Nhập vào số đt hoặc lấy từ danh bạ");
+        }
+        //   MainNavigationActivity.appbar.setVisibility(View.GONE);
+      /*  spn_type_setup_profile.setSelection(Integer.parseInt(setup_profle));
 
         spn_time_setup_profile.setSelection(Integer.parseInt(setup_time));
-
+*/
       /*  if (isUpdate){
             if(setup_profle.equals("1")){
                 if (caller_id.length()>0){
@@ -331,23 +293,67 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
 
     }
 
+    Adapter_ListGroup_Profile adapter_group;
+    @BindView(R.id.recycle_group_add_profile)
+    RecyclerView recycle_profile;
+    @BindView(R.id.linner_phone_add_profile)
+    RelativeLayout linner_phone_add_profile;
+
     private void initSpinner() {
         lisGroup = new ArrayList<>();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_spinner_item, spn_stype_setup);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_type_setup_profile.setAdapter(adapter);
+        adapter_group = new Adapter_ListGroup_Profile(lisNameGroup, this);
+        mLayoutManager = new GridLayoutManager(this, 1);
+        recycle_profile.setHasFixedSize(true);
+        recycle_profile.setNestedScrollingEnabled(false);
+        recycle_profile.setLayoutManager(mLayoutManager);
+        recycle_profile.setItemAnimator(new DefaultItemAnimator());
+        recycle_profile.setAdapter(adapter_group);
+        adapter_group.notifyDataSetChanged();
 
-        ArrayAdapter<String> adapter_time = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_spinner_item, spn_time_setup);
-        adapter_time.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn_time_setup_profile.setAdapter(adapter_time);
+        adapter_group.setSetOnItemClickListener(new setOnItemClickListener() {
+            @Override
+            public void OnItemClickListener(final int position) {
+                for (int i = 0; i < lisNameGroup.size(); i++) {
+                    if (i == position) {
+                        lisNameGroup.get(i).setCheck(true);
+                      /*  from_time = lisTime.get(position).getFrom_time();
+                        to_time = lisTime.get(position).getTo_time();*/
+                    } else lisNameGroup.get(i).setCheck(false);
+                }
+                if (position == (lisNameGroup.size() - 1)) {
+                    caller_type = "CLI";
+                    caller_id = ed_cli_add_profile.getText().toString();
+                    linner_phone_add_profile.setVisibility(View.VISIBLE);
+                } else if (position == 0) {
+                    // setup_profle = "0";
+                    caller_type = "ALL";
+                    caller_id = "";
+                    linner_phone_add_profile.setVisibility(View.GONE);
+                } else {
+                    // initSpinnerGroup();
+                    //setup_profle = "2";
+                    caller_type = "GROUP";
+                    caller_id = lisNameGroup.get(position).getId_group();
+                    linner_phone_add_profile.setVisibility(View.GONE);
+                    // linner_add_contact.setVisibility(View.VISIBLE);
+                    // linner_add_buy_cli.setVisibility(View.GONE);
+                    // spn_addprofile_buy_group.setVisibility(View.VISIBLE);
+                }
+                //content_id = lisItem.get(position).getContent_id();
+                adapter_group.notifyDataSetChanged();
+            }
+
+            @Override
+            public void OnLongItemClickListener(int position) {
+            }
+        });
+
     }
 
     private void init() {
-        adapterCollection = new AdapterCollectionGroup(listConllection, getContext());
-        mLayoutManager = new GridLayoutManager(getContext(), 1);
+        adapterCollection = new AdapterCollectionGroup(listConllection, this);
+        mLayoutManager = new GridLayoutManager(this, 1);
         recycleAlbum.setHasFixedSize(true);
         recycleAlbum.setNestedScrollingEnabled(false);
         recycleAlbum.setLayoutManager(mLayoutManager);
@@ -385,17 +391,29 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
     public void showaddProfile(List<String> list) {
         if (list.size() > 0) {
             if (list.get(0).equals("0")) {
-                FragmentProfiles.get_profile();
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                if (fm.getBackStackEntryCount() > 0) {
-                    fm.popBackStack();
-                }
+                new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Thông báo")
+                        .setContentText("Thêm luật phát nhạc thành công")
+                        .setConfirmText("Đóng")
+                        .showCancelButton(true)
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                                finish();
+                            }
+                        }).show();
+                // FragmentProfiles.get_profile();
+
             } else if (list.get(0).equals("117")) {
-                Toast.makeText(getContext(), "Số điện thoại đã được cài đặt" + list.get(1), Toast.LENGTH_SHORT).show();
+                show_notification("Thông báo", "Số điện thoại đã được cài đặt");
+                //Toast.makeText(this, "Số điện thoại đã được cài đặt" + list.get(1), Toast.LENGTH_SHORT).show();
             } else if (list.get(0).equals("135")) {
-                Toast.makeText(getContext(), "Luật phát đã bị trùng với các cài đặt trước", Toast.LENGTH_SHORT).show();
+                show_notification("Thông báo", "Luật phát đã bị trùng với các cài đặt trước");
+                //  Toast.makeText(this, "Luật phát đã bị trùng với các cài đặt trước", Toast.LENGTH_SHORT).show();
             } else
-                Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+                show_notification("Thông báo", "Hệ thống bận, mời thử lại sau");
+            // Toast.makeText(this, "Hệ thống bận, mời thử lại sau", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -411,35 +429,43 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
                 else id_songs = id_songs + listConllection.get(i).getContent_id();
             }
             presenterConllection.get_info_songs_collection(id_songs, Constant.USER_ID);
-
         }
-       /* if (listItems != null && listItems.size() > 0) {
-            listConllection.clear();
-            listConllection.addAll(listItems);
-            adapterCollection.notifyDataSetChanged();
-        }*/
     }
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(getContext(), "" + message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showGroups(GROUPS groups) {
         if (groups != null) {
-            lisGroup.addAll(groups.getGroup());
-            List<GroupName> lis = realm.where(GroupName.class).findAll();
-            for (int i = 0; i < lis.size(); i++) {
-                for (int j = 0; j < lisGroup.size(); j++) {
-                    if (lis.get(i).getsNameServer().equals(lisGroup.get(j).getName())) {
-                        if (lis.get(i).getsNameLocal() != null)
-                            lisNameGroup.add(new GroupName(lis.get(i).getsNameServer(), lis.get(i).getsNameLocal(), lisGroup.get(j).getId()));
-                        else
-                            lisNameGroup.add(new GroupName(lis.get(i).getsNameServer(), lisGroup.get(j).getName(), lisGroup.get(j).getId()));
+            if (!groups.getTotal().equals("0")) {
+                lisGroup.addAll(groups.getGroup());
+                List<GroupName> lis = realm.where(GroupName.class).findAll();
+                for (int i = 0; i < lis.size(); i++) {
+                    for (int j = 0; j < lisGroup.size(); j++) {
+                        if (lis.get(i).getsNameServer().equals(lisGroup.get(j).getName())) {
+                            if (lis.get(i).getsNameLocal() != null)
+                                lisNameGroup.add(new GroupName(lis.get(i).getsNameServer(), lis.get(i).getsNameLocal(), lisGroup.get(j).getId(), R.drawable.spr_green));
+                            else
+                                lisNameGroup.add(new GroupName(lis.get(i).getsNameServer(), lisGroup.get(j).getName(), lisGroup.get(j).getId(), R.drawable.spr_green));
+                        }
                     }
                 }
+                lisNameGroup.add(0, new GroupName("obj", "Tất cả số gọi đến", null, R.drawable.spr_cam, true));
+                lisNameGroup.add(new GroupName("obj", "Một số gọi đến", null, R.drawable.spr_cam));
+                adapter_group.notifyDataSetChanged();
+            } else {
+                lisNameGroup.add(0, new GroupName("obj", "Tất cả số gọi đến", null, R.drawable.spr_cam, true));
+                lisNameGroup.add(new GroupName("obj", "Một số gọi đến", null, R.drawable.spr_cam));
+                adapter_group.notifyDataSetChanged();
             }
+        } else {
+            lisNameGroup.add(0, new GroupName("obj", "Tất cả số gọi đến", null, R.drawable.spr_cam, true));
+            lisNameGroup.add(new GroupName("obj", "Một số gọi đến", null, R.drawable.spr_cam));
+            //lisNameGroup.get(0).setCheck(true);
+            adapter_group.notifyDataSetChanged();
         }
     }
 
@@ -465,95 +491,19 @@ public class Fragment_AddProfiles extends BaseFragment implements Add_Profile_In
                         listConllection.get(j).setPath(listSongs.get(i).getPath());
                     }
                 }
-                adapterCollection.notifyDataSetChanged();
-                //presenterConllection.getSongsSame(listSongs.get(listSongs.size()-1).getSinger_id(), "" + page, "" + index);
             }
+            int sd = listConllection.size();
+            adapterCollection.notifyDataSetChanged();
         }
     }
 
     public void get_contact() {
-        MainNavigationActivity.datasvina = new ArrayList<PhoneContactModel>();
-        MainNavigationActivity.datas = new ArrayList<PhoneContactModel>();
-        listGitSongs = new ArrayList<PhoneContactModel>();
-        SharedPreferences.Editor editor = pre.edit();
+
+      /*  SharedPreferences.Editor editor = pre.edit();
         editor.putString("option", Config.ADD_PROFILES);
-        editor.commit();
-        if (!ActivityContacts.getInstance().isAdded())
-        FragmentUtil.addFragment(getActivity(), ActivityContacts.getInstance(), true);
-    }
+        editor.commit();*/
 
-    public void askForContactPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                        Manifest.permission.READ_CONTACTS)) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Contacts access needed");
-                    builder.setPositiveButton(android.R.string.ok, null);
-                    builder.setMessage("please confirm Contacts access");//TODO put real question
-                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @TargetApi(Build.VERSION_CODES.M)
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            requestPermissions(
-                                    new String[]
-                                            {Manifest.permission.READ_CONTACTS}
-                                    , MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-                        }
-                    });
-                    builder.show();
-                    // Show an expanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
-
-                } else {
-
-                    // No explanation needed, we can request the permission.
-
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.READ_CONTACTS},
-                            MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
-                }
-            } else {
-                get_contact();
-                // datas = CustomUtils.getAllPhoneContacts(getContext());
-            }
-        } else {
-            get_contact();
-            //datas = CustomUtils.getAllPhoneContacts(getContext());
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    get_contact();
-                    //datas = CustomUtils.getAllPhoneContacts(getContext());
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-
+      /*  if (!ActivityContacts.getInstance().isAdded())
+            FragmentUtil.addFragment(getActivity(), ActivityContacts.getInstance(), true);*/
     }
 }

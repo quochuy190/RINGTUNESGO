@@ -1,14 +1,15 @@
 package com.neo.media.Adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.neo.media.Fragment.Collection.PresenterConllection;
+import com.neo.media.Fragment.CaNhan.Collection.PresenterConllection;
+import com.neo.media.Fragment.CaNhan.Groups.GroupMember.FragmentGroupMember;
 import com.neo.media.Model.PhoneContactModel;
 import com.neo.media.R;
 import com.neo.media.untils.setOnItemClickListener;
@@ -18,9 +19,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.content.Context.MODE_PRIVATE;
-import static com.neo.media.Fragment.Groups.GroupMember.FragmentGroupMember.fragmentGroupMember;
 
 /**
  * Created by QQ on 7/7/2017.
@@ -56,16 +54,18 @@ public class Adapter_Group_Member extends RecyclerView.Adapter<Adapter_Group_Mem
     @Override
     public void onBindViewHolder(TopicViewHoder holder, final int position) {
         final PhoneContactModel contact = lisContact.get(position);
-        SharedPreferences pre=fragmentGroupMember.getActivity().getSharedPreferences
-                ("data", MODE_PRIVATE);
-        //id_Singer= pre.getString("isSinger", "");
-        final String sesionID= pre.getString("sesionID", "");
-        final String msisdn= pre.getString("msisdn", "");
-        //String urlImage = IMAGE_URL + ringtunes.getImage_file();
         //Glide.with(context).load(urlImage).into(holder.imgRingtunes);
         holder.txtRingtunescName.setText(contact.getName());
         holder.txtRingtunesSinger.setText(contact.getPhoneNumber());
-
+        if (contact.isShowDelete()) {
+            holder.img_delete_cli.setVisibility(View.VISIBLE);
+        } else holder.img_delete_cli.setVisibility(View.GONE);
+        holder.img_delete_cli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentGroupMember.delete_cli_to_group(context,contact.getPhoneNumber());
+            }
+        });
     /*    holder.img_recyclebin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +86,8 @@ public class Adapter_Group_Member extends RecyclerView.Adapter<Adapter_Group_Mem
         TextView txtRingtunescName;
         @BindView(R.id.item_g_member_phone)
         TextView txtRingtunesSinger;
-
+        @BindView(R.id.img_delete_cli)
+        ImageView img_delete_cli;
 
         public TopicViewHoder(View itemView) {
             super(itemView);

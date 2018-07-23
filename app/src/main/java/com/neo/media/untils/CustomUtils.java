@@ -11,7 +11,7 @@ import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.neo.media.MainNavigationActivity;
+import com.neo.media.Activity.ActivityMainHome;
 import com.neo.media.Model.GroupName;
 import com.neo.media.Model.PhoneContactModel;
 import com.neo.media.R;
@@ -148,7 +148,7 @@ public class CustomUtils {
      * @param message GCM message DELIVERED.
      */
     public static void sendNotification(String message, Context context) {
-        Intent intent = new Intent(context, MainNavigationActivity.class);
+        Intent intent = new Intent(context, ActivityMainHome.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

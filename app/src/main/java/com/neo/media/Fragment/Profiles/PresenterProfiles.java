@@ -55,6 +55,7 @@ public class PresenterProfiles implements ProfilesInterface.Presenter {
         apiService.api_delete_profile(new CallbackData<String>() {
             @Override
             public void onGetDataSuccess(ArrayList<String> arrayList) {
+                fragmentProfiles.hideDialogLoading();
                 if (arrayList.size() > 0)
                     fragmentProfiles.showErrorDeleteProfile(arrayList);
                 else {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:padding="@dimen/dp2"
+    android:background="@drawable/spr_item_groupt"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textSize="@dimen/text_17sp"
+        android:textColor="@color/purple"
+        android:gravity="center_vertical"
+        android:id="@+id/txt_name_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp35" />
+    <ImageView
+        android:padding="@dimen/dp3"
+        android:id="@+id/icon_time_group"
+        android:visibility="visible"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp5"
+        android:layout_centerVertical="true"
+        android:src="@drawable/icon_unchose"
+        android:layout_width="@dimen/dp30"
+        android:layout_height="@dimen/dp30" />
+</RelativeLayout>

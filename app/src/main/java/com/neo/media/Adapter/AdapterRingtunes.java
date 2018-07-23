@@ -67,7 +67,7 @@ public class AdapterRingtunes extends RecyclerView.Adapter<AdapterRingtunes.Topi
             Glide.with(context).load(R.mipmap.ic_launcher_round).into(holder.imgRingtunes);
         }
         if (ringtunes.getProduct_name() != null && ringtunes.getProduct_name().length() > 0) {
-            holder.txtRingtunescName.setText(ringtunes.getProduct_name());
+            holder.txtRingtunescName.setText(ringtunes.getProduct_name().replace("u0027", "'"));
         }
         if (ringtunes.getSinger_name() != null && ringtunes.getSinger_name().length() > 0) {
             holder.txtRingtunesSinger.setText(ringtunes.getSinger_name());

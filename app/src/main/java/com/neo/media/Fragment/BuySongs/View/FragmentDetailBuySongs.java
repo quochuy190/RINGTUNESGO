@@ -1,35 +1,26 @@
 package com.neo.media.Fragment.BuySongs.View;
 
-import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,28 +29,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.neo.media.Adapter.AdapterComment;
+import com.neo.media.Activity.ActivityMainHome;
 import com.neo.media.Adapter.AdapterRingtunes;
 import com.neo.media.CRBTModel.Info_User;
 import com.neo.media.CRBTModel.Item;
-import com.neo.media.Config.Config;
+import com.neo.media.CRBTModel.subscriber;
+import com.neo.media.Config.Constant;
 import com.neo.media.Fragment.BuySongs.Presenter.PresenterSongs;
 import com.neo.media.Fragment.BuySongs.Presenter.PresenterSongsImpl;
-import com.neo.media.Fragment.Collection.FragmentConllection;
-import com.neo.media.Fragment.Stop_Pause.FragmentStopPause;
-import com.neo.media.MainNavigationActivity;
+import com.neo.media.GetUserInfo.IpmGetUserInfo;
+import com.neo.media.GetUserInfo.Presenter_GetUser_Info;
 import com.neo.media.Model.Comment;
 import com.neo.media.Model.Login;
-import com.neo.media.Model.PhoneContactModel;
 import com.neo.media.Model.Ringtunes;
 import com.neo.media.Model.Singer;
+import com.neo.media.Model.Songs;
 import com.neo.media.Player.IPlayback;
 import com.neo.media.Player.Player;
 import com.neo.media.R;
 import com.neo.media.RealmController.RealmController;
-import com.neo.media.View.ActivityContacts;
-import com.neo.media.View.HomeFragment;
-import com.neo.media.View.Xacthuc_thuebao.ActivityXacthuc;
+import com.neo.media.View.Register.ActivityRegisterOTP;
 import com.neo.media.untils.BaseFragment;
 import com.neo.media.untils.CustomUtils;
 import com.neo.media.untils.DialogUtil;
@@ -68,6 +57,7 @@ import com.neo.media.untils.PhoneNumber;
 import com.neo.media.untils.TimeUtils;
 import com.neo.media.untils.Utilities;
 import com.neo.media.untils.setOnItemClickListener;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,19 +66,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import jp.wasabeef.glide.transformations.BlurTransformation;
+import me.alexrs.prefs.lib.Prefs;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.os.Build.VERSION_CODES.M;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 import static com.neo.media.Config.Constant.IMAGE_URL;
-import static com.neo.media.MainNavigationActivity.myRealm;
+import static com.neo.media.MyApplication.objRingGift;
 import static com.neo.media.MyApplication.player_ring;
-import static com.neo.media.View.ActivityContacts.MY_PERMISSIONS_REQUEST_READ_CONTACTS;
 
 /**
  * Created by QQ on 7/28/2017.
  */
 
-public class FragmentDetailBuySongs extends BaseFragment implements PresenterSongsImpl.View, MediaPlayer.OnPreparedListener, IPlayback.Callback {
+public class FragmentDetailBuySongs extends BaseFragment
+        implements PresenterSongsImpl.View, MediaPlayer.OnPreparedListener, IPlayback.Callback, IpmGetUserInfo.View {
     public static String TAG = FragmentDetailBuySongs.class.getSimpleName();
     public static FragmentDetailBuySongs fragmentSingerDetail;
 
@@ -113,30 +105,21 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     TextView txtPrice_BuySongs;
     @BindView(R.id.txt_time_buysongs)
     TextView txtTime_BuySongs;
-    /*    @BindView(R.id.linnear_phone_gift)
-        LinearLayout liner_gif_songs;
-        @BindView(R.id.img_getphone_buysongs)
-        ImageView img_getphone_songs;*/
-    /*  @BindView(R.id.btn_buy_gift_buysongs)
-      Button btn_buy_gift;*/
+
     @BindView(R.id.img_buy_buysong)
     Button btn_buysong;
     @BindView(R.id.img_gift_buysong)
     Button btn_giftsongs;
     @BindView(R.id.recycle_comment)
     RecyclerView recyclerView;
-    @BindView(R.id.img_buysong_send_comment)
-    ImageView img_send_comment;
-    @BindView(R.id.txt_title_detailsong)
-    TextView txt_title_buysong;
+
     @BindView(R.id.txt_total_comment_songs)
     TextView txt_total_comment;
     @BindView(R.id.img_buysong_detail)
     ImageView img_buysong_detail;
-    @BindView(R.id.img_back_detailsong)
-    ImageView img_back_detailsong;
+
     RecyclerView.LayoutManager mLayoutManager;
-    AdapterComment adapterComment;
+
     @BindView(R.id.nesScoll_DetailSong)
     NestedScrollView nestedScrollView;
     String option;
@@ -154,7 +137,7 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     public boolean isLogin;
     public String msisdn;
     public String sessionID;
-    public String userName;
+    public String sUserId;
     public String pass;
     Info_User objInfo;
     Login objLogin;
@@ -177,21 +160,31 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     MediaPlayer mp = new MediaPlayer();
     public ImageView img_buysong_detail_nen;
     boolean isHome;
-    boolean notifi;
+    boolean notifi = false;
     boolean isFull = false;
     String id_Songs;
     String sEntity;
     public static boolean is_subscriber = false;
     public static boolean is_SVC_STATUS = false;
+    private Presenter_GetUser_Info presenter_getUser_info;
+    private boolean is_Buy = true;
+    private boolean iWating = false;
+    @BindView(R.id.img_favorite)
+    ImageView img_favorite;
+    List<Songs> lisSongFavorite;
 
+    @SuppressLint("ResourceAsColor")
     private void initPlayer() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            seekBarProgress.setProgressTintList(ColorStateList.valueOf(Color.MAGENTA));
-            seekBarProgress.setThumbTintList(ColorStateList.valueOf(Color.MAGENTA));
+        if (Build.VERSION.SDK_INT >= M) {
+            seekBarProgress.setProgressTintList(getResources().getColorStateList(R.color.orange, getContext().getTheme()));
+            seekBarProgress.setThumbTintList(getResources().getColorStateList(R.color.orange, getContext().getTheme()));
         } else {
             seekBarProgress.getProgressDrawable().setColorFilter(R.color.orange, PorterDuff.Mode.SRC_IN);
+            seekBarProgress.getThumb().setColorFilter(R.color.orange, PorterDuff.Mode.SRC_IN);
+           // seekBarProgress.getProgressDrawable().setColorFilter(R.color.orange, PorterDuff.Mode.SRC_IN);
+            //seekBarProgress.setThumbTintList(R.color.orange, PorterDuff.Mode.SRC_IN);
+            //   seekBarProgress.setBackgroundTintList();
         }
-
         SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -215,10 +208,7 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
                 }
             }
         };
-        //  seekBarProgress.setOnSeekBarChangeListener(listener);
-
-        //  seekBarProgress.setOnSeekBarChangeListener(listener);
-        // onSongUpdated( );
+        iPlayer.registerCallback(this);
 
         btn_player.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,20 +287,28 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        iWating = false;
+        realm = RealmController.with(this).getRealm();
+        iPlayer = Player.getInstance(getContext());
+        iPlayer = new Player(this);
+        count_get_api = 0;
 
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.buysongs_detail, container, false);
+        View view = inflater.inflate(R.layout.player_songs, container, false);
         ButterKnife.bind(this, view);
         presenterSongs = new PresenterSongs(this);
-        ed_add_comment_content = (EditText) view.findViewById(R.id.input_content_buysongs);
+        presenter_getUser_info = new Presenter_GetUser_Info(this);
         img_buysong_detail_nen = (ImageView) view.findViewById(R.id.img_buysong_detail_nen);
+        isFavorite = false;
         init();
         initEvent();
         initPlayer();
+        intData();
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,32 +322,36 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     @Override
     public void onResume() {
         super.onResume();
-        intData();
-        realm = RealmController.with(this).getRealm();
-        iPlayer = Player.getInstance(getContext());
-        iPlayer = new Player(this);
-        //
-        if (!notifi) {
-            updateData(ringtunes);
-            if (ringtunes != null && ringtunes.getProduct_name().length() > 0)
-                txt_title_buysong.setText("" + ringtunes.getProduct_name());
-            else
-                txt_title_buysong.setText("Chi tiết bài hát");
-            if (ringtunes != null) {
-                String id_singer = ringtunes.getSinger_id();
-                showDialogLoading();
-                presenterSongs.api_suggestion_play(id_singer, ringtunes.getId(), userName);
+        Log.i(TAG, "OnResume");
+        if (iPlayer != null) {
+            if (iPlayer.isPlaying()) {
+                iPlayer.pause();
+                btn_player.setImageResource(R.drawable.play_adapter);
+
+            } else {
+                if (!iPlayer.pause()) {
+                    iPlayer.play();
+                    btn_player.setImageResource(R.drawable.pause_adapter);
+                }
             }
         }
-        MainNavigationActivity.appbar.setVisibility(View.GONE);
-        objLogin = myRealm.where(Login.class).findFirst();
-        objInfo = myRealm.where(Info_User.class).findFirst();
+        ActivityMainHome.relative_tab.setVisibility(View.GONE);
+
+        //  MainNavigationActivity.appbar.setVisibility(View.GONE);
+        /*objLogin = realm.where(Login.class).findFirst();
+        objInfo = realm.where(Info_User.class).findFirst();
         if (objLogin != null) {
-            if (objLogin.isLogin())
+
+            if (objLogin.isLogin()) {
+                msisdn = objLogin.getMsisdn();
+                sessionID = objLogin.getsSessinonID();
                 isLogin = objLogin.isLogin();
-            if (objInfo != null) {
+            }
+
+            *//*if (objInfo != null) {
                 if (objInfo.getStatus() != null && objInfo.getStatus().equals("2")) {
                     is_subscriber = true;
+
                     if (objInfo.getService_status().equals("1")) {
                         is_SVC_STATUS = true;
                     } else if (objInfo.getService_status().equals("0")) {
@@ -358,64 +360,82 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
                 } else {
                     is_subscriber = false;
                 }
-            }
-        }
+            }*//*
+        }*/
     }
 
     private void StartPlayer(Ringtunes ringtunes) {
         ringtunes.setFull(false);
         //ringtunes.setPath(Constant.MUSIC_URL + ringtunes.getPath().replace(" ", "%20"));
         btn_player.setImageResource(R.drawable.pause_adapter);
-        iPlayer.play(ringtunes);
+        if (iPlayer != null)
+            iPlayer.play(ringtunes);
         onSongUpdated(ringtunes);
         mHandler.postDelayed(mProgressCallback, 100);
         //updateProgressBar();
     }
 
+    public void fragmentBackTack() {
+        if (iPlayer != null) {
+            iPlayer.releasePlayer();
+            iPlayer.removeCallbacks();
+        }
+        mHandler.removeCallbacks(mProgressCallback);
+        FragmentUtil.popBackStack(getActivity());
+    }
+
     @Override
     public void onPause() {
         super.onPause();
+        if (iPlayer != null)
+            iPlayer.pause();
+        //Log.i(TAG, "OnPause");
         if (isHome) {
-            MainNavigationActivity.appbar.setVisibility(View.VISIBLE);
+            //MainNavigationActivity.appbar.setVisibility(View.VISIBLE);
+            ActivityMainHome.relative_tab.setVisibility(View.VISIBLE);
         }
-        iPlayer.releasePlayer();
-        mHandler.removeCallbacks(mProgressCallback);
-        if (notifi) {
-            SharedPreferences.Editor editor = pre.edit();
-            editor.putBoolean("notifi", false);
-            editor.putString("id_songs", "");
-            editor.putString("id_singer", "");
-            editor.commit();
-            MainNavigationActivity.appbar.setVisibility(View.VISIBLE);
-            if (HomeFragment.getInstance() == null) {
-                FragmentUtil.pushFragmentLayoutMain(getFragmentManager(),
-                        R.id.fame_main, HomeFragment.getInstance(), null, HomeFragment.class.getSimpleName());
-            } else {
-                FragmentUtil.pushFragmentLayoutMain(getFragmentManager(),
-                        R.id.fame_main, HomeFragment.getInstance(), null, HomeFragment.class.getSimpleName());
-            }
-
-        }
+       /* iPlayer.releasePlayer();
+        mHandler.removeCallbacks(mProgressCallback);*/
+        SharedPreferences.Editor editor = pre.edit();
+        editor.putBoolean("notifi", false);
+        editor.putString("id_songs", "");
+        editor.putString("id_singer", "");
+        editor.commit();
+        // MainNavigationActivity.appbar.setVisibility(View.VISIBLE);
     }
 
     private void intData() {
         pre = getActivity().getSharedPreferences("data", MODE_PRIVATE);
         isHome = pre.getBoolean("isHome", false);
         notifi = pre.getBoolean("notifi", false);
-        userName = pre.getString("user_id", "");
+        sUserId = Prefs.with(getContext()).getString("user_id", "");
         ringtunes = player_ring;
-        msisdn = pre.getString("msisdn", "");
+        //  msisdn = pre.getString("msisdn", "");
         id_Singer = pre.getString("isSinger", "");
-        isLogin = pre.getBoolean("isLogin", false);
-        sessionID = pre.getString("sessionID", "");
+        //isLogin = pre.getBoolean("isLogin", false);
+
+        isLogin = Prefs.with(getContext()).getBoolean("isLogin", false);
+        is_subscriber = Prefs.with(getContext()).getBoolean("is_subscriber", false);
+        is_SVC_STATUS = Prefs.with(getContext()).getBoolean("is_SVC_STATUS", false);
+        sessionID = Prefs.with(getContext()).getString("sessionID", "");
+        msisdn = Prefs.with(getContext()).getString("msisdn", "");
+        // sessionID = Prefs.with(getContext()).getString("sessionID", "");
+        //  sessionID = pre.getString("sessionID", "");
         pass = pre.getString("password", "");
         sEntity = "app listen" + ringtunes.getId();
         //presenterSongs.log_Info_Charge_Server(sEntity, sessionID, msisdn, );
+        lisSongFavorite = realm.where(Songs.class).findAll();
         if (notifi) {
             id_Songs = pre.getString("id_songs", "");
             id_Singer = pre.getString("id_singer", "");
-            presenterSongs.get_info_songs_by_id(id_Songs, userName);
-            presenterSongs.api_suggestion_play(id_Singer, id_Songs, userName);
+            presenterSongs.get_info_songs_by_id(id_Songs, sUserId);
+            presenterSongs.api_suggestion_play(id_Singer, id_Songs, sUserId);
+        } else {
+            updateData(ringtunes);
+            if (ringtunes != null) {
+                String id_singer = ringtunes.getSinger_id();
+                presenterSongs.api_suggestion_play(id_singer, ringtunes.getId(), sUserId);
+            }
         }
     }
 
@@ -428,158 +448,118 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapterRingtunes);
-
     }
 
+    private boolean isFavorite = false;
+
     private void initEvent() {
+        // Thêm bài hát vào favorite
+        img_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isFavorite) {
+                    Toast.makeText(getContext(), "Bài hát đã được thêm vào danh sách yêu thích", Toast.LENGTH_LONG).show();
+                    Glide.with(getContext()).load(R.drawable.icon_favorite_red).into(img_favorite);
+                    Songs objSong = new Songs();
+                    objSong.setId(ringtunes.getId());
+                    objSong.setCOUNTER(ringtunes.getCOUNTER());
+                    objSong.setCp_name(ringtunes.getCp_name());
+                    objSong.setPath(ringtunes.getPath());
+                    objSong.setCreate_date(ringtunes.getCreate_date());
+                    objSong.setDescription(ringtunes.getDescription());
+                    objSong.setImage_file(ringtunes.getImage_file());
+                    objSong.setHist(ringtunes.getHist());
+                    objSong.setPrice(ringtunes.getPrice());
+                    objSong.setSinger_name(ringtunes.getSinger_name());
+                    objSong.setsExpiration(ringtunes.getsExpiration());
+                    objSong.setProduct_name(ringtunes.getProduct_name());
+                    objSong.setProduct_name_no(ringtunes.getProduct_name_no());
+                    objSong.setIs_new(ringtunes.getIs_new());
+                    objSong.setSinger_id(ringtunes.getSinger_id());
+                    objSong.setModify_date(ringtunes.getModify_date());
+                    add_songs_favorite(objSong);
+                }
+
+            }
+        });
+        // mua bài hát
         btn_buysong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuySongs();
+                is_Buy = true;
+                check_buysong();
+
             }
         });
-
+        // Bấm tặng bài hát
         btn_giftsongs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isLogin) {
-                    if (is_subscriber) {
-                        dialog_getphone = new Dialog(getContext());
-                        dialog_getphone.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        dialog_getphone.setContentView(R.layout.dialog_get_contact);
-                        ed_getphone = (EditText) dialog_getphone.findViewById(R.id.ed_add_phone_dialog);
-                        ImageView contact = (ImageView) dialog_getphone.findViewById(R.id.img_add_contact_dialog);
-                        Button ok = (Button) dialog_getphone.findViewById(R.id.btn_dialogcontact_ok);
-                        Button cancel = (Button) dialog_getphone.findViewById(R.id.btn_dialogcontact_cancel);
-                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.showSoftInput(ed_getphone, InputMethodManager.SHOW_IMPLICIT);
-                        contact.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                askForContactPermission();
-                                dialog_getphone.dismiss();
-                            }
-                        });
-                        ok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (ed_getphone.getText().length() > 0) {
-                                    String phone_gift = ed_getphone.getText().toString();
-                                    phone_gift = phone_gift.replaceAll("\\,", "");
-                                    phone_gift = phone_gift.replaceAll(" ", "");
-                                    phone_gift = PhoneNumber.convertTo84PhoneNunber(phone_gift);
-                                    if (PhoneNumber.StandartTelco(phone_gift).equals("VINA")) {
-                                        presenterSongs.addGifttoPlayList(sessionID, msisdn, phone_gift, sExpiration, ringtunes.getId());
-                                        dialog_getphone.dismiss();
-                                    } else
-                                        DialogUtil.showDialog(getContext(), "Lỗi", "Bạn chỉ tặng được cho số điện thoại thuộc mạng Vinaphone");
-                                } else
-                                    Toast.makeText(getContext(), "Bạn chưa nhập vào số điện thoại", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog_getphone.dismiss();
-                            }
-                        });
-                        dialog_getphone.show();
-                    } else {
-                        final Dialog dialog_yes = new Dialog(getContext());
-                        dialog_yes.setContentView(R.layout.dialog_yes_no);
-                        TextView txt_buysongs = (TextView) dialog_yes.findViewById(R.id.dialog_message);
-                        Button yes = (Button) dialog_yes.findViewById(R.id.btn_dialog_yes);
-                        Button no = (Button) dialog_yes.findViewById(R.id.btn_dialog_no);
-                        txt_buysongs.setText("Bạn chưa đăng ký dịch vụ Ringtunes bạn có muốn Đăng ký để tiếp tục mua bài");
-                        yes.setText("Đồng ý");
-                        yes.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog_yes.dismiss();
-                                startActivity(new Intent(getActivity(), FragmentStopPause.class));
-                            }
-                        });
-                        no.setText("Không");
-                        no.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog_yes.dismiss();
-                            }
-                        });
-                        dialog_yes.show();
+                is_Buy =false;
+                check_buysong();
+                //isLogin = Prefs.with(getContext()).getBoolean("isLogin", false);
+                //Check login
+               /* if (isLogin) {
+                    if (!iWating) {
+                        sessionID = Prefs.with(getContext()).getString("sessionID", "");
+                        msisdn = Prefs.with(getContext()).getString("msisdn", "");
+                        is_Buy = false;
+                        iWating = true;
+                        showDialogLoading();
+                        //  is_Buy = true;
+                        count_get_api = 0;
+                        //Gọi hàm check thông tin thuê bao
+                        presenter_getUser_info.api_get_detail_subsriber(sessionID, msisdn);
                     }
 
                 } else {
-                    // yêu cầu login
-                    final Dialog dialog_yes = new Dialog(getContext());
-                    dialog_yes.setContentView(R.layout.dialog_yes_no);
-                    TextView txt_buysongs = (TextView) dialog_yes.findViewById(R.id.dialog_message);
-                    Button yes = (Button) dialog_yes.findViewById(R.id.btn_dialog_yes);
-                    Button no = (Button) dialog_yes.findViewById(R.id.btn_dialog_no);
+                    new SweetAlertDialog(getContext(), SweetAlertDialog.NORMAL_TYPE)
+                            .setTitleText("Thông báo")
+                            .setContentText("Bạn chưa đăng nhập, mời bạn đăng nhập để tiếp tục tặng bài")
+                            .setConfirmText("Đăng nhập")
+                            .setCancelText("Trở lại")
+                            .showCancelButton(true)
+                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.cancel();
+                                }
+                            })
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.dismiss();
+                                    getActivity().startActivity(new Intent(getActivity(), ActivityXacthuc.class));
+                                }
+                            })
+                            .show();
+                }*/
 
-                    txt_buysongs.setText("Mời bạn đăng nhập để tiếp tục tặng bài");
-                    yes.setText("Đăng nhập");
-
-                    yes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            getActivity().startActivity(new Intent(getActivity(), ActivityXacthuc.class));
-                            dialog_yes.dismiss();
-                        }
-                    });
-                    no.setText("Trở lại");
-                    no.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog_yes.dismiss();
-                        }
-                    });
-                    dialog_yes.show();
-                }
 
             }
         });
-        img_back_detailsong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                if (fm.getBackStackEntryCount() > 0) {
-                    fm.popBackStack();
-                }
-            }
-        });
 
-   /*     btn_full.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isFull = true;
-                Bundle bundle = new Bundle();
-                bundle.putString("option", Config.GIFT);
-                bundle.putSerializable("objRing", ringtunes);
-                FragmentUtil.addFragmentData(getActivity(), FragmentPlayerFull.getInstance(), true, bundle);
-            }
-        });
-*/
     }
 
-    public void get_contact() {
-        MainNavigationActivity.datasvina = new ArrayList<PhoneContactModel>();
-        MainNavigationActivity.datas = new ArrayList<PhoneContactModel>();
-        MainNavigationActivity.listGitSongs = new ArrayList<PhoneContactModel>();
-        SharedPreferences.Editor editor = pre.edit();
-        editor.putString("option", Config.GIFT);
-        editor.commit();
-        FragmentUtil.addFragment(getActivity(), ActivityContacts.getInstance(), true);
-    }
-
-    private void sendComment() {
-        InputMethodManager inputManager = (InputMethodManager) getContext().
-                getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().
-                getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        presenterSongs.add_comment_services("205197638", ringtunes.getId(), "401", "12-8-2017", "" + 1,
-                ed_add_comment_content.getText().toString(), "1689932004",
-                "APP", "1689932004", "0", "1", "1");
+    private void check_buysong() {
+        isLogin = Prefs.with(getContext()).getBoolean("isLogin", false);
+        if (isLogin) {
+            if (!iWating) {
+                sessionID = Prefs.with(getContext()).getString("sessionID", "");
+                msisdn = Prefs.with(getContext()).getString("msisdn", "");
+               // showDialogLoading();
+                iWating = true;
+                //Gọi hàm check thông tin thuê bao
+                presenter_getUser_info.api_get_detail_subsriber(sessionID, msisdn);
+            }
+        } else {
+            if (init3G()){
+                showDialogLoading();
+                presenter_getUser_info.login_3g(sUserId);
+            }else {
+                startActivity(new Intent(getContext(), ActivityRegisterOTP.class));
+            }
+        }
     }
 
 
@@ -587,29 +567,13 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     public void showGiftSongsSuccess(List<String> list) {
         if (list.size() > 0) {
             if (list.get(0).equals("0")) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("XÁC NHẬN");
-                builder.setMessage(list.get(1));
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                builder.show();
+                show_notification("Thông báo", list.get(1));
             }
             if (list.get(0).equals("104")) {
                 //
-                DialogUtil.showDialog(getContext(), "Lỗi", getResources().getString(R.string.error_104));
+                show_notification("Thông báo", list.get(1));
             } else {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("XÁC NHẬN");
-                builder.setMessage(list.get(1));
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                builder.show();
+                show_notification("Thông báo", getResources().getString(R.string.error_104));
             }
         }
     }
@@ -618,35 +582,23 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
     public void ShowBuySongsSuccess(List<String> list) {
         if (list.size() > 0) {
             if (list.get(0).equals("0")) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("XÁC NHẬN");
-                builder.setMessage("Bạn đã mua bài thành công, bạn có muốn vào bộ sưu tập");
-                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        iPlayer.releasePlayer();
-                        mHandler.removeCallbacks(mProgressCallback);
-                        SharedPreferences.Editor editor = pre.edit();
-                        editor.putBoolean("isHome", false);
-                        editor.commit();
-                        FragmentUtil.addFragment(getActivity(), FragmentConllection.getInstance(), true);
-                    }
-                });
-                builder.setNegativeButton("Trở lại", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        if (fm.getBackStackEntryCount() > 0) {
-                            fm.popBackStack();
-                        }
-                    }
-                });
-                builder.show();
+                new SweetAlertDialog(getContext(), SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("Thông báo")
+                        .setContentText("Bạn đã mua bài hát thành công")
+                        .setConfirmText("Đóng")
+                        .showCancelButton(true)
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        }).show();
             } else {
-                DialogUtil.showDialog(getContext(), "Lỗi", list.get(1));
-            }
+                show_notification("Thông báo", list.get(1));
 
-        } else Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+            }
+        } else
+            show_notification("Thông báo", "Hệ thống đang bận, mời thử lại sau");
     }
 
     @Override
@@ -674,23 +626,24 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
             ed_add_comment_content.setText("");
             presenterSongs.getComment_by_Songid(ringtunes.getId(), "" + page, "" + index);
         }
-
     }
 
+    /**
+     * Hiện thị danh sách bài hát gợi ý
+     *
+     * @param lisRingtunes: Danh sách bài hát tương tự
+     */
     @Override
     public void show_lis_songs_bysinger(List<Ringtunes> lisRingtunes) {
         hideDialogLoading();
         if (lisRingtunes.size() > 0) {
             lisRing.addAll(lisRingtunes);
             adapterRingtunes.notifyDataSetChanged();
-
             adapterRingtunes.setSetOnItemClickListener(new setOnItemClickListener() {
                 @Override
                 public void OnItemClickListener(int position) {
-                    showDialogLoading();
                     ringtunes = lisRing.get(position);
                     updateData(ringtunes);
-                    nestedScrollView.fullScroll(View.FOCUS_UP);
                 }
 
                 @Override
@@ -708,11 +661,17 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
         }
     }
 
-
     public void updateData(Ringtunes ringtunes) {
-        /*if (ringtunes.getPathfulltrack() != null && ringtunes.getPathfulltrack().length() > 0) {
-            btn_full.setVisibility(View.VISIBLE);
-        } else btn_full.setVisibility(View.GONE);*/
+        Glide.with(getContext()).load(R.drawable.icon_favorite_white).into(img_favorite);
+        isFavorite = false;
+        if (lisSongFavorite != null && lisSongFavorite.size() > 0) {
+            for (int i = 0; i < lisSongFavorite.size(); i++) {
+                if (ringtunes.getId().equals(lisSongFavorite.get(i).getId())) {
+                    isFavorite = true;
+                    Glide.with(getContext()).load(R.drawable.icon_favorite_red).into(img_favorite);
+                }
+            }
+        }
         presenterSongs.getSongsInformation(sessionID, msisdn, ringtunes.getId());
         StartPlayer(ringtunes);
         String urlImage = IMAGE_URL + ringtunes.getImage_file();
@@ -732,172 +691,33 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
         } else {
             txtHits_BuySongs.setText("0");
         }
-
-
         txtPrice_BuySongs.setText("(" + ringtunes.getPrice() + " Đ");
         txt_name_buysongs.setText(ringtunes.getProduct_name());
 
     }
 
     public void BuySongs() {
-        if (isLogin) {
-            if (is_subscriber) {
-                // mua bài
-                final Dialog dialog_yes = new Dialog(getContext());
-                dialog_yes.setContentView(R.layout.dialog_yes_no);
-                TextView txt_buysongs = (TextView) dialog_yes.findViewById(R.id.dialog_message);
-                Button yes = (Button) dialog_yes.findViewById(R.id.btn_dialog_yes);
-                Button no = (Button) dialog_yes.findViewById(R.id.btn_dialog_no);
-                txt_buysongs.setText("Bạn muốn mua bài hát " + ringtunes.getProduct_name() + " với giá "
-                        + ringtunes.getPrice() + " làm nhạc chờ");
-                yes.setText("Đồng ý");
-                yes.setOnClickListener(new View.OnClickListener() {
+        new SweetAlertDialog(getContext(), SweetAlertDialog.NORMAL_TYPE)
+                .setTitleText("Thông báo")
+                .setContentText("Bạn muốn mua bài hát " + ringtunes.getProduct_name() + " với giá "
+                        + ringtunes.getPrice() + " làm nhạc chờ")
+                .setConfirmText("Đồng ý")
+                .setCancelText("Trở lại")
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.cancel();
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
                         presenterSongs.addItemtoMyList(sessionID, msisdn, sExpiration, ringtunes.getId());
-                        dialog_yes.dismiss();
                     }
-                });
-                no.setText("Không");
-                no.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog_yes.dismiss();
-                    }
-                });
-                dialog_yes.show();
-            } else {
-                // đăng ký
-                final Dialog dialog_yes = new Dialog(getContext());
-                dialog_yes.setContentView(R.layout.dialog_yes_no);
-                TextView txt_buysongs = (TextView) dialog_yes.findViewById(R.id.dialog_message);
-                Button yes = (Button) dialog_yes.findViewById(R.id.btn_dialog_yes);
-                Button no = (Button) dialog_yes.findViewById(R.id.btn_dialog_no);
-                txt_buysongs.setText("Bạn chưa đăng ký dịch vụ Ringtunes bạn có muốn Đăng ký để tiếp tục mua bài");
-                yes.setText("Đồng ý");
-                yes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog_yes.dismiss();
-                        startActivity(new Intent(getActivity(), FragmentStopPause.class));
-                    }
-                });
-                no.setText("Không");
-                no.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog_yes.dismiss();
-                    }
-                });
-                dialog_yes.show();
-
-            }
-
-        } else {
-            // yêu cầu login
-            final Dialog dialog_yes = new Dialog(getContext());
-            dialog_yes.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog_yes.setContentView(R.layout.dialog_yes_no);
-            TextView txt_buysongs = (TextView) dialog_yes.findViewById(R.id.dialog_message);
-            Button yes = (Button) dialog_yes.findViewById(R.id.btn_dialog_yes);
-            Button no = (Button) dialog_yes.findViewById(R.id.btn_dialog_no);
-
-            txt_buysongs.setText("Mời bạn đăng nhập để tiếp tục mua bài");
-            yes.setText("Đăng nhập");
-
-            yes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().startActivity(new Intent(getActivity(), ActivityXacthuc.class));
-                    dialog_yes.dismiss();
-                }
-            });
-            no.setText("Trở lại");
-            no.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog_yes.dismiss();
-                }
-            });
-            dialog_yes.show();
-        }
-    }
-
-
-    public void askForContactPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                        Manifest.permission.READ_CONTACTS)) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Contacts access needed");
-                    builder.setPositiveButton(android.R.string.ok, null);
-                    builder.setMessage("please confirm Contacts access");//TODO put real question
-                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @TargetApi(Build.VERSION_CODES.M)
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            requestPermissions(
-                                    new String[]
-                                            {Manifest.permission.READ_CONTACTS}
-                                    , MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-                        }
-                    });
-                    builder.show();
-                    // Show an expanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
-
-                } else {
-
-                    // No explanation needed, we can request the permission.
-
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.READ_CONTACTS},
-                            MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
-                }
-            } else {
-                get_contact();
-                // datas = CustomUtils.getAllPhoneContacts(getContext());
-            }
-        } else {
-            get_contact();
-            //datas = CustomUtils.getAllPhoneContacts(getContext());
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    get_contact();
-                    //datas = CustomUtils.getAllPhoneContacts(getContext());
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-
+                })
+                .show();
     }
 
     @Override
@@ -939,5 +759,212 @@ public class FragmentDetailBuySongs extends BaseFragment implements PresenterSon
         } else {
             seekBarProgress.setProgress(0);
         }
+    }
+
+    @Override
+    public void show_detail_subsriber(subscriber objSub) {
+        hideDialogLoading();
+        iWating = false;
+        count_get_api = 0;
+        if (objSub != null) {
+            if (objSub.getERROR() != null && objSub.getERROR().equals("0")) {
+                if (objSub.getSTATUS() != null && objSub.getSTATUS().equals("2")) {
+                    Prefs.with(getContext()).save("is_subscriber", true);
+                    is_subscriber = true;
+                    if (objSub.getSVC_STATUS().equals("1")) {
+                        Prefs.with(getContext()).save("is_SVC_STATUS", true);
+                        is_SVC_STATUS = true;
+                    } else if (objSub.getSVC_STATUS().equals("0")) {
+                        Prefs.with(getContext()).save("is_SVC_STATUS", false);
+                        is_SVC_STATUS = false;
+                    }
+                    if (is_Buy)
+                        BuySongs();
+                    else {
+                        objRingGift = ringtunes;
+                        objRingGift.setsExpiration(sExpiration);
+                        if (!FragmenGiftRingtunes.getInstance().isAdded()) {
+                            FragmentUtil.addFragment(getActivity(), FragmenGiftRingtunes.getInstance(), true);
+                        }
+                    }
+                } else {
+                    Prefs.with(getContext()).save("is_subscriber", false);
+                    is_subscriber = false;
+                    final Dialog dialog_yes = new Dialog(getContext());
+                    dialog_yes.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog_yes.setContentView(R.layout.dialog_yes_no);
+                    TextView txt_buysongs = (TextView) dialog_yes.findViewById(R.id.txt_content_dialog);
+
+                    Button yes = (Button) dialog_yes.findViewById(R.id.btn_dialog_yes);
+                    Button no = (Button) dialog_yes.findViewById(R.id.btn_dialog_no);
+                    String formattedText = "This is &lt;font color='#0000FF'&gt;blue&lt;/font&gt;";
+                    txt_buysongs.setText(Html.fromHtml("Để hoàn tất dịch vụ Ringtunes, Quý khách vui lòng thực hiện thao tác <font color='#FF0000'>\"Y2 gửi 9194\"</font> từ số điện thoại <font color='#FF0000'> " + PhoneNumber.convertToVnPhoneNumber(msisdn) + "</font> giá cước 3000đ/ 7 ngày. Cảm ơn quý khách"));
+
+                    // txt_buysongs.setText(Html.fromHtml("Để hoàn tất đăng ký dịch vụ RingTunes, Quý khách vui lòng thực hiện thao tác soạn tin nhắn <font color='#060606'>\"Y2 gửi 9194\"</font> từ số điện thoại giá cước: 3.000Đ/7 ngày. Cảm ơn Quý khách!"));
+                    yes.setText("Đồng ý");
+                    yes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            presenter_getUser_info.api_subsriber_sms(msisdn, "2");
+                            Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
+                            smsIntent.setType("vnd.android-dir/mms-sms");
+                            smsIntent.putExtra("address", "9194");
+                            smsIntent.putExtra("sms_body", "Y2");
+                            try {
+                                startActivity(smsIntent);
+                            } catch (ActivityNotFoundException e) {
+                                // Display some sort of error message here.
+                            }
+                            //    startActivity(smsIntent);
+                            dialog_yes.dismiss();
+                            //  startActivity(new Intent(getActivity(), FragmentStopPause.class));
+                        }
+                    });
+                    TextView btn_delete_dialog = dialog_yes.findViewById(R.id.btn_delete_dialog);
+                    btn_delete_dialog.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            presenter_getUser_info.api_subsriber_sms(msisdn, "1");
+                            dialog_yes.dismiss();
+                        }
+                    });
+                    no.setText("Không");
+                    no.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog_yes.dismiss();
+                        }
+                    });
+                    dialog_yes.show();
+                }
+            } else {
+                Prefs.with(getContext()).save("is_subscriber", false);
+                is_subscriber = false;
+                final Dialog dialog_yes = new Dialog(getContext());
+                dialog_yes.setCancelable(false);
+                dialog_yes.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog_yes.setContentView(R.layout.dialog_yes_no);
+                TextView txt_buysongs = (TextView) dialog_yes.findViewById(R.id.txt_content_dialog);
+
+                Button yes = (Button) dialog_yes.findViewById(R.id.btn_dialog_yes);
+                Button no = (Button) dialog_yes.findViewById(R.id.btn_dialog_no);
+                String formattedText = "This is &lt;font color='#0000FF'&gt;blue&lt;/font&gt;";
+                txt_buysongs.setText(Html.fromHtml("Để hoàn tất dịch vụ Ringtunes, Quý khách vui lòng thực hiện thao tác <font color='#FF0000'>\"Y2 gửi 9194\"</font> từ số điện thoại <font color='#FF0000'> " + PhoneNumber.convertToVnPhoneNumber(msisdn) + "</font> giá cước 3000đ/ 7 ngày. Cảm ơn quý khách"));
+
+                // txt_buysongs.setText(Html.fromHtml("Để hoàn tất đăng ký dịch vụ RingTunes, Quý khách vui lòng thực hiện thao tác soạn tin nhắn <font color='#060606'>\"Y2 gửi 9194\"</font> từ số điện thoại giá cước: 3.000Đ/7 ngày. Cảm ơn Quý khách!"));
+                yes.setText("Đồng ý");
+                yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter_getUser_info.api_subsriber_sms(msisdn, "2");
+                        Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
+                        smsIntent.setType("vnd.android-dir/mms-sms");
+                        smsIntent.putExtra("address", "9194");
+                        smsIntent.putExtra("sms_body", "Y2");
+                        try {
+                            startActivity(smsIntent);
+                        } catch (ActivityNotFoundException e) {
+                            // Display some sort of error message here.
+                        }
+                        //     startActivity(smsIntent);
+                        dialog_yes.dismiss();
+                        //  startActivity(new Intent(getActivity(), FragmentStopPause.class));
+                    }
+                });
+                TextView btn_delete_dialog = dialog_yes.findViewById(R.id.btn_delete_dialog);
+                btn_delete_dialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean is_phien_dn = Prefs.with(getActivity()).getBoolean("is_Phien_DN", false);
+                        if (is_phien_dn) {
+                            presenter_getUser_info.api_subsriber_sms(msisdn, "1");
+                            Prefs.with(getActivity()).save("is_Phien_DN", false);
+                        }
+                        dialog_yes.dismiss();
+                    }
+                });
+                no.setText("Không");
+                dialog_yes.show();
+            }
+        } else {
+            show_notification("Thông báo", "Hệ thống đang bận, mời thử lại sau");
+        }
+    }
+
+    private int count_get_api = 0;
+
+    @Override
+    public void show_error_api() {
+        hideDialogLoading();
+        show_notification("Lỗi kết nối", "Mời bạn kiểm tra lại mạng và thử lại.");
+
+    }
+
+    @Override
+    public void show_login_3g(final List<String> list) {
+        hideDialogLoading();
+        if (list.size() > 0) {
+            if (list.get(0).equals("0") && list.get(3).equals("SUCCESS")) {
+                DialogUtil.ShowAlertDialogAnimationUpBottom2Button(getContext(), getString(R.string.title_notification),
+                        "Bạn có muốn đăng nhập Ringtunes bằng số điện thoại: "
+                                +PhoneNumber.convertToVnPhoneNumber(list.get(2)),
+                        "Đồng ý",
+                        "Số khác",
+                        new DialogUtil.ClickDialog() {
+                    @Override
+                    public void onClickYesDialog() {
+                        Prefs.with(getContext()).save("pass_sql_server", list.get(1));
+                        Constant.sMSISDN = list.get(2);
+                        Prefs.with(getContext()).save("msisdn", list.get(2));
+                        presenter_getUser_info.Login(sUserId, list.get(1));
+                    }
+
+                    @Override
+                    public void onClickNoDialog() {
+                        startActivity(new Intent(getContext(), ActivityRegisterOTP.class));
+                    }
+                });
+
+            } else {
+                DialogUtil.ShowAlertDialogAnimationUpBottom2Button(getContext(),
+                        "Thông báo", getString(R.string.message)
+                        ,"Đăng nhập"
+                        , "Huỷ bỏ",
+                        new DialogUtil.ClickDialog() {
+                    @Override
+                    public void onClickYesDialog() {
+                        startActivity(new Intent(getContext(), ActivityRegisterOTP.class));
+                    }
+
+                    @Override
+                    public void onClickNoDialog() {
+
+                    }
+                });
+                //show_notification("Thông", "Hệ thống đang bận mời thử lại sau");
+                // Toast.makeText(this, "Lỗi, thuê bao của quý khách không hợp lệ", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void showDataLogin(List<String> list) {
+        hideDialogLoading();
+        if (list.size() > 0) {
+            Constant.sSessionID = list.get(2);
+            Prefs.with(getContext()).save("sessionID", list.get(2));
+            Prefs.with(getContext()).save("isLogin", true);
+            Prefs.with(getContext()).save("is_Show_Subscriber", true);
+            Prefs.with(getContext()).save("is_Phien_DN", true);
+            check_buysong();
+        } else {
+            show_notification("Lỗi", "Hệ thống đang bận mời bạn thử lại");
+        }
+    }
+
+    public void add_songs_favorite(Songs objSong) {
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(objSong);
+        realm.commitTransaction();
     }
 }

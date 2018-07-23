@@ -3,10 +3,13 @@ package com.neo.media.untils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.text.Html;
+import android.text.Spanned;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +24,14 @@ import java.util.Random;
  */
 
 public class Utilities {
+    public static Spanned getSpannedText(String text) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT);
+        } else {
+            return Html.fromHtml(text);
+        }
+    }
+
     public static String encodeUTF(String str) {
 
         try {

@@ -10,10 +10,19 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class GroupName extends RealmObject implements Serializable{
-    public GroupName(String sNameServer, String sNameLocal, String id_group) {
+    public GroupName(String sNameServer, String sNameLocal, String id_group, int background) {
         this.sNameServer = sNameServer;
         this.sNameLocal = sNameLocal;
         this.id_group = id_group;
+        this.background = background;
+    }
+
+    public GroupName(String sNameServer, String sNameLocal, String id_group, int background, boolean isCheck) {
+        this.sNameServer = sNameServer;
+        this.sNameLocal = sNameLocal;
+        this.id_group = id_group;
+        this.background = background;
+        this.isCheck = isCheck;
     }
 
     public GroupName() {
@@ -25,6 +34,26 @@ public class GroupName extends RealmObject implements Serializable{
     private String sNameLocal;
     //
     private String id_group;
+
+    private int background;
+
+    private boolean isCheck;
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
+
+    public int getBackground() {
+        return background;
+    }
+
+    public void setBackground(int background) {
+        this.background = background;
+    }
 
     public String getId_group() {
         return id_group;

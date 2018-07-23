@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dp5">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tìm kiếm số điện thoại"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_20sp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btn_ok_contact"
+                    android:layout_width="@dimen/dp35"
+                    android:layout_height="@dimen/dp35"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/spr_buton_dialog"
+                    android:text="@string/alert_ok"
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/text_15sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp3"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_weight="5"
+                android:background="@drawable/spr_edt_search">
+
+                <EditText
+                    android:id="@+id/editTextSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp35"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:hint=" - Search"
+                    android:inputType="text"
+                    android:padding="@dimen/dp2"
+                    android:textSize="@dimen/text_15sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp35"
+                    android:layout_height="@dimen/dp35"
+                    android:padding="@dimen/dp5"
+                    android:src="@drawable/search" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp2"
+        android:background="@color/purple"></View>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listContact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" />
+
+</LinearLayout>
