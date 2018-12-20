@@ -242,7 +242,9 @@
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
                     android:background="@color/white"
-                    android:focusable="false"></android.support.v7.widget.RecyclerView>
+                    android:focusable="false">
+
+                </android.support.v7.widget.RecyclerView>
             </LinearLayout>
 
         </RelativeLayout>

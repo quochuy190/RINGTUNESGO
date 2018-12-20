@@ -798,7 +798,9 @@ public class FragmentDetailBuySongs extends BaseFragment
                     Button yes = (Button) dialog_yes.findViewById(R.id.btn_dialog_yes);
                     Button no = (Button) dialog_yes.findViewById(R.id.btn_dialog_no);
                     String formattedText = "This is &lt;font color='#0000FF'&gt;blue&lt;/font&gt;";
-                    txt_buysongs.setText(Html.fromHtml("Để hoàn tất dịch vụ Ringtunes, Quý khách vui lòng thực hiện thao tác <font color='#FF0000'>\"Y2 gửi 9194\"</font> từ số điện thoại <font color='#FF0000'> " + PhoneNumber.convertToVnPhoneNumber(msisdn) + "</font> giá cước 3000đ/ 7 ngày. Cảm ơn quý khách"));
+                    txt_buysongs.setText(Html.fromHtml("Để hoàn tất dịch vụ Ringtunes, Quý khách vui lòng thực hiện thao tác <font color='#FF0000'>\"Y2 gửi 9194\"</font> " +
+                            "từ số điện thoại <font color='#FF0000'> " + PhoneNumber.convertToVnPhoneNumber(msisdn) + "</font> giá cước 3000đ/ 7 ngày." +
+                            " Cảm ơn quý khách"));
 
                     // txt_buysongs.setText(Html.fromHtml("Để hoàn tất đăng ký dịch vụ RingTunes, Quý khách vui lòng thực hiện thao tác soạn tin nhắn <font color='#060606'>\"Y2 gửi 9194\"</font> từ số điện thoại giá cước: 3.000Đ/7 ngày. Cảm ơn Quý khách!"));
                     yes.setText("Đồng ý");

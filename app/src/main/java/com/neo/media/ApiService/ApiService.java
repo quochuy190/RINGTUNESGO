@@ -523,7 +523,6 @@ public class ApiService {
     public void getAllGroup(final CallbackData<GROUPS> callbackData, String Service, String Provider,
                             String ParamSize, String P1, String P2, String P3) {
         apiSevice = ApiSeviceImpl.retrofit.create(ApiSeviceImpl.class);
-        Log.i("group", "inPut" + P1 + "P2" + P2 + "P3" + P3);
         Call<ResponseBody> getElement = apiSevice.getAllGroup(Service, Provider, ParamSize, P1, P2, P3);
 
         getElement.enqueue(new Callback<ResponseBody>() {
@@ -531,14 +530,11 @@ public class ApiService {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     response.code();
-                    Log.i("group", "" + response.code());
-                    Log.i("group", "" + response.body().toString());
                     GROUPS objGroups = new GROUPS();
                     Gson gson = new Gson();
                     ArrayList<GROUP> lisGroup = new ArrayList<GROUP>();
                     String num_of_clis;
                     String jsonString = response.body().string();
-                    Log.i("group", "" + jsonString);
                     jsonString = jsonString.replaceAll("\\\\", "");
                     jsonString = jsonString.substring(11, jsonString.length() - 2);
                     System.out.print(jsonString);
